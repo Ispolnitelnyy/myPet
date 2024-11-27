@@ -10,3 +10,7 @@
 5. создаем public, index.html
 6. подтягиваем плагины вэбпака (html-webpack-plugin)
 7. вписываем в конфиг плагины и задаем template для HtmlWebpackPlugin
+8. добавил команду npm run build прописав в packaje.json в скриптах "build": "webpack"
+9. добавляем npm install --save-dev typescript ts-loader в дев зависимости
+10. перемсеновываем index.js на index.ts и создаем tsconfig.json
+11. дописываем в конфиг вэбпака свойства module и resolve
