@@ -41,3 +41,15 @@
 ---
 
 3 Webpack-dev-server. Переменные окружения (env) branch: startDev/webpackDevServer/dotEnv
+
+1. вписываем devtool: "inline-source-map" в buildWebpackConfig для того чтобы узнать из какого исходного файла происходит ошибка
+   1.1 выбираем инструмент Webpack-dev-server npm install --save-dev webpack-dev-server и типы npm install --save-dev @types/webpack-dev-server
+   1.2 в config/build создаем buildDevServer.ts
+2. добавляем порт, прокидываем его в buildWebpackConfig.ts
+   2.1 в buildWebpackConfig.ts дописываем и передаем порт devServer: buildDevServer(порт)
+   2.2 в buildDevServer дописываем open: true, //автоматически рвет страницу с нашим приложением
+   2.3 добавляем "start": "webpack serve" в package.json
+3. Разделяем dev сборку от production (Environment Variables (env))
+   3.1 в package.json добавляем "build:prod": "webpack --env mode=production", "build:dev": "webpack --env mode=development"
+   3.2 Чтобы использовать переменную env, вы должны преобразовать module.exports в webpack.config.ts в функцию export default (env) => {return config};
+   3.3 в buildWebpackConfig.ts используем флаг (для source-map) : devtool:isDev?"inline-source-map":undefined, devServer:isDev?buildDevServer(options):undefined
