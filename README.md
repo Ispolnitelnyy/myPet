@@ -8,9 +8,15 @@
    3.3 при заполненных entry и output в конфиге вэбпака, можем его запустить командой 'npx webpack'
 4. задаем динамический нэйминг для бандла в конфиге (комит-3d737a95879dfbbaa3b5be1b8e2a4e16a8d58f55)
 5. создаем public, index.html
-6. подтягиваем плагины вэбпака (html-webpack-plugin)
-7. вписываем в конфиг плагины и задаем template для HtmlWebpackPlugin
-8. добавил команду npm run build прописав в packaje.json в скриптах "build": "webpack"
-9. добавляем npm install --save-dev typescript ts-loader в дев зависимости
-10. перемсеновываем index.js на index.ts и создаем tsconfig.json
-11. дописываем в конфиг вэбпака свойства module и resolve
+   5.1. подтягиваем плагины вэбпака (html-webpack-plugin)
+   5.2. вписываем в конфиг плагины и задаем template для HtmlWebpackPlugin
+6. добавил команду npm run build прописав в packaje.json в скриптах "build": "webpack"
+7. добавляем npm install --save-dev typescript ts-loader в дев зависимости (для исходного кода)
+   9.1. перемсеновываем index.js на index.ts и создаем tsconfig.json
+   9.2. дописываем в конфиг вэбпака свойства module и resolve
+8. пишем конфигурацию Webpack на TypeScript npm install --save-dev typescript ts-node @types/node @types/webpack
+   10.1 переписываем webpack.konfig с js на ts
+   10.2 переписываем импорты
+   10.3 добавляем в tsconfig "allowSyntheticDefaultImports": true, "esModuleInterop": true
+   10.4 выносим конфиг в идентификатор config с типом webpack.Configuration и импортируем его
+   10.5 добавляем в tsconfig "ts-node":{"compilerOptions":{"module":"CommonJS"}}
