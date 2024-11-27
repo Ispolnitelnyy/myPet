@@ -53,3 +53,11 @@
    3.1 в package.json добавляем "build:prod": "webpack --env mode=production", "build:dev": "webpack --env mode=development"
    3.2 Чтобы использовать переменную env, вы должны преобразовать module.exports в webpack.config.ts в функцию export default (env) => {return config};
    3.3 в buildWebpackConfig.ts используем флаг (для source-map) : devtool:isDev?"inline-source-map":undefined, devServer:isDev?buildDevServer(options):undefined
+
+---
+
+4 Подключаем React и настраиваем css в webpack
+
+1. npm i react react-dom, npm i - D @types/react @types/react-dom
+2. npm install sass-loader sass webpack style-loader css-loader --save-dev
+3. добавляем лоадер для scss из доки в buildLoaders.ts
