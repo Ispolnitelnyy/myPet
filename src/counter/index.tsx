@@ -1,6 +1,5 @@
 import { useState } from "react";
-import "./index.scss";
-
+import classes from "./index.module.scss";
 export const Counter = () => {
   const [count, setCount] = useState(0);
 
@@ -10,9 +9,9 @@ export const Counter = () => {
   const decrementHandler = () => {
     setCount(count - 1);
   };
-
+  console.log(classes, "classes");
   return (
-    <div className="wrapper">
+    <div className={classes.red}>
       <h1>{count}</h1>
       <button onClick={incrementHandler}> increment </button>
       <button onClick={decrementHandler}> decrement </button>

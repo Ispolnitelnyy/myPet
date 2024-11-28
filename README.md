@@ -53,11 +53,46 @@
    3.1 в package.json добавляем "build:prod": "webpack --env mode=production", "build:dev": "webpack --env mode=development"
    3.2 Чтобы использовать переменную env, вы должны преобразовать module.exports в webpack.config.ts в функцию export default (env) => {return config};
    3.3 в buildWebpackConfig.ts используем флаг (для source-map) : devtool:isDev?"inline-source-map":undefined, devServer:isDev?buildDevServer(options):undefined
+   на выходе получаем 3 команды npm run build:dev , npm run build:prod npm run start
 
 ---
 
-4 Подключаем React и настраиваем css в webpack
+4 Подключаем React и настраиваем css в branch: webpack react/cssInWebpack
 
 1. npm i react react-dom, npm i - D @types/react @types/react-dom
 2. npm install sass-loader sass webpack style-loader css-loader --save-dev
 3. добавляем лоадер для scss из доки в buildLoaders.ts
+
+---
+
+5 Настраиваем css modules branch: cssModules
+
+1. будем использовать специальный плагин: MiniCssExtractPlugin npm install --save-dev mini-css-extract-plugin
+   1.1 ставим плагин в buildLoaders и задаем динамический нэйминг на fileName, а так же создаем 1 чанк chunkFilename: "css/[name].[contenthash:8].css"
+   1.2 так же дока предлставляет css loader ставим его в buildLoaders.ts вместо "style-loader" в продакшн версии
+   (!!! css-loader выше 6.11.0 версии багнутый и не корректно выводит импорт модулей scss файлов !!!)
+   2 настраиваем css модули: для корректного импорта модульных css и scss файлов добавляем декларацию модуля в global.d.ts
+   (не знаю по какой причине, но тип импорта для scss и css файлов в global.d.ts не подсказывает через IDE доступные варианы,
+   нашел решение в сторонней либе: "typed-scss-modules", она под каждым css, scss файлом создает index.module.d.scss и вписывает туда доступные типы, что решает проблему. `в будующем надо разобраться, как записывать все типы в global.d.ts)
+
+---
+
+`
+`
+`
+`
+`
+`
+`
+`
+`
+`
+`
+`
+`
+`
+`
+`
+`rm -rf ./.webpack-cache && rm -rf ./dist
+Перезапустите TypeScript сервер: (Ctrl + Shift + P), и выбрав "TypeScript: Restart TS server".
+"typeRoots": ["./node_modules/@types", "./src/ts-modules-global-declaration"]
