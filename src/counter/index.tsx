@@ -12,7 +12,7 @@ export const Counter = () => {
   };
 
   return (
-    <div className="wrapper">
+    <div>
       <h1>{count}</h1>
       <button onClick={incrementHandler}> increment </button>
       <button onClick={decrementHandler}> decrement </button>
