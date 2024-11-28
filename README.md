@@ -71,12 +71,23 @@
    1.1 ставим плагин в buildLoaders и задаем динамический нэйминг на fileName, а так же создаем 1 чанк chunkFilename: "css/[name].[contenthash:8].css"
    1.2 так же дока предлставляет css loader ставим его в buildLoaders.ts вместо "style-loader" в продакшн версии
    (!!! css-loader выше 6.11.0 версии багнутый и не корректно выводит импорт модулей scss файлов !!!)
-   2 настраиваем css модули: для корректного импорта модульных css и scss файлов добавляем декларацию модуля в global.d.ts
+2. настраиваем css модули: для корректного импорта модульных css и scss файлов добавляем декларацию модуля в global.d.ts
    (не знаю по какой причине, но тип импорта для scss и css файлов в global.d.ts не подсказывает через IDE доступные варианы,
    нашел решение в сторонней либе: "typed-scss-modules", она под каждым css, scss файлом создает index.module.d.scss и вписывает туда доступные типы, что решает проблему. `в будующем надо разобраться, как записывать все типы в global.d.ts)
 
 ---
 
+6 Роутинг Code splitting Lazy Suspence branch: routers/reactLazy
+
+1. нвастраиваем роутинг: npm i react-router-dom, npm i -d @types/react-router-dom
+2. прописываем Routes в App.tsx
+3. добавляем Link в App.tsx для перехода между страничками
+4. дописываем в webpack dev server свойство historyApiFallback: true для проксирования запросов через корневой src/app/index.tsx
+5. разбиваваем наше spa приложение:
+   5.1. разбиваем страницы на отдельные бандлы путем информирования о других страницах в основном чанке бандла, а оставшиеся страничные чанки будут подгружаться асинхронно
+   (такой подход называется - asyncChanks, codeSplitting, lazyLoading) в реакте это делается с помощью спец компонентов: lazy и suspence
+   создаем специальный страничный компонент с приставкой lazy или async ( я создал отдельную диру pagesLazy)
+
 `
 `
 `
@@ -93,6 +104,6 @@
 `
 `
 `
-`rm -rf ./.webpack-cache && rm -rf ./dist
+`
+rm -rf ./.webpack-cache && rm -rf ./dist
 Перезапустите TypeScript сервер: (Ctrl + Shift + P), и выбрав "TypeScript: Restart TS server".
-"typeRoots": ["./node_modules/@types", "./src/ts-modules-global-declaration"]

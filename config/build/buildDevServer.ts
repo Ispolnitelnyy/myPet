@@ -4,6 +4,7 @@ import { BuildOptions } from "./types/config";
 export function buildDevServer(options: BuildOptions): DevServerConfiguration {
   return {
     port: options.port,
-    open: true, //автоматически рвет страницу с нашим приложением
+    open: true,
+    historyApiFallback: true,
   };
 }

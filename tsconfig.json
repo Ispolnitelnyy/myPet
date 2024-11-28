@@ -1,32 +1,19 @@
 {
   "compilerOptions": {
-    // то, куда производится сборка (сейчас не важна, так собираем через WebPack)
     "outDir": "./dist/",
-    //подсвечивает места где не указан тип
     "noImplicitAny": true,
-    // различные способы модульной сборки
     "module": "ESNext",
-    // в какую версию ES будет компилироваться код: для поддержки больгинства браузеров
     "target": "es5",
     "jsx": "react-jsx",
-    //allowJs - компилятор будет обрабатывать ек только Ts файлы, но и js
     "allowJs": true,
-    //moduleResolution - режим имитирует способ, которым Node.js ищет модули
     "moduleResolution": "node",
-    // позволяет использовать импорты без звездочки
     "allowSyntheticDefaultImports": true,
-    // esModuleInterop позволяет работать с пакетами которые используют common js (requeire() module.export)
-    // как с обычными пакетами с помощью import
-    "esModuleInterop": true,
-    "typeRoots": ["./node_modules/@types", "./src/ts-modules-global-declaration"]
+    "esModuleInterop": true
   },
-  //ts-node не поддерживает никакой синтаксис модуля, кроме commonjs
-  //переопределение для ts-node из доки
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
     }
   },
-  // для абсолютного импорта
   "baseUrl": "."
 }
