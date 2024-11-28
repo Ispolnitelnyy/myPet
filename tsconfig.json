@@ -17,7 +17,8 @@
     "allowSyntheticDefaultImports": true,
     // esModuleInterop позволяет работать с пакетами которые используют common js (requeire() module.export)
     // как с обычными пакетами с помощью import
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types", "./src/ts-modules-global-declaration"]
   },
   //ts-node не поддерживает никакой синтаксис модуля, кроме commonjs
   //переопределение для ts-node из доки
