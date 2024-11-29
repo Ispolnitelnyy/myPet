@@ -1,4 +1,4 @@
-import { Counter } from "../../components/widgets/counter";
+import { Counter } from "../../components/features/counter";
 
 const CounterPage = (): JSX.Element => {
   return (
