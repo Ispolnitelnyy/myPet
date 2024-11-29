@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { App } from "../app";
-import { ThemeProvider } from "../app/components/ui/theme/provider";
-
+import { ThemeProvider } from "app/providers";
 const rootElement = document.getElementById("root") as HTMLElement;
 
 if (rootElement) {
@@ -14,5 +13,5 @@ if (rootElement) {
     </>
   );
 } else {
-  console.error("-!----!---!-->Root element not found<--!---!----!-");
+  console.error("---!---!-->Root element not found<--!---!---");
 }

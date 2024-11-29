@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { ThemeStateEnums } from "../provider";
+import { ThemeStateEnums } from "../../../../../providers/themeProvider";
 
 export interface themeContextProps {
   theme?: ThemeStateEnums;

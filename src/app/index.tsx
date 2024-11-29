@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
-import "../styles/index.scss";
-import { useTheme } from "./components/ui/theme/hook";
+import "./styles/index.scss";
+import { useTheme } from "./components/shared/ui/themeButton/hook";
 import { HomePage } from "./pages/homePage";
 
 export const App = (): JSX.Element => {
@@ -9,7 +9,7 @@ export const App = (): JSX.Element => {
     <BrowserRouter>
       <div className={`app ${theme}`}>
         <HomePage />
-      </div>{" "}
+      </div>
     </BrowserRouter>
   );
 };

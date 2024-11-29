@@ -1,4 +1,4 @@
-import { LinkButton, LinkButtonsEnum, LinkRefsEnum } from "../../ui/linkButton";
+import { LinkButton, LinkButtonsEnum, LinkRefsEnum } from "../../shared/ui/linkButton";
 
 export const NavBar = () => {
   return (

@@ -1,5 +1,8 @@
+import {
+  LOCAL_STORAGE_THEME_KEY,
+  ThemeContext,
+} from "app/components/shared/ui/themeButton/context";
 import { FC, ReactNode, useMemo, useState } from "react";
-import { LOCAL_STORAGE_THEME_KEY, ThemeContext } from "../context";
 
 interface ThemeProviderProps {
   children: ReactNode;
@@ -26,3 +29,5 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 
   return <ThemeContext.Provider value={defaultProps}>{children}</ThemeContext.Provider>;
 };
+
+export default ThemeProvider;
