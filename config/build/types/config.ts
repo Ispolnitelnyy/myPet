@@ -4,7 +4,6 @@ export type BuildPath = {
   entry: string;
   build: string;
   html: string;
-  assets: string;
 };
 
 export interface BuildOptions {

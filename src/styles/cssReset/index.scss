@@ -1,57 +1,18 @@
-/* CSS Reset */
-
-*,
-*::before,
-*::after {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%; /* Отключить изменение размера текста на iOS */
-}
+input,
+button,
+textarea,
+select {
+  margin: 0;
 
-img,
-video {
-  max-width: 100%;
-  height: auto;
+  font: inherit;
 }
-
-ul,
-ol {
-  list-style: none;
-}
-
 a {
   text-decoration: none;
   color: inherit;
-}
-
-button,
-input,
-textarea {
-  border: none;
-  outline: none;
-  background: none;
-}
-
-button {
-  cursor: pointer;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: normal;
-  margin: 0;
 }

@@ -5,10 +5,9 @@ import path from "path";
 
 export default (env: BuildEnv) => {
   const paths: BuildPath = {
-    entry: path.resolve(__dirname, "src/app", "index.tsx"),
+    entry: path.resolve(__dirname, "src/root", "index.tsx"),
     build: path.resolve(__dirname, "build"),
     html: path.resolve(__dirname, "public", "index.html"),
-    assets: path.resolve(__dirname, "src/assets"),
   };
 
   const mode = env.mode || "development";

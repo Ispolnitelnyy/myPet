@@ -1,12 +1,19 @@
-import { createRoot } from "react-dom/client";
 import "../styles/index.scss";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import { Suspense } from "react";
-import { AboutPageLazy, CounterPageLazy, MainPageLazy } from "../pages/react-lazy";
+import { Route, Routes, Link } from "react-router-dom";
+import { Suspense, useContext } from "react";
+import { AboutPageLazy, CounterPageLazy, MainPageLazy } from "./pages/react-lazy";
+import { useTheme } from "./components/theme/hook";
 
-const App = (): JSX.Element => {
+export enum Theme {
+  DARK = "dark",
+  LIGHT = "light",
+}
+
+export const App = (): JSX.Element => {
+  const { theme, toggleTheme } = useTheme();
   return (
-    <div className="app">
+    <div className={`app ${theme}`}>
+      <button onClick={toggleTheme}>toggle</button>
       <Link to={"/"}>страница меню</Link>
       <Link to={"/about"}>страница о нас</Link>
       <Link to={"/counter"}>страница счетчик</Link>
@@ -20,18 +27,3 @@ const App = (): JSX.Element => {
     </div>
   );
 };
-
-const rootElement = document.getElementById("root") as HTMLElement;
-
-if (rootElement) {
-  const root = createRoot(rootElement);
-  root.render(
-    <>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </>
-  );
-} else {
-  console.error("Root element not found");
-}
