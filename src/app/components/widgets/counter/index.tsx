@@ -9,7 +9,7 @@ export const Counter = () => {
   const decrementHandler = () => {
     setCount(count - 1);
   };
-  console.log(classes, "classes");
+
   return (
     <div className={classes.red}>
       <h1>{count}</h1>

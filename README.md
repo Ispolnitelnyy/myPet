@@ -7,7 +7,7 @@
 1. npm init -y
 2. создаем src, index.js
 3. [webpack.js.org]
-   3.1. npm install webpack webpack-cli --save-dev (ULBI: "webpack":"^5.96.1","webpack-cli":"^5.1.4")
+   3.1. npm install webpack webpack-cli --save-dev
    3.2. создаем webpack.config.js командой npx webpack --config webpack.config.js
    3.3 при заполненных entry и output в конфиге вэбпака, можем его запустить командой 'npx webpack'
 4. задаем динамический нэйминг для бандла в конфиге
@@ -73,7 +73,7 @@
    (!!! css-loader выше 6.11.0 версии багнутый и не корректно выводит импорт модулей scss файлов !!!)
 2. настраиваем css модули: для корректного импорта модульных css и scss файлов добавляем декларацию модуля в global.d.ts
    (не знаю по какой причине, но тип импорта для scss и css файлов в global.d.ts не подсказывает через IDE доступные варианы,
-   нашел решение в сторонней либе: "typed-scss-modules", она под каждым css, scss файлом создает index.module.d.scss и вписывает туда доступные типы, что решает проблему npx typed-scss-modules src . `в будующем надо разобраться, как записывать все типы в global.d.ts)
+   нашел решение в сторонней либе: "typed-scss-modules", она под каждым css, scss файлом создает index.module.d.scss и вписывает туда доступные типы, что решает проблему npx typed-scss-modules src/app . `в будующем надо разобраться, как записывать все типы в global.d.ts)
 
 ---
 
@@ -120,5 +120,9 @@
 `
 `
 `
+
+---
+
+hotkeys:
 rm -rf ./.webpack-cache && rm -rf ./dist
 Перезапустите TypeScript сервер: (Ctrl + Shift + P), и выбрав "TypeScript: Restart TS server".

@@ -1,0 +1,25 @@
+import classes from "./index.module.scss";
+import { Link } from "react-router-dom";
+export type LinkButtonTypeProps = {
+  type: LinkButtonsEnum;
+  linkRef: LinkRefsEnum;
+};
+
+export enum LinkButtonsEnum {
+  MENU = "страница меню",
+  ABOUT = "страница о сайте",
+  COUNTER = "страница с счетчиком",
+}
+export enum LinkRefsEnum {
+  MENU = "/",
+  ABOUT = "/about",
+  COUNTER = "/counter",
+}
+
+export const LinkButton = (props: LinkButtonTypeProps) => {
+  return (
+    <div className={classes.linkButton}>
+      <Link to={props.linkRef}>{props.type}</Link>
+    </div>
+  );
+};
