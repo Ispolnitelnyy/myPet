@@ -7,7 +7,7 @@
 1. npm init -y
 2. создаем src, index.js
 3. [webpack.js.org]
-   3.1. npm install webpack webpack-cli --save-dev (ULBI: "webpack":"^5.96.1","webpack-cli":"^5.1.4")
+   3.1. npm install webpack webpack-cli --save-dev
    3.2. создаем webpack.config.js командой npx webpack --config webpack.config.js
    3.3 при заполненных entry и output в конфиге вэбпака, можем его запустить командой 'npx webpack'
 4. задаем динамический нэйминг для бандла в конфиге
@@ -102,6 +102,12 @@
 
 ---
 
+8 создание функции halper для классов branch: helperForClassNames
+создаем диру halpers, в не еще диру с названием хелпера
+в файле оставлю коммент как работает
+
+---
+
 `
 `
 `
@@ -116,5 +122,9 @@
 `
 `
 `
+
+---
+
+hotkeys:
 rm -rf ./.webpack-cache && rm -rf ./dist
 Перезапустите TypeScript сервер: (Ctrl + Shift + P), и выбрав "TypeScript: Restart TS server".
