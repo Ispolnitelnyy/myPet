@@ -1,0 +1,25 @@
+// @font-face {
+//   font-family: "Michroma";
+//   font-weight: normal;
+//   font-style: normal;
+//   src: url("~assets/fonts/Michroma-Regular.ttf") format("truetype");
+// }
+:root {
+// переменная для значения самого шрифта
+--font-family-default: "Michroma", "Times New Roman", Serif;
+// если шрифта нет, то использовать будем Times New Roman
+  // "Times New Roman", Serif;
+
+// переменная для размера шрифта m
+// средний размер (m) шрифта который будет использоваться по умолчанию во всех текстах приложения
+  --font-size-m: 16px;
+// размер для высоты самой линии шрифта
+  --font-line-m: 24px;
+// объединяющая переменная еоторая включает в себя размера шрифта, размер линии, сам шрифт
+  --font-m: var(--font-size-m)/  var(--font-size-m) var(--font-family-main)
+
+// (l) будет использоваться в заголовках
+  --font-size-l: 24px;
+  --font-line-l: 32px;
+  --font-l: var(--font-size-l)/  var(--font-size-l) var(--font-family-main)
+}

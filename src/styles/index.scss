@@ -1,0 +1,18 @@
+@use "./cssReset/index.scss" as reset;
+@use "./variables/global/index.scss" as global;
+@use "./themes/darkTheme/index.scss" as dark;
+@use "./themes/lightTheme/index.scss" as light;
+// Согласно модульной системе Sass для переменных, функций или миксинов,
+// импортированных через @use, требуется явно указывать их пространство имён.
+@font-face {
+  font-family: "Michroma";
+  font-weight: normal;
+  font-style: normal;
+  src: url("~assets/fonts/Michroma-Regular.ttf") format("truetype");
+}
+
+// корневой класс
+.app {
+  // этот шрифт будет по умолчанию использоваться во всех текстах в приложении
+  font-family: var(--font-family-default);
+}

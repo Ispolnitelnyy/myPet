@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
-import "./index.scss";
+import "../styles/index.scss";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-
 import { Suspense } from "react";
 import { AboutPageLazy, CounterPageLazy, MainPageLazy } from "../pages/react-lazy";
 
