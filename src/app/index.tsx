@@ -1,8 +1,9 @@
 import "../styles/index.scss";
 import { Route, Routes, Link } from "react-router-dom";
-import { Suspense, useContext } from "react";
+import { Suspense } from "react";
 import { AboutPageLazy, CounterPageLazy, MainPageLazy } from "./pages/react-lazy";
 import { useTheme } from "./components/theme/hook";
+import { classNames } from "./helpers/classNames";
 
 export enum Theme {
   DARK = "dark",
@@ -11,8 +12,9 @@ export enum Theme {
 
 export const App = (): JSX.Element => {
   const { theme, toggleTheme } = useTheme();
+
   return (
-    <div className={`app ${theme}`}>
+    <div className={classNames("app", {}, [theme])}>
       <button onClick={toggleTheme}>toggle</button>
       <Link to={"/"}>страница меню</Link>
       <Link to={"/about"}>страница о нас</Link>
