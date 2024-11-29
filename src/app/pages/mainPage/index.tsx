@@ -1,4 +1,11 @@
+import { ThemeButton } from "../../components/ui/theme";
+
 const MainPage = (): JSX.Element => {
-  return <>MainPage</>;
+  return (
+    <>
+      <ThemeButton />
+      MainPage
+    </>
+  );
 };
 export default MainPage;
