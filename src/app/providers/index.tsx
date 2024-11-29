@@ -4,5 +4,7 @@
 // а вот уже в root где мы провайдер применяем ставим абсолютный путь
 
 import ThemeProvider from "./themeProvider";
+import { AppRouter } from "./router";
 
 export { ThemeProvider };
+export { AppRouter };

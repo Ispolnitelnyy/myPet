@@ -6,12 +6,12 @@ export type LinkButtonTypeProps = {
 };
 
 export enum LinkButtonsEnum {
-  MENU = "страница меню",
+  MAIN = "страница меню",
   ABOUT = "страница о сайте",
   COUNTER = "страница с счетчиком",
 }
 export enum LinkRefsEnum {
-  MENU = "/",
+  MAIN = "/",
   ABOUT = "/about",
   COUNTER = "/counter",
 }
