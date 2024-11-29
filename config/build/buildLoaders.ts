@@ -26,6 +26,10 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
       "sass-loader",
     ],
   };
+  const fontsLoader = {
+    test: /\.(woff|woff2|eot|ttf|otf)$/i,
+    type: "asset/resource",
+  };
 
-  return [typescriptLoader, cssLoader];
+  return [typescriptLoader, cssLoader, fontsLoader];
 }

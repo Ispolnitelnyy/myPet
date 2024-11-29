@@ -1,0 +1,21 @@
+@use "./cssReset/index.scss" as reset;
+@use "./variables/global/index.scss" as global;
+@use "./themes/darkTheme/index.scss" as dark;
+@use "./themes/lightTheme/index.scss" as light;
+
+@font-face {
+  font-family: "Michroma";
+  font-weight: normal;
+  font-style: normal;
+  src: url("~assets/fonts/Michroma-Regular.ttf") format("truetype");
+}
+// задаем шрифт на весь документ
+* {
+  font-family: var(--font-family-default);
+}
+
+.app {
+  background-color: var(--bg-color);
+  color: var(--primary-color);
+  min-height: 100vh;
+}
