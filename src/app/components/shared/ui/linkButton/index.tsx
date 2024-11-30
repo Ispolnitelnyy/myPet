@@ -19,7 +19,7 @@ export enum LinkRefsEnum {
 export const LinkButton = (props: LinkButtonTypeProps) => {
   return (
     <div className={classes.linkButton}>
-      <Link to={props.linkRef}>{props.type}</Link>
+      <Link className={classes.link} to={props.linkRef}>{props.type}</Link>
     </div>
   );
 };
