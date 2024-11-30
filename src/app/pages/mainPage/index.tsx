@@ -9,4 +9,3 @@ const MainPage = (): JSX.Element => {
   );
 };
 export default MainPage;
-// import { App } from "app";

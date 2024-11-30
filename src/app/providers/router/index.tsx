@@ -17,4 +17,3 @@ export const AppRouter = () => {
 };
 
 export default AppRouter;
-// import { App } from "app";

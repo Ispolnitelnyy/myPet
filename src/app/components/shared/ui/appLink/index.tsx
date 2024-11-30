@@ -24,4 +24,3 @@ export const AppLink: FC<AppLinkProps> = (props) => {
 };
 
 export default AppLink;
-// import { NavBar } from "app/components/widgets/navBar";

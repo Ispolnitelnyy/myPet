@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import "./styles/index.scss";
-import { useTheme } from "./components/shared/ui/themeSwicherButton/hook";
+import { useTheme } from "./components/widgets/themeSwicher/hook";
 import { NavBar } from "./components/widgets/navBar";
 import { AppRouter } from "./providers";
 

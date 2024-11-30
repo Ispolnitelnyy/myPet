@@ -1,7 +1,7 @@
 import { classNames } from "app/components/shared/helpers/classNames";
 import cls from "./index.module.scss";
 import AppLink, { AppLinkEnum } from "app/components/shared/ui/appLink";
-import ThemeSwicherButton from "app/components/shared/ui/themeSwicherButton";
+import ThemeSwicherButton from "app/components/widgets/themeSwicher";
 
 interface NavBarProps {
   className?: string;
@@ -27,4 +27,3 @@ export const NavBar = ({ className }: NavBarProps) => {
 };
 
 export default NavBar;
-// import { App } from "app";

@@ -1,4 +1,4 @@
-import { Counter } from "../../components/features/counter";
+import { Counter } from "../../components/widgets/counter";
 
 const CounterPage = (): JSX.Element => {
   return (
@@ -8,4 +8,3 @@ const CounterPage = (): JSX.Element => {
   );
 };
 export default CounterPage;
-// import { App } from "app";
