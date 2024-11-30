@@ -1,5 +1,11 @@
 # myPet
 
+CLI:
+
+- объявить декларации для корректного импорта из scss файлов: npx typed-scss-modules src/app/components
+- почистить кэш вэбпака: rm -rf ./.webpack-cache && rm -rf ./dist
+- перезапустить TypeScript сервер: (Ctrl + Shift + P), выбрать "TypeScript: Restart TS server".
+
 ---
 
 1 Основы webpack, Добавление TS branch: startDev/webpack/typescript/1
@@ -127,7 +133,18 @@
 ---
 
 12 Navbar. Шаблоны для разработки. Первый UI Kit компонент branch: navBar
+
 починились шрифты :D
+
+---
+
+13 Svg loader. File loader. Button UI kit. branch: loaders-SVG-File/UI-kit-button
+
+1. загрузка лоудера для файлов: npm install file-loader --save-dev
+2. создание переиспользуемого ui kit для компонента button
+
+---
+
 .
 .
 .
