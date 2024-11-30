@@ -128,6 +128,25 @@
 
 12 Navbar. Шаблоны для разработки. Первый UI Kit компонент branch: navBar
 починились шрифты :D
+
+---
+
+13 Svg loader. File loader. Button UI kit. branch: loaders-SVG-File/UI-kit-button
+
+
+npm install typescript-plugin-css-modules --save-dev
+К счастью, сообщество уже думало над этой проблемой: typescript-plugin-css-modules. Данный плагин создаёт виртуальный .d.ts для каждого CSS файла и таким образом помогает IDE находить возможные баги:
+// tsconfig.json
+
+{
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ]
+  }
+}
 .
 .
 .

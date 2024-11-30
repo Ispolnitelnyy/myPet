@@ -17,10 +17,11 @@ interface AppLinkProps extends LinkProps {
 export const AppLink: FC<AppLinkProps> = (props) => {
   const { to, className, children, theme = AppLinkEnum.PRIMARY, ...otherProps } = props;
   return (
-    <Link to={to} className={classNames(cls.AppLink, {}, [className, cls[theme]])}>
+    <Link to={to} className={classNames(cls.appLink, {}, [className, cls[theme]])}>
       {children}
     </Link>
   );
 };
 
 export default AppLink;
+// import { NavBar } from "app/components/widgets/navBar";

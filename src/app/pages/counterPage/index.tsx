@@ -8,3 +8,4 @@ const CounterPage = (): JSX.Element => {
   );
 };
 export default CounterPage;
+// import { App } from "app";
