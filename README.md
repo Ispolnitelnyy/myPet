@@ -123,24 +123,29 @@
 2. создаем диру config/routes в shared на уровне с halpers, вписываем туда в routeConfig необходимые имена(AppRoutesEnum), пути роутов(RoutePath) и значения(страницу)
 3. в providers/route мапим routeConfig и в мапе выводим стандартный <Route/>
 4. в паблик апи вытаскиваем компонент из providers/route и передаем его в App
-   .
-   .
-   .
-   .
-   .
-   .
-   .
-   .
-   .
-   .
-   .
-   .
-   .
-   .
+
+---
+
+12 Navbar. Шаблоны для разработки. Первый UI Kit компонент branch: navBar
+починились шрифты :D
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 ---
 
 hotkeys:
-npx typed-scss-modules src/app
+npx typed-scss-modules src/app/components
 rm -rf ./.webpack-cache && rm -rf ./dist
 Перезапустите TypeScript сервер: (Ctrl + Shift + P), и выбрав "TypeScript: Restart TS server".
