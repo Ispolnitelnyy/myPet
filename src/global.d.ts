@@ -23,3 +23,5 @@ declare module "*.scss" {
   const styles: { [classname: string]: string };
   export default styles;
 }
+
+declare const __IS_DEV__: boolean;
