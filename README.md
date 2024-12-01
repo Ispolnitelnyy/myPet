@@ -212,3 +212,19 @@ Babel/extractPlagin
 инициализируем этот плагин в babel.config.json  
 так же добавляем плагин в babelLoader
 указываем какие функции он должен будет выполнять: locales, keyAsDefaultValue
+
+
+___
+
+
+18 Настраиваем EsLint. Исправляем ошибки  
+branch:  
+inject-eslint  
+(короче новый еслинт не ищет ошибки в файлах ts/tsx, поставил сомнительный конфиг, но хотябы видны ошибки при прогоне)  
+
+
+https://typescript-eslint.io/getting-started/  
+npm install --save-dev eslint @eslint/js typescript typescript-eslint
+сщздаем в корне eslint.config.mjs
+вписывам согласно доке  
+для прогона через cli вводим: npx eslint .
