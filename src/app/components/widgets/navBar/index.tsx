@@ -1,7 +1,6 @@
 import { classNames } from "app/components/shared/helpers/classNames";
 import cls from "./index.module.scss";
 import AppLink, { AppLinkEnum } from "app/components/shared/ui/appLink";
-import ThemeSwicherButton from "app/components/widgets/themeSwicher";
 
 interface NavBarProps {
   className?: string;
@@ -10,7 +9,6 @@ interface NavBarProps {
 export const NavBar = ({ className }: NavBarProps) => {
   return (
     <div className={classNames(cls.navbar, {}, [className])}>
-      <ThemeSwicherButton />
       <div className={cls.links}>
         <AppLink theme={AppLinkEnum.PRIMARY} to={"/"} className={cls.mainLink}>
           main page
