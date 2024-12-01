@@ -3,7 +3,6 @@ import { App } from "../app";
 import { ThemeProvider } from "app/providers";
 
 // import "app/components/shared/configs/routes/i18n";
-
 const rootElement = document.getElementById("root") as HTMLElement;
 
 const root = createRoot(rootElement);
