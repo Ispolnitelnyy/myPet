@@ -12,6 +12,15 @@ a {
   background: transparent;
 }
 
+input,
+button,
+textarea,
+select {
+    margin: 0;
+
+    font: inherit;
+}
+
 /*
 html5doctor.com Reset Stylesheet
 v1.6.1

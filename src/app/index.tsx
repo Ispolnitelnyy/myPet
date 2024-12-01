@@ -3,6 +3,7 @@ import "./styles/index.scss";
 import { useTheme } from "./components/widgets/themeSwicher/hook";
 import { NavBar } from "./components/widgets/navBar";
 import { AppRouter } from "./providers";
+import SideBar from "./components/widgets/sideBar";
 
 export const App = (): JSX.Element => {
   const { theme } = useTheme();
@@ -10,7 +11,10 @@ export const App = (): JSX.Element => {
     <BrowserRouter>
       <div className={`app ${theme}`}>
         <NavBar />
-        <AppRouter />
+        <div className="content-page">
+          <SideBar />
+          <AppRouter />
+        </div>
       </div>
     </BrowserRouter>
   );

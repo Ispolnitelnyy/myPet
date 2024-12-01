@@ -1,11 +1,4 @@
-
-
 const MainPage = (): JSX.Element => {
-  return (
-    <>
-      
-      MainPage
-    </>
-  );
+  return <div>MainPage</div>;
 };
 export default MainPage;
