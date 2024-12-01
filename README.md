@@ -191,3 +191,5 @@ branch:
 react-refresh-webpack-plagin
   
   тянем необходимые пакеты npm install --save-dev @pmmmwh/react-refresh-webpack-plugin react-refresh 
+  устанавливаем  HotModuleReplacementPlugin и ReactRefreshWebpackPlugin в массив плагинов
+  прописываем в devserver свойство hot: true 
