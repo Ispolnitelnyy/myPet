@@ -2,7 +2,6 @@
   height: calc(100vh - var(--navbar-height));
   width: var(--sidebar-width);
   background: var(--invert-bg-color);
-
   position: relative;
   transition: width 0.3s;
 }
@@ -20,6 +19,7 @@
   flex-direction: column;
   width: 100%;
 }
+
 .lang {
   margin-top: 10px;
 }

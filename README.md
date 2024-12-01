@@ -227,4 +227,18 @@ https://typescript-eslint.io/getting-started/
 npm install --save-dev eslint @eslint/js typescript typescript-eslint
 сщздаем в корне eslint.config.mjs
 вписывам согласно доке  
-для прогона через cli вводим: npx eslint .
+для прогона через cli вводим: (npx eslint .)
+
+
+___
+
+
+19 Stylelint. Plugin for i18next  
+branch:  
+stylelint/i18nPlugin  
+
+https://stylelint.io/user-guide/get-started  
+npm install --save-dev stylelint stylelint-config-standard-scss   
+создаем конфиг .stylelintrc.json 
+3. Run Stylelint on all the SCSS files in your project: `npx stylelint "**/*.scss"`
+4 для фикса `npx stylelint "**/*.scss" --fix`

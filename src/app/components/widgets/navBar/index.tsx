@@ -10,16 +10,16 @@ export const NavBar = ({ className }: NavBarProps) => {
   return (
     <div className={classNames(cls.navbar, {}, [className])}>
       <div className={cls.links}>
-        <AppLink theme={AppLinkEnum.PRIMARY} to={"/"} className={cls.mainLink}>
+        <AppLink theme={AppLinkEnum.PRIMARY} to={"/"} className={cls.mainlink}>
           main page
         </AppLink>
-        <AppLink theme={AppLinkEnum.SECONDARY} to={"/about"} className={cls.mainLink}>
+        <AppLink theme={AppLinkEnum.SECONDARY} to={"/about"} className={cls.mainlink}>
           about page
         </AppLink>
-        <AppLink theme={AppLinkEnum.RED} to={"/counter"} className={cls.mainLink}>
+        <AppLink theme={AppLinkEnum.RED} to={"/counter"} className={cls.mainlink}>
           counter page
         </AppLink>
-        <AppLink theme={AppLinkEnum.SECONDARY} to={"/translator"} className={cls.mainLink}>
+        <AppLink theme={AppLinkEnum.SECONDARY} to={"/translator"} className={cls.mainlink}>
           translator page
         </AppLink>
       </div>

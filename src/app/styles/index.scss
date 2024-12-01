@@ -4,10 +4,11 @@
 @use "./themes/lightTheme/index.scss" as light;
 
 @font-face {
-  font-family: "Michroma";
+  font-family: Michroma;
   font-weight: normal;
   font-style: normal;
   src: url("../static/assets/fonts/Michroma-Regular.ttf") format("truetype");
+
   // src: url("~stattic/assets/fonts/Michroma-Regular.ttf") format("truetype");
 }
 
@@ -17,9 +18,11 @@
   color: var(--primary-color);
   min-height: 100vh;
 }
+
 .content-page {
   display: flex;
 }
+
 .page-wrapper {
   flex-grow: 1;
   padding: 20px;
