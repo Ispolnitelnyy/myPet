@@ -6,6 +6,13 @@ CLI:
 - почистить кэш вэбпака: rm -rf ./.webpack-cache && rm -rf ./dist
 - перезапустить TypeScript сервер: (Ctrl + Shift + P), выбрать "TypeScript: Restart TS server".
 
+декларации для scss модулей - npm run decloration  
+увидеть ошибки ts - npm run lint:ts  
+исправить ошибки ts- npm run lint:ts:fix  
+увидеть ошибки scss - npm run stylelint:scss    
+исправить ошибки scss- npm run stylelint:scss:fix   
+ 
+
 ---
 
 1 Основы webpack, Добавление TS  
@@ -229,8 +236,8 @@ npm install --save-dev eslint @eslint/js typescript typescript-eslint
 вписывам согласно доке  
 для прогона через cli вводим: (npx eslint .)
 
-увидеть ошибки - lint:ts: `eslint\"**/*.{ts,tsx}\"`
-исправить ошибки - lint:ts:fix: `eslint\"**/*.{ts,tsx}\" --fix`
+увидеть ошибки - npm run lint:ts:
+исправить ошибки - npm run lint:ts:fix: 
 
 
 ___
@@ -244,5 +251,5 @@ https://stylelint.io/user-guide/get-started
 npm install --save-dev stylelint stylelint-config-standard-scss   
 создаем конфиг .stylelintrc.json 
 
-увидеть ошибки - stylelint:scss  или cli `npx stylelint "**/*.scss"`
-исправить ошибки - stylelint:scss:fix  или cli  `npx stylelint "**/*.scss" --fix`
+увидеть ошибки - npm run stylelint:scss  
+исправить ошибки - npm run stylelint:scss:fix 

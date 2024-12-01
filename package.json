@@ -7,11 +7,11 @@
     "start": "webpack server --env port=3000",
     "build:prod": "webpack  --env mode=production",
     "build:dev": "webpack  --env mode=development",
-    "gen:types": "tsm src --watch",
-    "lint:ts": "eslint\"**/*.{ts,tsx}\"",
-    "lint:ts:fix": "eslint\"**/*.{ts,tsx}\" --fix",
-    "stylelint:scss":  "npx stylelint \"***.scss\"" ,
-    "stylelint:scss:fix":  "npx stylelint \"***.scss\" --fix"
+    "decloration": "npx typed-scss-modules src/app/components",
+    "lint:ts": "eslint \"**/*.{ts,tsx}\"",
+    "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
+    "stylelint:scss":  "npx stylelint \"**/*.scss\"" ,
+    "stylelint:scss:fix":  "npx stylelint \"**/*.scss\" --fix"
   },
   "keywords": [],
   "author": "",
