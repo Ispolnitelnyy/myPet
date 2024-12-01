@@ -1,7 +1,8 @@
 import { classNames } from "app/components/shared/helpers/classNames";
 import cls from "./index.module.scss";
 import { useState } from "react";
-import ThemeSwicherButton from "../themeSwicher";
+import ThemeSwicherButton from "../themeSwicherButton";
+import { LangSwitcherButton } from "../langSwitherButton";
 
 interface SideBarProps {
   className?: string;
@@ -9,17 +10,21 @@ interface SideBarProps {
 
 export const SideBar = ({ className }: SideBarProps) => {
   const [collapsed, setCollapsed] = useState(true);
-  const onToggle = () => {
-    setCollapsed((prev) => !prev);
+  const open = () => {
+    setCollapsed(false);
+  };
+  const closed = () => {
+    setTimeout(() => setCollapsed(true));
   };
   return (
     <div
       className={classNames(cls.sidebar, { [cls.collapsed]: collapsed }, [className])}
-      onMouseEnter={onToggle}
-      onMouseLeave={onToggle}
+      onMouseEnter={open}
+      onMouseLeave={closed}
     >
       <div className={cls.switcher}>
         <ThemeSwicherButton />
+        <LangSwitcherButton className={cls.lang} />
       </div>
     </div>
   );

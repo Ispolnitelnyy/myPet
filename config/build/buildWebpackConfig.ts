@@ -16,7 +16,7 @@ export function buildWebpackConfig(options: BuildOptions): webpack.Configuration
       assetModuleFilename: "assets/fonts/[name][ext]",
       clean: true,
     },
-    plugins: buildPlugins(paths),
+    plugins: buildPlugins(options),
     module: {
       rules: buildLoaders(options),
     },

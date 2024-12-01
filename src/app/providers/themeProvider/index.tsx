@@ -1,4 +1,7 @@
-import { LOCAL_STORAGE_THEME_KEY, ThemeContext } from "app/components/widgets/themeSwicher/context";
+import {
+  LOCAL_STORAGE_THEME_KEY,
+  ThemeContext,
+} from "app/components/widgets/themeSwicherButton/context";
 import { FC, ReactNode, useMemo, useState } from "react";
 
 interface ThemeProviderProps {

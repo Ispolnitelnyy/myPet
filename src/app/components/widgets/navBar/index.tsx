@@ -19,6 +19,9 @@ export const NavBar = ({ className }: NavBarProps) => {
         <AppLink theme={AppLinkEnum.RED} to={"/counter"} className={cls.mainLink}>
           counter page
         </AppLink>
+        <AppLink theme={AppLinkEnum.SECONDARY} to={"/translator"} className={cls.mainLink}>
+          translator page
+        </AppLink>
       </div>
     </div>
   );

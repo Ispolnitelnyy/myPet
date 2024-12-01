@@ -8,7 +8,9 @@ CLI:
 
 ---
 
-1 Основы webpack, Добавление TS branch: startDev/webpack/typescript/1
+1 Основы webpack, Добавление TS  
+branch:  
+startDev/webpack/typescript/1
 
 1. npm init -y
 2. создаем src, index.js
@@ -33,7 +35,9 @@ CLI:
 
 ---
 
-2 Декомпозиция конфига branch: startDev/webpack/configDecompose/2
+2 Декомпозиция конфига  
+branch:  
+startDev/webpack/configDecompose/2
 
 1. в корне проекта создаем папку config (здесь будет храниться вся конфигурация приложения)  
    1.2. создаем config/build - тут будуь наши конфигурации сборок  
@@ -46,7 +50,9 @@ CLI:
 
 ---
 
-3 Webpack-dev-server. Переменные окружения (env) branch: startDev/webpackDevServer/dotEnv
+3 Webpack-dev-server. Переменные окружения (env)  
+branch:  
+startDev/webpackDevServer/dotEnv
 
 1. вписываем devtool: "inline-source-map" в buildWebpackConfig для того чтобы узнать из какого исходного файла происходит ошибка  
    1.1 выбираем инструмент Webpack-dev-server npm install --save-dev webpack-dev-server и типы npm install --save-dev @types/webpack-dev-server  
@@ -63,7 +69,9 @@ CLI:
 
 ---
 
-4 Подключаем React и настраиваем css в branch: webpack react/cssInWebpack
+4 Подключаем React и настраиваем css в  
+branch:  
+react/cssInWebpack
 
 1. npm i react react-dom, npm i - D @types/react @types/react-dom
 2. npm install sass-loader sass webpack style-loader css-loader --save-dev
@@ -71,7 +79,9 @@ CLI:
 
 ---
 
-5 Настраиваем css modules branch: cssModules
+5 Настраиваем css modules  
+branch:  
+cssModules
 
 1. будем использовать специальный плагин: MiniCssExtractPlugin npm install --save-dev mini-css-extract-plugin  
    1.1 ставим плагин в buildLoaders и задаем динамический нэйминг на fileName, а так же создаем 1 чанк chunkFilename: "css/[name].[contenthash:8].css"  
@@ -83,7 +93,9 @@ CLI:
 
 ---
 
-6 Роутинг Code splitting Lazy Suspence branch: routers/reactLazy
+6 Роутинг Code splitting Lazy Suspence  
+branch:  
+routers/reactLazy
 
 1. нвастраиваем роутинг: npm i react-router-dom, npm i -d @types/react-router-dom
 2. прописываем Routes в App.tsx
@@ -96,7 +108,9 @@ CLI:
 
 ---
 
-7 Организация стилей. Установка своего шрифта. Добавляем темы, Контекст для состояния темы branch:organization/styles
+7 Организация стилей. Установка своего шрифта. Добавляем темы, Контекст для состояния темы  
+branch:  
+organization/styles
 
 1. создаем рутовые стили которые будут обнулять или задавать поведение дефолтным
 2. создаем корневой index.scss для нашего компонента App
@@ -108,11 +122,15 @@ CLI:
 
 ---
 
-8,9 Рефакторинг: перевожу на переиспользуемость (близкое к фсд) , чтобы а дальнейшем на этом этапе применить различные stateManagers branch: refactor
+8,9 Рефакторинг: перевожу на переиспользуемость (близкое к фсд) , чтобы а дальнейшем на этом этапе применить различные stateManagers  
+branch:  
+refactor
 
 ---
 
-10 продожаем придерживаться архитекруры fsd, занимаемся структурированием папок branch: architecture
+10 продожаем придерживаться архитекруры fsd, занимаемся структурированием папок  
+branch:  
+architecture
 
 1. создание public API на примере providers/themeProviders оставлю там комментарий
 2. добавление абсолютных путей в конфиге тс прописываем "baseUrl", "paths",
@@ -123,7 +141,9 @@ CLI:
 
 ---
 
-11 AppRouter. Конфиг для роутера branch: appRouter/routerConfig
+11 AppRouter. Конфиг для роутера  
+branch:  
+appRouter/routerConfig
 
 1. coздаем диру providers/route чтобы в дальнейшем вытащить роуты через Public Api
 2. создаем диру config/routes в shared на уровне с halpers, вписываем туда в routeConfig необходимые имена(AppRoutesEnum), пути роутов(RoutePath) и значения(страницу)
@@ -132,21 +152,37 @@ CLI:
 
 ---
 
-12 Navbar. Шаблоны для разработки. Первый UI Kit компонент branch: navBar
+12 Navbar. Шаблоны для разработки. Первый UI Kit компонент  
+branch:  
+navBar
 
 починились шрифты :D
 
 ---
 
-13 Svg loader. File loader. Button UI kit. branch: loaders-SVG-File/UI-kit-button
+13 Svg loader. File loader. Button UI kit.  
+branch:  
+loaders-SVG-File/UI-kit-button
 
 1. загрузка лоудера для файлов: npm install file-loader --save-dev
 2. создание переиспользуемого ui kit для компонента button
 
 ---
 
-14 Sidebar. Layout приложения branch: sidebar/app-layout
+14 Sidebar. Layout приложения  
+branch:  
+sidebar/app-layout
 
 только верстка
+
+---
+
+15 i18n Интернационализация. Define plugin. Плагин для переводов  
+branch:  
+definePlagin-for-translator
+
+DefinePlugin- для глобальных переменных  
+надо будет персмотреть видос если будут нужны переводы, фича не частая, для примера оставлю, теперь есть где искать  
+в рутовом компоненте закомментил импорт, так как бандл стал в 2 раза больше из-за перевода
 
 ---
