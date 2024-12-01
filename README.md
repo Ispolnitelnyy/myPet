@@ -186,10 +186,29 @@ DefinePlugin- для глобальных переменных
 в рутовом компоненте закомментил импорт, так как бандл стал в 2 раза больше из-за перевода
 
 ---
+
 16 react-refresh-webpack-plagin  
 branch:  
 react-refresh-webpack-plagin
-  
-  тянем необходимые пакеты npm install --save-dev @pmmmwh/react-refresh-webpack-plugin react-refresh 
-  устанавливаем  HotModuleReplacementPlugin и ReactRefreshWebpackPlugin в массив плагинов
-  прописываем в devserver свойство hot: true 
+
+тянем необходимые пакеты npm install --save-dev @pmmmwh/react-refresh-webpack-plugin react-refresh
+устанавливаем HotModuleReplacementPlugin и ReactRefreshWebpackPlugin в массив плагинов
+прописываем в devserver свойство hot: true
+
+---
+
+17 Babel. Extract plugin  
+branch:  
+Babel/extractPlagin
+если бы мы не использовали typescriptLoader нам бы в любом случае пришлось бы настраивать babel
+
+качаем бабель: npm install --save-dev babel-loader @babel/core  
+создаем babelLoader  
+качаем пакет для новых ES перобразований npm install @babel/preset-env --save-dev
+прописываем в babelLoader в регулярку ts и tsx  
+!!!Важно!!! в массиве лоудеров babelLoader должен быть первее typescriptLoader
+
+далее подключаем babel-plugin-i18next-extract плагин который может извлекать ключи в формате JSONv4. для i18n  npm i --save-dev babel-plugin-i18next-extract  
+инициализируем этот плагин в babel.config.json  
+так же добавляем плагин в babelLoader
+указываем какие функции он должен будет выполнять: locales, keyAsDefaultValue
