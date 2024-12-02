@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 const AboutPage = (): JSX.Element => {
-  return <>AboutPage</>;
+  return <>About Page</>;
 };
 export default AboutPage;
