@@ -283,10 +283,22 @@ npm i eslint-plugin-i18next для того чтобы подсвечивал м
 ---
 
 20 Тестовая среда. Настраиваем Jest. Пишем первый тест
+branch:  
+jest
 
+убрал с еслинта проверку на перводы из предыдущей темы, поменял немного цвета в теме, убрал пример переводчика на main Page - комит: [jest b305355] refactor theme colors, and translator on main page
 
-
-
+тянем пакет с джестом: npm install --save-dev jest  
+дока предлагает npm init jest@latest , но я попробую npx jest --init  
+пошел по 2 этапу  
+перкинул конфиг джеста папку конфиг(иам где у нас лежит декомпозированный конфиг вэбпака)
+подтягиваем типы для jest: npm i --save-dev @types/jest
+Jest поддерживает TypeScript через Babel. Во-первых, убедитесь, что вы следовали инструкциям по использованию Babel выше. Затем установите(без него прогононяются, удалил npm install --save-dev @babel/preset-typescript)
+так же jpt советует поставить npm install --save-dev ts-jest и (без него прогононяются, удалил npm install --save-dev babel-jest)
+потом зашел сюда
+https://kulshekhar.github.io/ts-jest/docs/getting-started/installation/#jest-config-file
+и это помогло
+резюмируя: поставил только: "jest": "^29.7.0", "@types/jest": "^29.5.14", "ts-jest": "^29.2.5", в конфиге джеста добавил: preset: "ts-jest" и `transform: {"^.+.tsx?$": ["ts-jest",{}],}`
 
 ---
 

@@ -54,8 +54,8 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
       options: {
         presets: [
           "@babel/preset-env",
-          // "@babel/preset-react", // Если используете React
-          // "@babel/preset-typescript",
+          // "@babel/preset-react", 
+          // "@babel/preset-typescript", // использую аналог ts-jest
         ],
         plugins: [["i18next-extract", { locales: ["ru", "en"], keyAsDefaultValue: true }]],
       },
