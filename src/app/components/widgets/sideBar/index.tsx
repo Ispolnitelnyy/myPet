@@ -6,29 +6,33 @@ import ThemeSwicherButton from "../themeSwicherButton";
 import { LangSwitcherButton } from "../langSwitherButton";
 
 interface SideBarProps {
-  className?: string;
+   className?: string;
 }
 
 export const SideBar = ({ className }: SideBarProps) => {
-  const [collapsed, setCollapsed] = useState(true);
-  const open = () => {
-    setCollapsed(false);
-  };
-  const closed = () => {
-    setTimeout(() => setCollapsed(true));
-  };
-  return (
-    <div
-      className={classNames(cls.sidebar, { [cls.collapsed]: collapsed }, [className])}
-      onMouseEnter={open}
-      onMouseLeave={closed}
-    >
-      <div className={cls.switcher}>
-        <ThemeSwicherButton />
-        <LangSwitcherButton className={cls.lang} />
+   const [collapsed, setCollapsed] = useState(true);
+   const open = () => {
+      setCollapsed(false);
+   };
+   const closed = () => {
+      setTimeout(() => setCollapsed(true));
+   };
+   return (
+      <div
+         className={classNames(cls.sidebar, { [cls.collapsed]: collapsed }, [
+            className,
+         ])}
+         onMouseEnter={open}
+         onMouseLeave={closed}
+      >
+         {!collapsed && (
+            <div className={cls.switcher}>
+               <ThemeSwicherButton />
+               <LangSwitcherButton className={cls.lang} />
+            </div>
+         )}
       </div>
-    </div>
-  );
+   );
 };
 
 export default SideBar;
