@@ -6,7 +6,7 @@ CLI:
 - почистить кэш вэбпака: rm -rf ./.webpack-cache && rm -rf ./dist
 - перезапустить TypeScript сервер: (Ctrl + Shift + P), выбрать "TypeScript: Restart TS server".
 
-декларации для scss модулей - npm run decloration  
+декларации для scss модулей - npm run decloration  (npx typed-scss-modules src/app/components)
 увидеть ошибки ts - npm run lint:ts  
 исправить ошибки ts- npm run lint:ts:fix  
 увидеть ошибки scss - npm run stylelint:scss    
