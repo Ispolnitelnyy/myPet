@@ -2,9 +2,14 @@
 
 CLI:
 
-- объявить декларации для корректного импорта из scss файлов: npx typed-scss-modules src/app/components
-- почистить кэш вэбпака: rm -rf ./.webpack-cache && rm -rf ./dist
-- перезапустить TypeScript сервер: (Ctrl + Shift + P), выбрать "TypeScript: Restart TS server".
+-  почистить кэш вэбпака: rm -rf ./.webpack-cache && rm -rf ./dist
+-  перезапустить TypeScript сервер: (Ctrl + Shift + P), выбрать "TypeScript: Restart TS server".
+
+декларации для импорта scss модулей - npm run decloration (для варианта с cli (npx typed-scss-modules src/app/components))
+увидеть ошибки ts - npm run lint:ts  
+исправить ошибки ts- npm run lint:ts:fix  
+увидеть ошибки scss - npm run stylelint:scss  
+исправить ошибки scss- npm run stylelint:scss:fix
 
 ---
 
@@ -177,7 +182,7 @@ sidebar/app-layout
 
 ---
 
-15 i18n Интернационализация. Define plugin. Плагин для переводов  
+15 i18n Интернационализация. Define plugin. Плагин для переводов (Последняя ветка с ним stylelint/i18nPlugin)  
 branch:  
 definePlagin-for-translator
 
@@ -208,23 +213,77 @@ Babel/extractPlagin
 прописываем в babelLoader в регулярку ts и tsx  
 !!!Важно!!! в массиве лоудеров babelLoader должен быть первее typescriptLoader
 
-далее подключаем babel-plugin-i18next-extract плагин который может извлекать ключи в формате JSONv4. для i18n  npm i --save-dev babel-plugin-i18next-extract  
+далее подключаем babel-plugin-i18next-extract плагин который может извлекать ключи в формате JSONv4. для i18n npm i --save-dev babel-plugin-i18next-extract  
 инициализируем этот плагин в babel.config.json  
 так же добавляем плагин в babelLoader
 указываем какие функции он должен будет выполнять: locales, keyAsDefaultValue
 
-
-___
-
+---
 
 18 Настраиваем EsLint. Исправляем ошибки  
 branch:  
 inject-eslint  
-(короче новый еслинт не ищет ошибки в файлах ts/tsx, поставил сомнительный конфиг, но хотябы видны ошибки при прогоне)  
-
+(короче новый еслинт не ищет ошибки в файлах ts/tsx, поставил сомнительный конфиг, но хотябы видны ошибки при прогоне)
 
 https://typescript-eslint.io/getting-started/  
 npm install --save-dev eslint @eslint/js typescript typescript-eslint
 сщздаем в корне eslint.config.mjs
 вписывам согласно доке  
-для прогона через cli вводим: npx eslint .
+для прогона через cli вводим: (npx eslint .)
+
+увидеть ошибки - npm run lint:ts:
+исправить ошибки - npm run lint:ts:fix:
+
+---
+
+19 Stylelint. Plugin for i18next  
+branch:  
+stylelint/i18nPlugin
+
+https://stylelint.io/user-guide/get-started  
+npm install --save-dev stylelint stylelint-config-standard-scss  
+создаем конфиг .stylelintrc.json
+
+увидеть ошибки - npm run stylelint:scss  
+исправить ошибки - npm run stylelint:scss:fix
+
+---
+
+ПРОБУЮ УСТАНОВИТЬ ЕСЛИНТ СТАРОЙ ВЕРСИИ  
+для создания конфига: npm init @eslint/config  
+удалить еслинт глобально npm uninstall -g eslint  
+не получилось - последняя доступная версия 8.57.1  
+yстанавливаю посдеднюю:  
+`$ npm list eslint
+mypet@1.0.0 D:\code\myPet
+├─┬ @typescript-eslint/eslint-plugin@8.16.0
+│ ├─┬ @typescript-eslint/type-utils@8.16.0
+│ │ └── eslint@9.16.0 deduped
+│ ├─┬ @typescript-eslint/utils@8.16.0
+│ │ └── eslint@9.16.0 deduped
+│ └── eslint@9.16.0 deduped
+├─┬ @typescript-eslint/parser@8.16.0
+│ └── eslint@9.16.0 deduped
+├─┬ eslint-plugin-react@7.37.2
+│ └── eslint@9.16.0 deduped
+└─┬ eslint@9.16.0
+  └─┬ @eslint-community/eslint-utils@4.4.1
+    └── eslint@9.16.0 deduped`
+\_\_\_  
+пошел в доку https://eslint.org/docs/latest/use/getting-started  
+ там предлагается команда npm init @eslint/config@latest
+
+короче я ебал, в этот конфиг не могу прописать правила на импорт реакта и не используемые переменные
+оставлю пока так, потом разберусь, в любом случае для исправления еслинт больше не доступен, только подчеркивания неправильного синтаксиса и проблем(для чего собственно он и нужен), а уже для исправлений благо есть притер для коррекции кода  
+продолжаю 19 - Plugin for i18next
+npm i eslint-plugin-i18next для того чтобы подсвечивал места в которых нужен перевод  
+далее по доке в еслин конфиг вкидываем import i18next from 'eslint-plugin-i18next'; и сам конфиг `export default [ // your other configs,  i18next.configs['flat/recommended'],];`  
+на удивление все заработало, я оставлю для примера в этой ветке, но в дальнейшем избавлюсь от этой фичи с переводами
+
+---
+
+что еще сделать:  
+смена шрифта, так как Михрома не поддерживает русскую раскладку (подключить не через локальный шрифт)
+убрать фтчу с переводами, оставить только в ветках.
+нормальная адекватная настройка eslint
+деклорация через 1 глобальную деклорацию scss модулей

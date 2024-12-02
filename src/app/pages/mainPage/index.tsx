@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 
 import { useTranslation } from "react-i18next";
 
