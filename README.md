@@ -2,11 +2,10 @@
 
 CLI:
 
--  объявить декларации для корректного импорта из scss файлов: npx typed-scss-modules src/app/components
 -  почистить кэш вэбпака: rm -rf ./.webpack-cache && rm -rf ./dist
 -  перезапустить TypeScript сервер: (Ctrl + Shift + P), выбрать "TypeScript: Restart TS server".
 
-декларации для scss модулей - npm run decloration (npx typed-scss-modules src/app/components)
+декларации для импорта scss модулей - npm run decloration (для варианта с cli (npx typed-scss-modules src/app/components))
 увидеть ошибки ts - npm run lint:ts  
 исправить ошибки ts- npm run lint:ts:fix  
 увидеть ошибки scss - npm run stylelint:scss  
@@ -183,7 +182,7 @@ sidebar/app-layout
 
 ---
 
-15 i18n Интернационализация. Define plugin. Плагин для переводов  
+15 i18n Интернационализация. Define plugin. Плагин для переводов (Последняя ветка с ним stylelint/i18nPlugin)  
 branch:  
 definePlagin-for-translator
 
@@ -251,9 +250,9 @@ npm install --save-dev stylelint stylelint-config-standard-scss
 ---
 
 ПРОБУЮ УСТАНОВИТЬ ЕСЛИНТ СТАРОЙ ВЕРСИИ  
-для создания конфига: npm init @eslint/config
-удалить еслинт глобально npm uninstall -g eslint
-не получилось - последняя доступная версия 8.57.1
+для создания конфига: npm init @eslint/config  
+удалить еслинт глобально npm uninstall -g eslint  
+не получилось - последняя доступная версия 8.57.1  
 yстанавливаю посдеднюю:  
 `$ npm list eslint
 mypet@1.0.0 D:\code\myPet
@@ -270,13 +269,21 @@ mypet@1.0.0 D:\code\myPet
 └─┬ eslint@9.16.0
   └─┬ @eslint-community/eslint-utils@4.4.1
     └── eslint@9.16.0 deduped`
-\_\_\_
+\_\_\_  
 пошел в доку https://eslint.org/docs/latest/use/getting-started  
  там предлагается команда npm init @eslint/config@latest
 
 короче я ебал, в этот конфиг не могу прописать правила на импорт реакта и не используемые переменные
-оставлю пока так, потом разберусь, благо есть притер для коррекции кода
+оставлю пока так, потом разберусь, в любом случае для исправления еслинт больше не доступен, только подчеркивания неправильного синтаксиса и проблем(для чего собственно он и нужен), а уже для исправлений благо есть притер для коррекции кода  
+продолжаю 19 - Plugin for i18next
+npm i eslint-plugin-i18next для того чтобы подсвечивал места в которых нужен перевод  
+далее по доке в еслин конфиг вкидываем import i18next from 'eslint-plugin-i18next'; и сам конфиг `export default [ // your other configs,  i18next.configs['flat/recommended'],];`  
+на удивление все заработало, я оставлю для примера в этой ветке, но в дальнейшем избавлюсь от этой фичи с переводами
 
 ---
 
-продолжаю 19 - Plugin for i18next
+что еще сделать:  
+смена шрифта, так как Михрома не поддерживает русскую раскладку (подключить не через локальный шрифт)
+убрать фтчу с переводами, оставить только в ветках.
+нормальная адекватная настройка eslint
+деклорация через 1 глобальную деклорацию scss модулей
