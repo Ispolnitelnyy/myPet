@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { classNames } from "app/components/shared/helpers/classNames";
 import Button, { ThemeButtonEnums } from "app/components/shared/ui/button";
 import { useTranslation } from "react-i18next";

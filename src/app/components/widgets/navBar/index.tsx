@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { classNames } from "app/components/shared/helpers/classNames";
 import cls from "./index.module.scss";
 import AppLink, { AppLinkEnum } from "app/components/shared/ui/appLink";

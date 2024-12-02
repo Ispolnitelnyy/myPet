@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { routeConfig } from "app/components/shared/configs/routes";
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";

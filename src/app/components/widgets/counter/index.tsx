@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useState } from "react";
 import classes from "./index.module.scss";
 export const Counter = () => {

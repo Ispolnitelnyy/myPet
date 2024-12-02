@@ -2,16 +2,15 @@
 
 CLI:
 
-- объявить декларации для корректного импорта из scss файлов: npx typed-scss-modules src/app/components
-- почистить кэш вэбпака: rm -rf ./.webpack-cache && rm -rf ./dist
-- перезапустить TypeScript сервер: (Ctrl + Shift + P), выбрать "TypeScript: Restart TS server".
+-  объявить декларации для корректного импорта из scss файлов: npx typed-scss-modules src/app/components
+-  почистить кэш вэбпака: rm -rf ./.webpack-cache && rm -rf ./dist
+-  перезапустить TypeScript сервер: (Ctrl + Shift + P), выбрать "TypeScript: Restart TS server".
 
-декларации для scss модулей - npm run decloration  (npx typed-scss-modules src/app/components)
+декларации для scss модулей - npm run decloration (npx typed-scss-modules src/app/components)
 увидеть ошибки ts - npm run lint:ts  
 исправить ошибки ts- npm run lint:ts:fix  
-увидеть ошибки scss - npm run stylelint:scss    
-исправить ошибки scss- npm run stylelint:scss:fix   
- 
+увидеть ошибки scss - npm run stylelint:scss  
+исправить ошибки scss- npm run stylelint:scss:fix
 
 ---
 
@@ -215,20 +214,17 @@ Babel/extractPlagin
 прописываем в babelLoader в регулярку ts и tsx  
 !!!Важно!!! в массиве лоудеров babelLoader должен быть первее typescriptLoader
 
-далее подключаем babel-plugin-i18next-extract плагин который может извлекать ключи в формате JSONv4. для i18n  npm i --save-dev babel-plugin-i18next-extract  
+далее подключаем babel-plugin-i18next-extract плагин который может извлекать ключи в формате JSONv4. для i18n npm i --save-dev babel-plugin-i18next-extract  
 инициализируем этот плагин в babel.config.json  
 так же добавляем плагин в babelLoader
 указываем какие функции он должен будет выполнять: locales, keyAsDefaultValue
 
-
-___
-
+---
 
 18 Настраиваем EsLint. Исправляем ошибки  
 branch:  
 inject-eslint  
-(короче новый еслинт не ищет ошибки в файлах ts/tsx, поставил сомнительный конфиг, но хотябы видны ошибки при прогоне)  
-
+(короче новый еслинт не ищет ошибки в файлах ts/tsx, поставил сомнительный конфиг, но хотябы видны ошибки при прогоне)
 
 https://typescript-eslint.io/getting-started/  
 npm install --save-dev eslint @eslint/js typescript typescript-eslint
@@ -237,19 +233,50 @@ npm install --save-dev eslint @eslint/js typescript typescript-eslint
 для прогона через cli вводим: (npx eslint .)
 
 увидеть ошибки - npm run lint:ts:
-исправить ошибки - npm run lint:ts:fix: 
+исправить ошибки - npm run lint:ts:fix:
 
-
-___
-
+---
 
 19 Stylelint. Plugin for i18next  
 branch:  
-stylelint/i18nPlugin  
+stylelint/i18nPlugin
 
 https://stylelint.io/user-guide/get-started  
-npm install --save-dev stylelint stylelint-config-standard-scss   
-создаем конфиг .stylelintrc.json 
+npm install --save-dev stylelint stylelint-config-standard-scss  
+создаем конфиг .stylelintrc.json
 
 увидеть ошибки - npm run stylelint:scss  
-исправить ошибки - npm run stylelint:scss:fix 
+исправить ошибки - npm run stylelint:scss:fix
+
+---
+
+ПРОБУЮ УСТАНОВИТЬ ЕСЛИНТ СТАРОЙ ВЕРСИИ  
+для создания конфига: npm init @eslint/config
+удалить еслинт глобально npm uninstall -g eslint
+не получилось - последняя доступная версия 8.57.1
+yстанавливаю посдеднюю:  
+`$ npm list eslint
+mypet@1.0.0 D:\code\myPet
+├─┬ @typescript-eslint/eslint-plugin@8.16.0
+│ ├─┬ @typescript-eslint/type-utils@8.16.0
+│ │ └── eslint@9.16.0 deduped
+│ ├─┬ @typescript-eslint/utils@8.16.0
+│ │ └── eslint@9.16.0 deduped
+│ └── eslint@9.16.0 deduped
+├─┬ @typescript-eslint/parser@8.16.0
+│ └── eslint@9.16.0 deduped
+├─┬ eslint-plugin-react@7.37.2
+│ └── eslint@9.16.0 deduped
+└─┬ eslint@9.16.0
+  └─┬ @eslint-community/eslint-utils@4.4.1
+    └── eslint@9.16.0 deduped`
+\_\_\_
+пошел в доку https://eslint.org/docs/latest/use/getting-started  
+ там предлагается команда npm init @eslint/config@latest
+
+короче я ебал, в этот конфиг не могу прописать правила на импорт реакта и не используемые переменные
+оставлю пока так, потом разберусь, благо есть притер для коррекции кода
+
+---
+
+продолжаю 19 - Plugin for i18next

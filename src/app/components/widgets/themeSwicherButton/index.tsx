@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useTheme } from "./hook";
 import { classNames } from "app/components/shared/helpers/classNames";
 import LightIcon from "app/static/assets/icons/theme-light.svg";
