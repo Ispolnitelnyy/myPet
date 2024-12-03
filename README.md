@@ -330,6 +330,8 @@ errorBounary
 3. оборачиваем app в ErrorBoundary как по аналогии c ThemeProvider
 4. декомпозируем сам ui страницы ошибки в слой widgets/errorBoundaryPage
 5. для удобства отключил через cssReset `<iframe id="react-refresh-overlay">` об ошибке `body > iframe {display: none;}`
+6. убираем useEffect, делаем кнопу для вызова ошибки и ее отлова
+7. возвращаю `<iframe id="react-refresh-overlay">`
 
 ---
 

@@ -1,27 +1,21 @@
-
 import "./styles/index.scss";
 import { useTheme } from "./components/widgets/themeSwicherButton/hook";
 import { NavBar } from "./components/widgets/navBar";
 import { AppRouter } from "./providers";
 import SideBar from "./components/widgets/sideBar";
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 
 export const App = (): JSX.Element => {
-   useEffect(() => {
-      if (Math.random() < 0.5) {
-         throw new Error();
-      }
-   }, []);
    const { theme } = useTheme();
    return (
-            <div className={`app ${theme}`}>
-               <Suspense fallback="">
-                  <NavBar />
-                  <div className="content-page">
-                     <SideBar />
-                     <AppRouter />
-                  </div>
-               </Suspense>
+      <div className={`app ${theme}`}>
+         <Suspense fallback="">
+            <NavBar />
+            <div className="content-page">
+               <SideBar />
+               <AppRouter />
             </div>
+         </Suspense>
+      </div>
    );
 };
