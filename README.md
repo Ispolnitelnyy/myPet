@@ -330,8 +330,18 @@ errorBounary
 3. оборачиваем app в ErrorBoundary как по аналогии c ThemeProvider
 4. декомпозируем сам ui страницы ошибки в слой widgets/errorBoundaryPage
 5. для удобства отключил через cssReset `<iframe id="react-refresh-overlay">` об ошибке `body > iframe {display: none;}`
-6. убираем useEffect, делаем кнопу для вызова ошибки и ее отлова
+6. убираем useEffect, делаем кнопу (Тестовый компонент) для вызова ошибки и ее отлова
 7. возвращаю `<iframe id="react-refresh-overlay">`
+
+---
+
+23 Анализ размера банда. BundleAnalyzer  
+branch:  
+WebpackBundleAnalyzer
+
+для анализа размера бандла у вебпака есть специальны плагин npm install --save-dev webpack-bundle-analyzer  
+так же надо сразу установить @types/webpack-bundle-analyzer
+чтобы он не открывался нужно передать свойство с флагом `new BundleAnalyzerPlugin({openAnalyzer: false}),` (в консоли будет ссылка на него `http://127.0.0.1:8888`)
 
 ---
 
