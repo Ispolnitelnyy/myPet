@@ -1,4 +1,4 @@
-import Button from "./";
+import Button, { ThemeButtonEnums } from ".";
 import { render, screen } from "@testing-library/react";
 
 describe("метот из документации", () => {
@@ -15,5 +15,12 @@ describe("метот ulbi", () => {
       render(<Button>TEST</Button>);
 
       expect(await screen.findByText("TEST")).toBeInTheDocument();
+   });
+
+   it("render Button component with prop (theme: clear)", async () => {
+      render(<Button theme={ThemeButtonEnums.CLEAR}>TEST</Button>);
+
+      expect(await screen.findByText("TEST")).toHaveClass("clear");
+      screen.debug();
    });
 });
