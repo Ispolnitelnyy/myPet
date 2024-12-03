@@ -254,22 +254,22 @@ npm install --save-dev stylelint stylelint-config-standard-scss
 удалить еслинт глобально npm uninstall -g eslint  
 не получилось - последняя доступная версия 8.57.1  
 yстанавливаю посдеднюю:  
-`$ npm list eslint
-mypet@1.0.0 D:\code\myPet
-├─┬ @typescript-eslint/eslint-plugin@8.16.0
-│ ├─┬ @typescript-eslint/type-utils@8.16.0
-│ │ └── eslint@9.16.0 deduped
-│ ├─┬ @typescript-eslint/utils@8.16.0
-│ │ └── eslint@9.16.0 deduped
-│ └── eslint@9.16.0 deduped
-├─┬ @typescript-eslint/parser@8.16.0
-│ └── eslint@9.16.0 deduped
-├─┬ eslint-plugin-react@7.37.2
-│ └── eslint@9.16.0 deduped
-└─┬ eslint@9.16.0
-  └─┬ @eslint-community/eslint-utils@4.4.1
-    └── eslint@9.16.0 deduped`
-\_\_\_  
+`$ npm list eslint  
+mypet@1.0.0 D:\code\myPet  
+├─┬ @typescript-eslint/eslint-plugin@8.16.0  
+│ ├─┬ @typescript-eslint/type-utils@8.16.0  
+│ │ └── eslint@9.16.0 deduped  
+│ ├─┬ @typescript-eslint/utils@8.16.0  
+│ │ └── eslint@9.16.0 deduped  
+│ └── eslint@9.16.0 deduped  
+├─┬ @typescript-eslint/parser@8.16.0  
+│ └── eslint@9.16.0 deduped  
+├─┬ eslint-plugin-react@7.37.2  
+│ └── eslint@9.16.0 deduped  
+└─┬ eslint@9.16.0  
+  └─┬ @eslint-community/eslint-utils@4.4.1  
+    └── eslint@9.16.0 deduped`  
+\_\_\_    
 пошел в доку https://eslint.org/docs/latest/use/getting-started  
  там предлагается команда npm init @eslint/config@latest
 
@@ -307,6 +307,8 @@ branch:
 404Page/loader/spiner
 
 наконец то настроил Eslint!  
+https://ru.stackoverflow.com/questions/1593408/%D0%9A%D0%B0%D0%BA-%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B8%D1%82%D1%8C-eslint-%D0%B2-vs%D0%A1ode  
+тут увидел у типа пример с новыми настройками  
 Понял как работает:  
 теперь вместо отдельно прописанного плагина и его правил в rules используется импорт этого плагина и конкретная конфигурация котороя обладает теми или иными списком правил!  
 изменил конфигурации:
@@ -314,10 +316,10 @@ branch:
 1. pluginReact/"eslint-plugin-react": "^7.37.2", - вместо рекомендованных поставил правила jsx-runtime конфигурации, чтобы не проверял на импорт реакта
 2. tseslint/"typescript-eslint": "^8.16.0" - вместо рекомендованных (там проверка на неиспользуемые объявленные переменные) поставил правила stylistic где есть проверка на правильное наследование и определение типов (напимер, предпочтительным способом записи объекта является использование Record вместо явного определения индексного сигнатура { [classname: string]: string }, а так же обеспечение последовательного использования в определениях типов либо, interface либо type)
 
+для 404 страницы в роутах нужно указать `path = /*`
+
 ---
 
 что еще сделать:  
 смена шрифта, так как Михрома не поддерживает русскую раскладку (подключить не через локальный шрифт)
-убрать фтчу с переводами, оставить только в ветках.
-нормальная адекватная настройка eslint
 деклорация через 1 глобальную деклорацию scss модулей
