@@ -7,7 +7,7 @@
       "start": "webpack server --env port=3000",
       "build:prod": "webpack  --env mode=production",
       "build:dev": "webpack  --env mode=development",
-      "decloration": "npx typed-scss-modules src/app/components",
+      "decloration": "npx typed-scss-modules src/",
       "lint:ts": "eslint \"**/*.{ts,tsx}\"",
       "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
       "stylelint:scss": "npx stylelint \"**/*.scss\"",
@@ -37,6 +37,7 @@
       "css-loader": "^6.11.0",
       "eslint": "^8.57.1",
       "eslint-config-standard": "^17.1.0",
+      "eslint-plugin-i18next": "^6.1.1",
       "eslint-plugin-import": "^2.31.0",
       "eslint-plugin-n": "^16.6.2",
       "eslint-plugin-promise": "^6.6.0",
@@ -61,8 +62,7 @@
       "typescript-eslint": "^8.16.0",
       "webpack": "^5.96.1",
       "webpack-cli": "^5.1.4",
-      "webpack-dev-server": "^5.1.0",
-      "eslint-plugin-i18next": "^6.1.1"
+      "webpack-dev-server": "^5.1.0"
    },
    "dependencies": {
       "i18next": "^21.6.11",

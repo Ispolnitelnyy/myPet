@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/react-in-jsx-scope */
+
 
 import { classNames } from "app/components/shared/helpers/classNames";
 import cls from "./index.module.scss";
