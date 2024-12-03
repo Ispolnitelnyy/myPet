@@ -345,6 +345,39 @@ WebpackBundleAnalyzer
 
 ---
 
+24 React Testing Library. Тесты на компоненты  
+branch:  
+ReactTestingLibrary
+
+открываем доку, тянем пакеты `npm install --save-dev @testing-library/react @testing-library/dom`  
+так же для ts `npm install --save-dev @testing-library/react @testing-library/dom @types/react @types/react-dom`  
+для квик старта `https://www.robinwieruch.de/react-testing-library/`
+
+отсутствет метод toBeInTheDocument  
+для того чтобы он появился нужен пакет для работы с домом jest-dom `npm install --save-dev @testing-library/jest-dom`  
+так же пакет с окружением @jest-environment-jsdom npm i --save-dev jest-environment-jsdom и записываем в jest.config.ts строку testEnvironment: 'jsdom'  
+создаем setupTest.ts рядом с jest.config.ts импотрируемся import '@testing-library/jest-dom'  
+переходим в jest.config.ts, добавляем `setupFilesAfterEnv: ["<rootDir>/config/test/setupTest.ts"],`  
+при использовании TypeScript, убедиться, что файл установки .ts и не .js, чтобы включить необходимые типы.  
+необходимо будет включить свой файл установки в tsconfig.json   
+добавляем туда правило `"include": ["./config/test/setupTest.ts", "**/*.ts", "**/*.tsx"],`   
+теперь метод должен быть доступен  
+Mocking CSS Modules `npm install --save-dev identity-obj-proxy`  
+добавляем из доки `moduleNameMapper: {"\\.(s?css)$": "identity-obj-proxy",}` в jest.config.ts  
+
+/
+устанавливаем приссет бэйбла для ts `npm install --save-dev @babel/preset-typescript`  
+прописываем присет в babel.config.json `"@babel/preset-typescript",`  
+(работает без него)  
+устанавливаем приссет бэйбла для react `npm install --save-dev react-test-renderer`  
+прописываем присет в babel.config.json `["@babel/preset-react",{"runtime":"automatic"}] `
+(работает без него)
+ИТОГ: присеты не влияют
+
+---
+
 что еще сделать:  
 смена шрифта, так как Михрома не поддерживает русскую раскладку (подключить не через локальный шрифт)
 деклорация через 1 глобальную деклорацию scss модулей
+https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint
+метод toBeInTheDocument - посмотреть что делает в ролике про тесты

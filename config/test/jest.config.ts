@@ -6,10 +6,15 @@
 import type { Config } from "jest";
 
 const config: Config = {
+   testEnvironment: "jsdom",
+   modulePaths: ["<rootDir>src"],
+
+   setupFilesAfterEnv: ["<rootDir>/config/test/setupTest.ts"],
+
    // A map from regular expressions to paths to transformers
    transform: {
-      "^.+.tsx?$": ["ts-jest",{}],
-    },
+      "^.+.tsx?$": ["ts-jest", {}],
+   },
 
    // A preset that is used as a base for Jest's configuration
    preset: "ts-jest",
@@ -40,6 +45,12 @@ const config: Config = {
 
    // Automatically clear mock calls, instances, contexts and results before every test
    clearMocks: true,
+
+   moduleNameMapper: {
+      // "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      //    "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|scss)$": "identity-obj-proxy",
+   },
 
    // The test environment that will be used for testing
    // testEnvironment: "jest-environment-node",
