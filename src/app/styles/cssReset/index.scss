@@ -20,6 +20,10 @@ select {
    font: inherit;
 }
 
+body > iframe {
+   display: none;
+}
+
 /*
 html5doctor.com Reset Stylesheet
 v1.6.1
