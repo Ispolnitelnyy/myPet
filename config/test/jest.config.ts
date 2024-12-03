@@ -4,6 +4,7 @@
  */
 
 import type { Config } from "jest";
+import path from "path";
 
 const config: Config = {
    testEnvironment: "jsdom",
@@ -49,7 +50,8 @@ const config: Config = {
    moduleNameMapper: {
       // "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
       //    "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less|scss)$": "identity-obj-proxy",
+      "\\.s?css$": "identity-obj-proxy",
+      "\\.svg": path.resolve(__dirname, "jestEmptyComponent.tsx"),
    },
 
    // The test environment that will be used for testing

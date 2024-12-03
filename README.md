@@ -359,11 +359,11 @@ ReactTestingLibrary
 создаем setupTest.ts рядом с jest.config.ts импотрируемся import '@testing-library/jest-dom'  
 переходим в jest.config.ts, добавляем `setupFilesAfterEnv: ["<rootDir>/config/test/setupTest.ts"],`  
 при использовании TypeScript, убедиться, что файл установки .ts и не .js, чтобы включить необходимые типы.  
-необходимо будет включить свой файл установки в tsconfig.json   
-добавляем туда правило `"include": ["./config/test/setupTest.ts", "**/*.ts", "**/*.tsx"],`   
+необходимо будет включить свой файл установки в tsconfig.json  
+добавляем туда правило `"include": ["./config/test/setupTest.ts", "**/*.ts", "**/*.tsx"],`  
 теперь метод должен быть доступен  
 Mocking CSS Modules `npm install --save-dev identity-obj-proxy`  
-добавляем из доки `moduleNameMapper: {"\\.(s?css)$": "identity-obj-proxy",}` в jest.config.ts  
+добавляем из доки `moduleNameMapper: {"\\.(s?css)$": "identity-obj-proxy",}` в jest.config.ts
 
 /
 устанавливаем приссет бэйбла для ts `npm install --save-dev @babel/preset-typescript`  
@@ -374,6 +374,7 @@ Mocking CSS Modules `npm install --save-dev identity-obj-proxy`
 (работает без него)
 ИТОГ: присеты не влияют
 
+c 13.50 доаисать про мапер JestEmptyComponent
 ---
 
 что еще сделать:  

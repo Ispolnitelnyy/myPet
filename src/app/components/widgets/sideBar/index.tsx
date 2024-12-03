@@ -19,6 +19,7 @@ export const SideBar = ({ className }: SideBarProps) => {
    };
    return (
       <div
+         data-testid="sidebar"
          className={classNames(cls.sidebar, { [cls.collapsed]: collapsed }, [
             className,
          ])}
