@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import { BrowserRouter } from "react-router-dom";
 import "./styles/index.scss";
 import { useTheme } from "./components/widgets/themeSwicherButton/hook";

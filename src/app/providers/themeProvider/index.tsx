@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import {
   LOCAL_STORAGE_THEME_KEY,
   ThemeContext,

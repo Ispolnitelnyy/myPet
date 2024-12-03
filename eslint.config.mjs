@@ -6,6 +6,9 @@ import pluginReact from "eslint-plugin-react";
 export default [
    { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
    { languageOptions: { globals: globals.browser } },
-   ...tseslint.configs.recommended,
-   pluginReact.configs.flat.recommended,
+
+   // ...tseslint.configs.recommended, // убираем рекомендованые так как там проверка на неиспользуемые объявленные переменные
+   ...tseslint.configs.stylistic,
+   // pluginReact.configs.flat.recommended, // убираем рекомендованые так как там проверка на импорт реакта
+   pluginReact.configs.flat["jsx-runtime"], // выставляем с приоритетом на конфиг "jsx-runtime"
 ];

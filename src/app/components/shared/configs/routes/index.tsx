@@ -1,5 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
-
+import NotFoundPage from "app/pages/404Page";
 import {
    AboutPageLazy,
    CounterPageLazy,
@@ -9,13 +8,15 @@ import {
 import { RouteProps } from "react-router-dom";
 
 export enum AppRoutesEnum {
+   NOTFOUND = "notfound",
    MAIN = "main",
    ABOUT = "about",
    COUNTER = "counter",
-   TRANSLATOR = "tranlator",
+   TRANSLATOR = "translator",
 }
 
 export const RoutePath: Record<AppRoutesEnum, string> = {
+   [AppRoutesEnum.NOTFOUND]: "/*",
    [AppRoutesEnum.MAIN]: "/",
    [AppRoutesEnum.ABOUT]: "/about",
    [AppRoutesEnum.COUNTER]: "/counter",
@@ -23,6 +24,10 @@ export const RoutePath: Record<AppRoutesEnum, string> = {
 };
 
 export const routeConfig: [AppRoutesEnum, RouteProps][] = [
+   [
+      AppRoutesEnum.NOTFOUND,
+      { path: RoutePath.notfound, element: <NotFoundPage /> },
+   ],
    [AppRoutesEnum.MAIN, { path: RoutePath.main, element: <MainPageLazy /> }],
    [AppRoutesEnum.ABOUT, { path: RoutePath.about, element: <AboutPageLazy /> }],
    [
@@ -31,6 +36,6 @@ export const routeConfig: [AppRoutesEnum, RouteProps][] = [
    ],
    [
       AppRoutesEnum.TRANSLATOR,
-      { path: RoutePath.tranlator, element: <TranslatorPageLazy /> },
+      { path: RoutePath.translator, element: <TranslatorPageLazy /> },
    ],
 ];
