@@ -12,7 +12,7 @@ export enum AppRoutesEnum {
    MAIN = "main",
    ABOUT = "about",
    COUNTER = "counter",
-   TRANSLATOR = "tranlator",
+   TRANSLATOR = "translator",
 }
 
 export const RoutePath: Record<AppRoutesEnum, string> = {
@@ -36,6 +36,6 @@ export const routeConfig: [AppRoutesEnum, RouteProps][] = [
    ],
    [
       AppRoutesEnum.TRANSLATOR,
-      { path: RoutePath.tranlator, element: <TranslatorPageLazy /> },
+      { path: RoutePath.translator, element: <TranslatorPageLazy /> },
    ],
 ];
