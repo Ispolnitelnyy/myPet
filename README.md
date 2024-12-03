@@ -321,6 +321,20 @@ https://ru.stackoverflow.com/questions/1593408/%D0%9A%D0%B0%D0%BA-%D0%BD%D0%B0%D
 
 ---
 
+22 ErrorBoundary. Обработка React ошибок  
+branch:  
+errorBounary
+
+1. для эмуляции ошибки в app напишем юзэффект в котором будем пробрасывать ошибку `useEffect(()=>{throw new Error();},[]);`
+2. идем в доку реакта по ErrorBoundary компоненту и берем оттуда сниппет, создаем в providers сам компонент ErrorBoundary
+3. оборачиваем app в ErrorBoundary как по аналогии c ThemeProvider
+4. декомпозируем сам ui страницы ошибки в слой widgets/errorBoundaryPage
+5. для удобства отключил через cssReset `<iframe id="react-refresh-overlay">` об ошибке `body > iframe {display: none;}`
+6. убираем useEffect, делаем кнопу для вызова ошибки и ее отлова
+7. возвращаю `<iframe id="react-refresh-overlay">`
+
+---
+
 что еще сделать:  
 смена шрифта, так как Михрома не поддерживает русскую раскладку (подключить не через локальный шрифт)
 деклорация через 1 глобальную деклорацию scss модулей
