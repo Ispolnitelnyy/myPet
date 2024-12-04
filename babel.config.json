@@ -1,14 +1,14 @@
 {
    "presets": [
-      "@babel/preset-env"
-      //  не пригодилось для тестов
-      // "@babel/preset-typescript",
-      // [
-      //    "@babel/preset-react",
-      //    {
-      //       "runtime": "automatic"
-      //    }
-      // ]
+      "@babel/preset-env",
+      //  не пригодилось для тестов, а вот для сторибука подошло
+      "@babel/preset-typescript",
+      [
+         "@babel/preset-react",
+         {
+            "runtime": "automatic"
+         }
+      ]
    ],
 
    "plugins": ["i18next-extract"]

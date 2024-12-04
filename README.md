@@ -371,7 +371,7 @@ Mocking CSS Modules `npm install --save-dev identity-obj-proxy`
 (работает без него)  
 устанавливаем приссет бэйбла для react `npm install --save-dev react-test-renderer`  
 прописываем присет в babel.config.json `["@babel/preset-react",{"runtime":"automatic"}] `
-(работает без него)
+(работает без него)  
 ИТОГ: присеты не влияют
 
 для компонентов использующих svg и тд нужно настроить импорты
@@ -398,8 +398,37 @@ Mocking CSS Modules `npm install --save-dev identity-obj-proxy`
 
 ---
 
+25 Настраиваем Storybook. Декораторы. Стори кейсы на компоненты
+branch:  
+storyBook/decorators/storyCases-on-components
+
+лезем в доку `https://storybook.js.org/blog/storybook-for-webpack-5/`
+For a fresh Storybook install: `npx sb init --builder webpack5`
+в корне проекта появляется папка .storybook (уюираем точку, переносим ее в папук config где лежит вэбпак, в файлe main.ts меняем путь, на выход на 1 дирректорию `stories: ["../../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"]` )
+меняем команды для запусков скриптов дописываем путь `"storybook": "storybook dev -p 6006 -c ./config/storybook",`
+(возможно дальше откачу обратно)  
+теперь напишем первую сторис, но уже для своего компонента: `src\app\components\shared\ui\button\button.stories.tsx`
+копируем из примера `src\stories\Button.stories.ts` код и переносим к себе
+теперь папку с примерами `src\stories` можно удалить
+при первом запуске сталкивамся с проблемой абсолютных импортов:
+
+1. `https://storybook.js.org/docs/6/builders/webpack`  
+   По умолчанию Storybook обеспечивает поддержку нулевой конфигурации для Webpack и автоматически настраивает базовую конфигурацию, созданную для работы с наиболее распространенными вариантами использования - мы можем расширять ее (например, .storybook/main.ts) и переопределять под свои нужды
+   Для переопределения конфига выберем следующий способ:
+   создаем `корень\config\storybook\webpack.config.ts`
+   создаем и экспортруем функцию которая будет перезаписывать нашу конфигурацию вебпака сторибука
+   1.1. в контексте абсолютгых путей нам необходимо изменить в исходном вэбпак конфиге сторибука resolve в котором нужно переопределить extension and modules
+   пример в `config\storybook\webpack.config.ts`
+   1.2. теперь настроим имопрт scss модулей для вэбпак конфига сторибука, по умолчанию он с ними работать не умеет  
+   за основу возьмем cssLoader ранее использующийся в основном конфиге вебпака    
+   --- сделал мини рефакторинг: вынес лоудеры в отдельную функуию (getLoader), чтобы использовать лоудеры как в основном вэбпак конфиге проекта, так и в массив rules конфига вэбпака сторибука   
+   1.3. Строрибуку не нравится отсутствующий импорт реакта, здесь нам подойдут presets бабеля которые ранее не помогали для Jest
+   раскомитил присеты `preset-typescript, [preset-react",{"runtime":"automatic"}]` в babel.config.json и в самом babelLoader, запушил babelLoader в массив rules конфига вэбпака сторибука
+
+---
+
 что еще сделать:  
 смена шрифта, так как Михрома не поддерживает русскую раскладку (подключить не через локальный шрифт)
 деклорация через 1 глобальную деклорацию scss модулей
-https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint
+https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint  
 метод toBeInTheDocument - посмотреть что делает в ролике про тесты

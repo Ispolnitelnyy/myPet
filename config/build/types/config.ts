@@ -6,6 +6,9 @@ export interface BuildPath {
    html: string;
    src: string;
 }
+export interface BuildPathStorybook {
+   src: string;
+ }
 
 export interface BuildOptions {
    mode: BuildMode;
@@ -13,6 +16,10 @@ export interface BuildOptions {
    isDev: boolean;
    port: number;
 }
+export interface BuildOptionsStorybook {
+   paths: BuildPathStorybook; 
+   isDev: boolean;
+ }
 
 export interface BuildEnv {
    mode: BuildMode;
