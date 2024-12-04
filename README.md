@@ -374,7 +374,20 @@ Mocking CSS Modules `npm install --save-dev identity-obj-proxy`
 (работает без него)
 ИТОГ: присеты не влияют
 
-c 13.50 доаисать про мапер JestEmptyComponent
+для компонентов использующих svg и тд нужно настроить импорты
+тем в jest.config.ts, из за ранее установлного svgLoader (@svgr/webpack отвечает за преобразование SVG в компоненты React) который импортирует svg как компоненты мы можем использовать мапер:  
+`moduleNameMapper: {"\\.svg": path.resolve(__dirname, "./mockComponent/jestEmptyComponent.tsx")},`  
+Файл jestEmptyComponent.tsx используется в сочетании с настройкой moduleNameMapper в Jest, чтобы подменять реальные импорты SVG-файлов на пустой компонент при тестировании. Jest не понимает, как обрабатывать SVG-файлы по умолчанию. Если SVG-файлы импортируются как компоненты (например, с помощью @svgr/webpack), они могут вызывать ошибки, поскольку Jest не выполняет сборку с Webpack. SVG-файлы часто, не влияют на логику компонента. Поэтому вместо обработки реального SVG достаточно заменить его на простой React-компонент  
+Проще говоря jestEmptyComponent.tsx - это мок для тестирования которы присутствует для всех импоротов расширений svg  
+создаем собстаенно в дире jest.config.ts диру для моеового компонента /mockComponent/jestEmptyComponent.tsx где будет рендер 1 `<div/>`
+
+связываем тесты и библиотеку i18next : `https://react.i18next.com/misc/testing`  
+Для целей тестирования компонента надо экспортировать чистый компонент без расширения с помощью Translation hoc ( пример: 8-9 строчка langSwitherButton.test.tsx)  
+Далее нам нужен раздел: Testing without stubbing  
+создаем конфг для тестов (\shared\configs\routes\i18n\i18nForTests\index.ts)
+для удобства использования этого конфига создаем хелпер который в будущем можно будет использовать во всех тестах (\shared\helpers\tests\renderWithTranslation\index.tsx)создаем функцию и оборачиваем по примеру из доки теста с использованием этой конфигурации `<I18nextProvider i18n={i18n}>{component}</I18nextProvider>`
+осталось использовать эту функцию для рендера компонента в langSwitherButton.test.tsx (пример: 10 строчка)
+
 ---
 
 что еще сделать:  
