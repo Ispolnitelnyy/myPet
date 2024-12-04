@@ -345,6 +345,61 @@ WebpackBundleAnalyzer
 
 ---
 
+24 React Testing Library. Тесты на компоненты  
+branch:  
+ReactTestingLibrary
+
+открываем доку, тянем пакеты `npm install --save-dev @testing-library/react @testing-library/dom`  
+так же для ts `npm install --save-dev @testing-library/react @testing-library/dom @types/react @types/react-dom`  
+для квик старта `https://www.robinwieruch.de/react-testing-library/`
+
+отсутствет метод toBeInTheDocument  
+для того чтобы он появился нужен пакет для работы с домом jest-dom `npm install --save-dev @testing-library/jest-dom`  
+так же пакет с окружением @jest-environment-jsdom npm i --save-dev jest-environment-jsdom и записываем в jest.config.ts строку testEnvironment: 'jsdom'  
+создаем setupTest.ts рядом с jest.config.ts импотрируемся import '@testing-library/jest-dom'  
+переходим в jest.config.ts, добавляем `setupFilesAfterEnv: ["<rootDir>/config/test/setupTest.ts"],`  
+при использовании TypeScript, убедиться, что файл установки .ts и не .js, чтобы включить необходимые типы.  
+необходимо будет включить свой файл установки в tsconfig.json  
+добавляем туда правило `"include": ["./config/test/setupTest.ts", "**/*.ts", "**/*.tsx"],`  
+теперь метод должен быть доступен  
+Mocking CSS Modules `npm install --save-dev identity-obj-proxy`  
+добавляем из доки `moduleNameMapper: {"\\.(s?css)$": "identity-obj-proxy",}` в jest.config.ts
+
+/
+устанавливаем приссет бэйбла для ts `npm install --save-dev @babel/preset-typescript`  
+прописываем присет в babel.config.json `"@babel/preset-typescript",`  
+(работает без него)  
+устанавливаем приссет бэйбла для react `npm install --save-dev react-test-renderer`  
+прописываем присет в babel.config.json `["@babel/preset-react",{"runtime":"automatic"}] `
+(работает без него)
+ИТОГ: присеты не влияют
+
+для компонентов использующих svg и тд нужно настроить импорты
+тем в jest.config.ts, из за ранее установлного svgLoader (@svgr/webpack отвечает за преобразование SVG в компоненты React) который импортирует svg как компоненты мы можем использовать мапер:  
+`moduleNameMapper: {"\\.svg": path.resolve(__dirname, "./mockComponent/jestEmptyComponent.tsx")},`  
+Файл jestEmptyComponent.tsx используется в сочетании с настройкой moduleNameMapper в Jest, чтобы подменять реальные импорты SVG-файлов на пустой компонент при тестировании. Jest не понимает, как обрабатывать SVG-файлы по умолчанию. Если SVG-файлы импортируются как компоненты (например, с помощью @svgr/webpack), они могут вызывать ошибки, поскольку Jest не выполняет сборку с Webpack. SVG-файлы часто, не влияют на логику компонента. Поэтому вместо обработки реального SVG достаточно заменить его на простой React-компонент  
+Проще говоря jestEmptyComponent.tsx - это мок для тестирования которы присутствует для всех импоротов расширений svg  
+создаем собстаенно в дире jest.config.ts диру для моеового компонента /mockComponent/jestEmptyComponent.tsx где будет рендер 1 `<div/>`
+
+связываем тесты и библиотеку i18next : `https://react.i18next.com/misc/testing`  
+Для целей тестирования компонента надо экспортировать чистый компонент без расширения с помощью Translation hoc ( пример: 8-9 строчка langSwitherButton.test.tsx)  
+Далее нам нужен раздел: Testing without stubbing  
+создаем конфг для тестов (\shared\configs\routes\i18n\i18nForTests\index.ts)
+для удобства использования этого конфига создаем хелпер который в будущем можно будет использовать во всех тестах (\shared\helpers\tests\renderWithTranslation\index.tsx)создаем функцию и оборачиваем по примеру из доки теста с использованием этой конфигурации `<I18nextProvider i18n={i18n}>{component}</I18nextProvider>`
+осталось использовать эту функцию для рендера компонента в langSwitherButton.test.tsx (пример: 10 строчка)
+
+тест на сворачивание и разворачивание sideBar:  
+у нас применяется динамический нейминг классов за счет обновления состояния сайтбара  
+класс collapsed динамически добавляется через setState, но тест не ждёт обновления состояния  
+кроме того, используемый класс — `src-app-components-widgets-sideBar-index-module__collapsed--hash`, так как в проекте используются CSS-модули (identity-obj-proxy: Заменяет хэшированные классы на читаемые в тестах)
+
+1. добавим поддержку CSS-модулей в тестах (в jest.config.ts настроим `moduleNameMapper:{"\\.module\\.scss$": "identity-obj-proxy",}` чтобы маппить CSS-модули на простые объекты) это позволит в тестах использовать оригинальные имена классов, такие как collapsed
+2. в компоненте используется setTimeout для обновления состояния. (jest.useFakeTimers чтобы дождаться изменений) (а так же использовать waitFor для ожидания изменения класса)
+
+---
+
 что еще сделать:  
 смена шрифта, так как Михрома не поддерживает русскую раскладку (подключить не через локальный шрифт)
 деклорация через 1 глобальную деклорацию scss модулей
+https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint
+метод toBeInTheDocument - посмотреть что делает в ролике про тесты

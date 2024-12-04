@@ -1,28 +1,23 @@
 {
-  "compilerOptions": {
-    "outDir": "./dist/",
-    "noImplicitAny": true,
-    "module": "ESNext",
-    "target": "es5",
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["./src/*"]
-    },
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
-  },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  },
-  "baseUrl": ".",
-  "plugins": [
-    {
-      "name": "typed-scss-modules"
-    }
-  ],
+   "compilerOptions": {
+      "outDir": "./dist/",
+      "noImplicitAny": true,
+      "module": "ESNext",
+      "target": "es5",
+      "jsx": "react-jsx",
+      "allowJs": true,
+      "moduleResolution": "node",
+      "baseUrl": ".",
+      "paths": { "*": ["./src/*"] },
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true
+   },
+   "ts-node": { "compilerOptions": { "module": "CommonJS" } },
+   "plugins": [{ "name": "typed-scss-modules" }],
+   "include": [
+      // "src/global.d.ts",
+      "./config/test/setupTest.ts",
+      "**/*.ts",
+      "**/*.tsx"
+   ]
 }

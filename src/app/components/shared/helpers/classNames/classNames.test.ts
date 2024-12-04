@@ -1,6 +1,6 @@
 // import { describe } from "node:test";
 
-import { classNames } from "./";
+import { classNames } from ".";
 
 describe("classNames", () => {
    test("с одним первым параметром", () => {
