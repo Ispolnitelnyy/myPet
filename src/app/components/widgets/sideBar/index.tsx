@@ -17,6 +17,11 @@ export const SideBar = ({ className }: SideBarProps) => {
    const closed = () => {
       setTimeout(() => setCollapsed(true));
    };
+
+   console.log(
+      classNames(cls.sidebar, { [cls.collapsed]: collapsed }, [className])
+   );
+
    return (
       <div
          data-testid="sidebar"
