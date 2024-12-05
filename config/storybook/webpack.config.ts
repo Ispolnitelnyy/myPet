@@ -2,7 +2,7 @@ import {
    BuildOptionsStorybook,
    BuildPathStorybook,
 } from "../build/types/config";
-import webpack from "webpack";
+import webpack, { RuleSetRule } from "webpack";
 import { getLoader } from "../build/loaders";
 import path from "path";
 
@@ -19,5 +19,12 @@ export default ({ config }: { config: webpack.Configuration }) => {
    config.resolve.extensions.push(".ts", ".tsx"); // добавляем расширения в массив extensions конфига вэбпака сторибука
    config.module.rules.push(getLoader(options.isDev).cssLoader); // добавляем cssLoader в массив rules конфига вэбпака сторибука
    config.module.rules.push(getLoader().babelLoader); // отрубаем дефолтеый импорт реакта через правило в babelLoader и тянем его в массив rules конфига вэбпака сторибука
+   config.module.rules = config.module.rules.map((rule: RuleSetRule) => {
+      if (/svg/.test(rule.test as string)) {
+         return { ...rule, exclude: /\.svg$/i };
+      }
+      return rule;
+   }); // отключение дефолтного правила для svg если такое есть
+   config.module.rules.push(getLoader().svgLoader); // впмсываем лоудер svg для отображения svg в sidebar
    return config;
 };

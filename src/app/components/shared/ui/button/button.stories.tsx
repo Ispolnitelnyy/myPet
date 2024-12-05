@@ -3,7 +3,7 @@ import { fn } from "@storybook/test";
 import { Button, ThemeButtonEnums } from "./";
 // import "../../../../styles/index.scss"; // рабочий импорт
 // import "app/styles/index.scss"; // рабочий импорт
-import { ThemeDecorator } from "../../configs/storybook/decorators/themeDecorator";
+import { ThemeDecorator } from "app/components/shared/configs/storybook/decorators/themeDecorator";
 import { ThemeStateEnums } from "app/providers/themeProvider";
 const meta = {
    title: "Shared/UI/Button",
