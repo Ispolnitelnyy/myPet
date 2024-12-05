@@ -1,46 +1,57 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-
 import { Button, ThemeButtonEnums } from "./";
-
-// Конфигурация Storybook для компонента Button
+// import "../../../../styles/index.scss"; // рабочий импорт
+// import "app/styles/index.scss"; // рабочий импорт
+import { ThemeDecorator } from "../../configs/storybook/decorators/themeDecorator";
+import { ThemeStateEnums } from "app/providers/themeProvider";
 const meta = {
-   title: "Shared/UI/Button", // Категория и имя компонента
+   title: "Shared/UI/Button",
    component: Button,
-   parameters: {
-      layout: "centered", // Центровка компонента в Canvas
-   },
-   tags: ["autodocs"], // Тег для автодокументации
+   parameters: {},
+   tags: ["Button component"],
    argTypes: {
       theme: {
-         control: "select", // Добавляем селектор для выбора темы
-         options: Object.values(ThemeButtonEnums), // Опции из перечисления ThemeButtonEnums
+         control: "text",
+         options: Object.values(ThemeButtonEnums),
       },
-      className: { control: "text" }, // Опциональный класс
    },
-   args: { onClick: fn() }, // Шпион для отслеживания onClick
+   decorators: [
+      ThemeDecorator(ThemeStateEnums.DARK),
+      ThemeDecorator(ThemeStateEnums.LIGHT),
+   ],
+   args: { onClick: fn() },
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Примеры историй для различных вариантов использования компонента
-export const Default: Story = {
+export const LightThemeButtonTypeClear: Story = {
+   decorators: [ThemeDecorator(ThemeStateEnums.LIGHT)],
    args: {
-      children: "Default Button",
+      children: "Clear Button LightTheme",
+      theme: ThemeButtonEnums.CLEAR,
+   },
+};
+export const DarkThemeButtonTypeClear: Story = {
+   decorators: [ThemeDecorator(ThemeStateEnums.DARK)],
+   args: {
+      children: "Clear Button DarkTheme",
+      theme: ThemeButtonEnums.CLEAR,
    },
 };
 
-export const Clear: Story = {
+export const LightThemeButtonTypeOutline: Story = {
+   decorators: [ThemeDecorator(ThemeStateEnums.LIGHT)],
    args: {
-      children: "Clear Button",
-      theme: ThemeButtonEnums.CLEAR, // Тема CLEAR
+      children: "Outline Button LightTheme",
+      theme: ThemeButtonEnums.OUTLINE,
    },
 };
-
-export const WithCustomClass: Story = {
+export const DarkThemeButtonTypeOutline: Story = {
+   decorators: [ThemeDecorator(ThemeStateEnums.DARK)],
    args: {
-      children: "Custom Class Button",
-      className: "my-custom-class", // Пользовательский класс
+      children: "Outline Button DarkTheme",
+      theme: ThemeButtonEnums.OUTLINE,
    },
 };
