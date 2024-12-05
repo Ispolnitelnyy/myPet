@@ -8,6 +8,7 @@ lerna-debug.log*
 .pnpm-debug.log*
 build
 src/stories/
+storybook-static
 
 
 # Diagnostic reports (https://nodejs.org/api/report.html)

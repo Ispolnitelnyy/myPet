@@ -487,6 +487,25 @@ ScreenTests/Loki/RegressionUITesting
 перезаписывем историю на удалённом репозитории  
 7 git push origin <имя ветки> --force
 
+теперь запустим loki в ci pipeline  
+делаем сборку сторибука
+результат сборки (storybook-static) добавим в гитигнор
+указываем при запуске loki путь до storybook-static  
+`"test:ui:ci":"npx loki --requireReference --reactUri file:./storybook-static",`
+добавляем эти скрипты в yaml
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
 ---
 
 что еще сделать:  
