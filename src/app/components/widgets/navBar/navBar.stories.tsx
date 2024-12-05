@@ -1,23 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { SideBar } from "./";
+import { NavBar } from ".";
 import { ThemeStateEnums } from "app/providers/themeProvider";
 import { ThemeDecorator } from "app/components/shared/configs/storybook/decorators/themeDecorator";
+import { RourerDecorator } from "app/components/shared/configs/storybook/decorators/routerDecorator";
 const meta = {
-   title: "Widgets/SideBar",
-   component: SideBar,
+   title: "Widgets/NavBar",
+   component: NavBar,
    parameters: {},
-   tags: ["SideBar component"],
+   tags: ["NavBar component"],
    argTypes: {},
-} satisfies Meta<typeof SideBar>;
+   decorators: [
+      RourerDecorator,
+   ],
+} satisfies Meta<typeof NavBar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const LightThemeSideBar: Story = {
+export const LightThemeNavBar: Story = {
    decorators: [ThemeDecorator(ThemeStateEnums.LIGHT)],
    args: {},
 };
-export const DarkThemeSideBar: Story = {
+export const DarkThemeNavBar: Story = {
    decorators: [ThemeDecorator(ThemeStateEnums.DARK)],
    args: {},
 };

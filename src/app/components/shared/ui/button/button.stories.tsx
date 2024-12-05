@@ -16,10 +16,6 @@ const meta = {
          options: Object.values(ThemeButtonEnums),
       },
    },
-   decorators: [
-      ThemeDecorator(ThemeStateEnums.DARK),
-      ThemeDecorator(ThemeStateEnums.LIGHT),
-   ],
    args: { onClick: fn() },
 } satisfies Meta<typeof Button>;
 
