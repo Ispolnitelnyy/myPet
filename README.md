@@ -456,7 +456,7 @@ branch:
 ScreenTests/Loki/RegressionUITesting
 
 устанавливаем либу npm install --save-dev loki  
-выполняем команду npx loki init --config ./config/storybook  закинем в скрипт npm run test:ui
+выполняем команду npx loki init --config ./config/storybook закинем в скрипт npm run test:ui
 добавилась инфа в package.json можно запускать через докер, а можно через эмулятор хромаа и браузера телефона  
 теперь запускаем сторибук и выполняем команду npx loki test
 после прогона теста появится в корне папка .loki где будут лежать скриншоты  
@@ -466,9 +466,19 @@ ScreenTests/Loki/RegressionUITesting
 
 ---
 
+27 CI pipeline. Автоматизация прогона тестов
+
+создаем yml файлик в `.github\workflows\linting-testing-building.yml`  
+наполняем его согласно документации `https://docs.github.com/ru/actions/writing-workflows/quickstart`
+так как у нас есть BundleAnalyzerPlugin, то его необходимо отколючить при продакшен сборке. тоже самое с HotModuleReplacementPlugin, ReactRefreshWebpackPlugin и всеми плагинами для разработки
+лоудеры не импортируются, не знаю в чем проблема, локально все работает, при пайплайне не находит модуль
+---
+
 что еще сделать:  
 смена шрифта, так как Михрома не поддерживает русскую раскладку (подключить не через локальный шрифт)  
 деклорация через 1 глобальную деклорацию scss модулей  
 https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint  
 метод toBeInTheDocument - посмотреть что делает в ролике про тесты  
 перетащить статику в паблик
+тест langSwitherButton.test.tsx с warning
+импортировать лоудеры через модуль в buildLoaders и вэбпак сторибука

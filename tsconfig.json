@@ -15,7 +15,6 @@
    "ts-node": { "compilerOptions": { "module": "CommonJS" } },
    "plugins": [{ "name": "typed-scss-modules" }],
    "include": [
-      // "src/global.d.ts",
       "./config/test/setupTest.ts",
       "**/*.ts",
       "**/*.tsx"

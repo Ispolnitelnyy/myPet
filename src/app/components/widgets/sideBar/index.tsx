@@ -1,6 +1,6 @@
 import { classNames } from "app/components/shared/helpers/classNames";
 import cls from "./index.module.scss";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ThemeSwicherButton from "../themeSwicherButton";
 import { LangSwitcherButton } from "../langSwitherButton";
 import GetErrorButton from "../getErrorButton";
@@ -11,16 +11,15 @@ interface SideBarProps {
 
 export const SideBar = ({ className }: SideBarProps) => {
    const [collapsed, setCollapsed] = useState(true);
+   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
    const open = () => {
       setCollapsed(false);
    };
    const closed = () => {
-      setTimeout(() => setCollapsed(true));
+      timeoutRef.current = setTimeout(() => {
+         setCollapsed(true);
+      });
    };
-
-   console.log(
-      classNames(cls.sidebar, { [cls.collapsed]: collapsed }, [className])
-   );
 
    return (
       <div
