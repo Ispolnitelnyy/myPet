@@ -1,4 +1,4 @@
-const AboutPage = (): JSX.Element => {
+export const AboutPage = (): JSX.Element => {
   return <>About Page</>;
 };
 export default AboutPage;

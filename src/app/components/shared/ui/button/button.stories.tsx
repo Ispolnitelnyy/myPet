@@ -6,7 +6,7 @@ import { Button, ThemeButtonEnums } from "./";
 import { ThemeDecorator } from "app/components/shared/configs/storybook/decorators/themeDecorator";
 import { ThemeStateEnums } from "app/providers/themeProvider";
 const meta = {
-   title: "Shared/UI/Button",
+   title: "Shared/Button",
    component: Button,
    parameters: {},
    tags: ["Button component"],
