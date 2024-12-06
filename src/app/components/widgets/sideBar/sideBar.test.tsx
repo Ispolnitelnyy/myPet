@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor, act } from "@testing-library/react";
+import {
+   fireEvent,
+   render,
+   screen,
+   waitFor,
+   act,
+} from "@testing-library/react";
 import SideBar from ".";
 
 describe("SideBar tests", () => {
@@ -40,5 +46,12 @@ describe("SideBar tests", () => {
 
       // Возвращаем реальное время
       jest.useRealTimers();
+   });
+   test("test button open/close", () => {
+      render(<SideBar />);
+      const toggleBtn = screen.getByTestId("sidebar-toggle");
+      expect(screen.getByTestId("sidebar")).toBeInTheDocument();
+      fireEvent.click(toggleBtn);
+      expect(screen.getByTestId("sidebar")).toHaveClass("sidebar");
    });
 });

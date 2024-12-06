@@ -466,26 +466,14 @@ ScreenTests/Loki/RegressionUITesting
 
 ---
 
-27 CI pipeline. Автоматизация прогона тестов
+27 CI pipeline. Автоматизация прогона тестов  
+branch:  
+CI-pipeline/automatick-tests-running
 
 создаем yml файлик в `.github\workflows\linting-testing-building.yml`  
 наполняем его согласно документации `https://docs.github.com/ru/actions/writing-workflows/quickstart`
 так как у нас есть BundleAnalyzerPlugin, то его необходимо отколючить при продакшен сборке. тоже самое с HotModuleReplacementPlugin, ReactRefreshWebpackPlugin и всеми плагинами для разработки
 лоудеры не импортируются, не знаю в чем проблема, локально все работает, при пайплайне не находит модуль
-
-для заметки:  
-чтобы убрать коммиты из удаленного репозитория  
-Сначала синхронизируйте локальный репозиторий с удалённым  
-1 git fetch origin  
-2 git pull origin <имя ветки>  
-смотрим истории комитов и выбираем SHAкомита к которому нужно откатиться  
-3 git log  
-4 git reset --soft SHAкомита  
-создаем новый коммит  
-5 git add -A  
-6 git commit -m 'тест'  
-перезаписывем историю на удалённом репозитории  
-7 git push origin <имя ветки> --force
 
 теперь запустим loki в ci pipeline  
 делаем сборку сторибука
@@ -493,8 +481,13 @@ ScreenTests/Loki/RegressionUITesting
 указываем при запуске loki путь до storybook-static  
 `"test:ui:ci":"npx loki --requireReference --reactUri file:./storybook-static",`
 добавляем эти скрипты в yaml
+скриншотные тесты не запускаются в пайплайне, пока закоментил их, не хочу тратить время
 
 ---
+
+28 Сайдбар. Состояния кнопки. UI Screenshot test report  
+branch:  
+sidebar-refactor/UI-screenshots-test-report
 
 ---
 
@@ -515,7 +508,10 @@ https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про нов
 метод toBeInTheDocument - посмотреть что делает в ролике про тесты  
 перетащить статику в паблик
 тест langSwitherButton.test.tsx с warning
-импортировать лоудеры через модуль в buildLoaders и вэбпак сторибука
+импортировать лоудеры через модуль в buildLoaders и вэбпак сторибука  
+скриншотные тесты в пайплайне
+
+---
 
 для заметки:  
 чтобы убрать коммиты из удаленного репозитория  
