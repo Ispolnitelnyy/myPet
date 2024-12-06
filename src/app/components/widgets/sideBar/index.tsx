@@ -8,6 +8,7 @@ import Button, {
    SizesButtonEnums,
    ThemeButtonEnums,
 } from "app/components/shared/ui/button";
+import SideBarHeader from "./sideBarHeader";
 
 interface SideBarProps {
    className?: string;
@@ -38,6 +39,7 @@ export const SideBar = ({ className }: SideBarProps) => {
             onMouseEnter={open}
             onMouseLeave={closed}
          >
+            <SideBarHeader collapsed={collapsed}/>
             <Button
                data-testid="sidebar-toggle"
                onClick={onToggle}
