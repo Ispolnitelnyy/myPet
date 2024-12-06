@@ -8,6 +8,7 @@
 
 .collapsed {
    width: var(--sidebar-width-collapsed);
+
    .link {
       opacity: 0;
       transition: 0.2s opacity;
@@ -20,6 +21,7 @@
    right: 0;
    top: 50%;
 }
+
 .switcher {
    position: absolute;
    bottom: 20px;
@@ -29,6 +31,7 @@
    flex-direction: column;
    width: 100%;
 }
+
 .lang {
    margin-top: 10px;
 }

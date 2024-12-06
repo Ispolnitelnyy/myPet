@@ -6,10 +6,11 @@ import {
    act,
 } from "@testing-library/react";
 import SideBar from ".";
+import { ComponentRender } from "app/components/shared/configs/tests/componentRender";
 
 describe("SideBar tests", () => {
    it("render SideBar component", () => {
-      render(<SideBar />);
+      ComponentRender(<SideBar />);
 
       expect(screen.getByTestId("sidebar")).toBeInTheDocument();
    });
@@ -17,7 +18,7 @@ describe("SideBar tests", () => {
    it("sideBar должен разворачиваться при наведении мыши и сворачиваться при ее уходе", async () => {
       // Активируем фейковые таймеры
       jest.useFakeTimers();
-      render(<SideBar />);
+      ComponentRender(<SideBar />);
 
       const sidebar = screen.getByTestId("sidebar");
 
@@ -48,7 +49,7 @@ describe("SideBar tests", () => {
       jest.useRealTimers();
    });
    test("test button open/close", () => {
-      render(<SideBar />);
+      ComponentRender(<SideBar />);
       const toggleBtn = screen.getByTestId("sidebar-toggle");
       expect(screen.getByTestId("sidebar")).toBeInTheDocument();
       fireEvent.click(toggleBtn);

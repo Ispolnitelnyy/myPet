@@ -15,7 +15,7 @@
       "test:unit": "jest --config ./config/test/jest.config.ts",
       "test:ui": "npx loki init --config ./config/storybook",
       "test:ui:ok": "npx loki approve",
-      "test:ui:ci":"npx loki --requireReference --reactUri file:./storybook-static",
+      "test:ui:ci": "npx loki --requireReference --reactUri file:./storybook-static",
       "storybook": "storybook dev -p 6006 -c ./config/storybook",
       "storybook:build": "storybook build -c ./config/storybook"
    },
@@ -85,6 +85,7 @@
       "typed-scss-modules": "^8.0.1",
       "typescript": "^5.7.2",
       "typescript-eslint": "^8.16.0",
+      "util": "^0.12.5",
       "webpack": "^5.96.1",
       "webpack-bundle-analyzer": "^4.10.2",
       "webpack-cli": "^5.1.4",
