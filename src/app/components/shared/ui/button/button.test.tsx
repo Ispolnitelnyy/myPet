@@ -5,12 +5,11 @@ describe("метот из документации", () => {
    it("render Button component", () => {
       render(<Button>TEST</Button>);
 
-      screen.debug();
    });
 });
 
 // у него проходит без async
-describe("метот ulbi", () => {
+describe("метот 2", () => {
    it("render Button component", async () => {
       render(<Button>TEST</Button>);
 
@@ -21,6 +20,5 @@ describe("метот ulbi", () => {
       render(<Button theme={ThemeButtonEnums.CLEAR}>TEST</Button>);
 
       expect(await screen.findByText("TEST")).toHaveClass("clear");
-      screen.debug();
    });
 });

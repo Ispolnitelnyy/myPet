@@ -1,7 +1,7 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, act } from "@testing-library/react";
 import SideBar from ".";
 
-describe("sideBar tests", () => {
+describe("SideBar tests", () => {
    it("render SideBar component", () => {
       render(<SideBar />);
 
@@ -18,18 +18,23 @@ describe("sideBar tests", () => {
       // Изначально свернут
       expect(sidebar).toHaveClass("collapsed");
 
-      // разворачивание
+      // Разворачивание (наводим курсор)
       fireEvent.mouseEnter(sidebar);
       expect(sidebar).toHaveClass("sidebar");
 
-      // сворачивание
+      // Сворачивание (убираем курсор)
       fireEvent.mouseLeave(sidebar);
-      // Завершаем таймеры
-      jest.runAllTimers();
+
+      // Ожидаем, пока таймеры завершатся и класс обновится
+      await act(async () => {
+         jest.runAllTimers(); // Запуск всех таймеров
+      });
+
       // Ожидаем, пока класс не обновится
       await waitFor(() => {
          expect(sidebar).toHaveClass("collapsed");
       });
+
       // Проверяем, что sidebar свернулся
       expect(sidebar).toHaveClass("collapsed");
 
