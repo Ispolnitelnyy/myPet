@@ -16,47 +16,55 @@
    color: var(--invert-secondary-color);
    background: none;
 }
+
 .background {
    background: var(--bg-color);
    color: var(--primary-color);
    border: none;
 }
-.backgroundInverted {
+
+.backgroundinverted {
    background: var(--invert-bg-color);
    color: var(--invert-primary-color);
    border: none;
 }
+
 .square {
    padding: 0;
 }
-.square.sizeM {
+
+.square.sizem {
    width: var(--font-line-m);
    height: var(--font-line-m);
 }
-.square.sizeL {
+
+.square.sizel {
    width: var(--font-line-l);
    height: var(--font-line-l);
 }
-.square.sizeXl {
+
+.square.sizexl {
    width: var(--font-line-xl);
    height: var(--font-line-xl);
 }
-.square.sizeXxl {
+
+.square.sizexxl {
    width: var(--font-line-xxl);
    height: var(--font-line-xxl);
 }
-.sizeM {
+
+.sizem {
    font-size: var(--font-size-m);
 }
 
-.sizeL {
+.sizel {
    font-size: var(--font-size-l);
 }
 
-.sizeXl {
+.sizexl {
    font-size: var(--font-size-xl);
 }
 
-.sizeXxl {
+.sizexxl {
    font-size: var(--font-size-xxl);
 }

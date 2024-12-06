@@ -6,13 +6,13 @@ export enum ThemeButtonEnums {
    CLEAR = "clear",
    OUTLINE = "outline",
    BACKGROUND = "background",
-   BACKGROUND_INVERTED = "backgroundInverted",
+   BACKGROUND_INVERTED = "backgroundinverted",
 }
 export enum SizesButtonEnums {
-   M = "sizeM",
-   L = "sizeL",
-   XL = "sizeXl",
-   XXL = "sizeXxl",
+   M = "sizem",
+   L = "sizel",
+   XL = "sizexl",
+   XXL = "sizexxl",
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
