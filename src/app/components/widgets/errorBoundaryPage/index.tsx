@@ -15,7 +15,7 @@ export const ErrorBoundaryPage = ({ className }: ErrorBoundaryPageProps) => {
    return (
       <div className={classNames(cls.errorboundarypage, {}, [className])}>
          <p>{t("Возникла непредвиденная ошибка")}</p>
-         <Button onClick={reloadPage}>{t("Перезагрузить страницу")}</Button>
+         <Button square={false} onClick={reloadPage}>{t("Перезагрузить страницу")}</Button>
       </div>
    );
 };

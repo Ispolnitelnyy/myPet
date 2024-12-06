@@ -18,7 +18,7 @@ export const GetErrorButton = () => {
    };
 
    return (
-      <Button onClick={getError} theme={ThemeButtonEnums.CLEAR}>
+      <Button onClick={getError} theme={ThemeButtonEnums.CLEAR} square={false}>
          {t("вызвать ошибку")}
       </Button>
    );

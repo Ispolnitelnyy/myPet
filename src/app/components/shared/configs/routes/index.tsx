@@ -1,10 +1,10 @@
-import NotFoundPage from "app/pages/404Page";
+import NotFoundPage from "app/components/pages/404Page";
 import {
    AboutPageLazy,
    CounterPageLazy,
    MainPageLazy,
    TranslatorPageLazy,
-} from "app/pages/react-lazy";
+} from "app/components/pages/react-lazy";
 import { RouteProps } from "react-router-dom";
 
 export enum AppRoutesEnum {

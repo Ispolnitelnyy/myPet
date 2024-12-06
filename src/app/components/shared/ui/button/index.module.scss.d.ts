@@ -1,3 +1,10 @@
+export declare const background: string;
+export declare const backgroundInverted: string;
 export declare const button: string;
 export declare const clear: string;
 export declare const outline: string;
+export declare const sizeL: string;
+export declare const sizeM: string;
+export declare const sizeXl: string;
+export declare const sizeXxl: string;
+export declare const square: string;

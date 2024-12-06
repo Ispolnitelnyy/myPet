@@ -16,6 +16,7 @@ export const ThemeSwicherButton = ({ className }: ThemeSwicherButtonProps) => {
          theme={ThemeButtonEnums.CLEAR}
          onClick={toggleTheme}
          className={classNames("", {}, [className])}
+         square={false}
       >
          {theme === ThemeStateEnums.LIGHT ? <DarkIcon /> : <LightIcon />}
       </Button>

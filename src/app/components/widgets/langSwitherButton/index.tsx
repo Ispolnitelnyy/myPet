@@ -17,6 +17,7 @@ export const LangSwitcherButton = ({ className }: LangSwitcherButtonProps) => {
          className={classNames("", {}, [className])}
          theme={ThemeButtonEnums.CLEAR}
          onClick={tranlate}
+         square={false}
       >
          {t("язык")}{" "}
       </Button>

@@ -5,18 +5,42 @@ import { ButtonHTMLAttributes, FC } from "react";
 export enum ThemeButtonEnums {
    CLEAR = "clear",
    OUTLINE = "outline",
+   BACKGROUND = "background",
+   BACKGROUND_INVERTED = "backgroundInverted",
+}
+export enum SizesButtonEnums {
+   M = "sizeM",
+   L = "sizeL",
+   XL = "sizeXl",
+   XXL = "sizeXxl",
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    className?: string;
    theme?: ThemeButtonEnums;
+   square?: boolean;
+   size?: SizesButtonEnums;
 }
 
 export const Button: FC<ButtonProps> = (props) => {
-   const { className, theme, children, ...otherProps } = props;
+   const {
+      className,
+      theme,
+      children,
+      square,
+      size,
+      ...otherProps
+   } = props;
+
+   const mods: Record<string, boolean> = {
+      [cls[theme]]: true,
+      [cls.square]: square,
+      [cls[size]]: true,
+   };
    return (
       <button
-         className={classNames(cls.button, {}, [className, cls[theme]])}
+         type="button"
+         className={classNames(cls.button, mods, [className])}
          {...otherProps}
       >
          {children}
