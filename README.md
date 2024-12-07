@@ -510,6 +510,7 @@ sidebar-refactor/UI-screenshots-test-report
 `D:\code\myPet\node_modules\@loki\browser\src\await-selector-present.js` нашел где устанавливается значение
 попробую поиграться с этим
 c 45000 страницы грузятся (загрущились 1 раз)
+скачал SWC лоудер так как при билде сторибука в пайплайне орет на него
 
 для асинхронных прогонов пайплайнов прописываем if: always()
 

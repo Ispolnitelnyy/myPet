@@ -75,5 +75,20 @@ export default ({ config }: { config: webpack.Configuration }) => {
       test: /\.svg$/,
       use: ["@svgr/webpack"],
    }); // впмсываем лоудер svg для отображения svg в sidebar
+   config.module.rules.push({
+      test: /\.tsx?$/,
+      use: {
+         loader: "swc-loader",
+         options: {
+            jsc: {
+               parser: {
+                  syntax: "typescript",
+                  tsx: true,
+               },
+               target: "es2015",
+            },
+         },
+      },
+   }); // впмсываем SWC лоудер так как при биде в пайплайне орет на его
    return config;
 };
