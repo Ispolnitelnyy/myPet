@@ -18,5 +18,5 @@
       "./config/test/setupTest.ts",
       "**/*.ts",
       "**/*.tsx"
-   ]
+, "updateLokiTimeout.js"   ]
 }

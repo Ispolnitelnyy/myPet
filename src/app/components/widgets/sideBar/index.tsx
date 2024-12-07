@@ -4,6 +4,11 @@ import { useRef, useState } from "react";
 import ThemeSwicherButton from "../themeSwicherButton";
 import { LangSwitcherButton } from "../langSwitherButton";
 import GetErrorButton from "../getErrorButton";
+import Button, {
+   SizesButtonEnums,
+   ThemeButtonEnums,
+} from "app/components/shared/ui/button";
+import SideBarHeader from "./sideBarHeader";
 
 interface SideBarProps {
    className?: string;
@@ -20,6 +25,9 @@ export const SideBar = ({ className }: SideBarProps) => {
          setCollapsed(true);
       });
    };
+   const onToggle = () => {
+      setCollapsed((prev) => !prev);
+   };
 
    return (
       <div
@@ -30,6 +38,16 @@ export const SideBar = ({ className }: SideBarProps) => {
          onMouseEnter={open}
          onMouseLeave={closed}
       >
+         <SideBarHeader collapsed={collapsed} />
+         <Button
+            data-testid="sidebar-toggle"
+            onClick={onToggle}
+            className={cls.collapsebtn}
+            theme={ThemeButtonEnums.BACKGROUND_INVERTED}
+            size={SizesButtonEnums.M}
+         >
+            {collapsed ? ">" : "<"}
+         </Button>
          {!collapsed && (
             <div className={cls.switcher}>
                <ThemeSwicherButton />
