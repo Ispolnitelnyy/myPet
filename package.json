@@ -15,9 +15,11 @@
       "test:unit": "jest --config ./config/test/jest.config.ts",
       "test:ui": "npx loki init --config ./config/storybook",
       "test:ui:ok": "npx loki approve",
-      "test:ui:ci": "npx loki --requireReference --reactUri file:./storybook-static",
+      "test:ui:ci": "npm run update-loki-timeout && npx loki --requireReference --reactUri file:./storybook-static",
       "storybook": "storybook dev -p 6006 -c ./config/storybook",
-      "storybook:build": "storybook build -c ./config/storybook"
+      "storybook:build": "storybook build -c ./config/storybook",
+      "update-loki-timeout": "node updateLokiTimeout.js",
+      "loki-test": "npm run update-loki-timeout && npx loki test"
    },
    "keywords": [],
    "author": "",
@@ -112,7 +114,8 @@
             "width": 1366,
             "height": 768,
             "deviceScaleFactor": 1,
-            "mobile": false
+            "mobile": false,
+            "timeout": 30000
          },
          "chrome.iphone7": {
             "target": "chrome.app",

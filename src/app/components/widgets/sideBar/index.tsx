@@ -30,34 +30,32 @@ export const SideBar = ({ className }: SideBarProps) => {
    };
 
    return (
-      <>
-         <div
-            data-testid="sidebar"
-            className={classNames(cls.sidebar, { [cls.collapsed]: collapsed }, [
-               className,
-            ])}
-            onMouseEnter={open}
-            onMouseLeave={closed}
+      <div
+         data-testid="sidebar"
+         className={classNames(cls.sidebar, { [cls.collapsed]: collapsed }, [
+            className,
+         ])}
+         onMouseEnter={open}
+         onMouseLeave={closed}
+      >
+         <SideBarHeader collapsed={collapsed} />
+         <Button
+            data-testid="sidebar-toggle"
+            onClick={onToggle}
+            className={cls.collapsebtn}
+            theme={ThemeButtonEnums.BACKGROUND_INVERTED}
+            size={SizesButtonEnums.M}
          >
-            <SideBarHeader collapsed={collapsed}/>
-            <Button
-               data-testid="sidebar-toggle"
-               onClick={onToggle}
-               className={cls.collapsebtn}
-               theme={ThemeButtonEnums.BACKGROUND_INVERTED}
-               size={SizesButtonEnums.L}
-            >
-               {collapsed ? ">" : "<"}
-            </Button>
-            {!collapsed && (
-               <div className={cls.switcher}>
-                  <ThemeSwicherButton />
-                  <LangSwitcherButton className={cls.lang} />
-                  <GetErrorButton />
-               </div>
-            )}
-         </div>
-      </>
+            {collapsed ? ">" : "<"}
+         </Button>
+         {!collapsed && (
+            <div className={cls.switcher}>
+               <ThemeSwicherButton />
+               <LangSwitcherButton className={cls.lang} />
+               <GetErrorButton />
+            </div>
+         )}
+      </div>
    );
 };
 

@@ -499,7 +499,17 @@ sidebar-refactor/UI-screenshots-test-report
 Полифилл util может потребоваться, если он ещё не установлен `npm install util --save-dev`
 
 пробую починить скринщотные тесты, установлю их по новой
-
+есть проблема. что хром который использует локи не успевает за 10 секунт заскринить некоторые компоненты
+` FAIL  chrome.app/chrome.laptop/Pages/CounterPage
+       Light Theme Counter Page
+       Timeout after 10000ms
+       Dark Theme Counter Page
+       Timeout after 10000ms
+ PASS  chrome.app/chrome.laptop/Pages/TranslatorPage`
+здесь 2 страницы, одна из них не успела обработаться.
+`D:\code\myPet\node_modules\@loki\browser\src\await-selector-present.js` нашел где устанавливается значение
+попробую поиграться с этим
+c 45000 страницы грузятся (загрущились 1 раз)
 
 для асинхронных прогонов пайплайнов прописываем if: always()
 
