@@ -1,4 +1,4 @@
-import ErrorBoundaryPage from "app/components/widgets/errorBoundaryPage";
+import ErrorBoundaryPage from "widgets/errorBoundaryPage";
 import React, { Suspense } from "react";
 // import { withTranslation } from "react-i18next";
 

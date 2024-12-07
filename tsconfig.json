@@ -1,22 +1,40 @@
 {
+   // Задает параметры для компилятора TypeScript
    "compilerOptions": {
+      // Указывает папку, куда компилятор будет помещать скомпилированные файлы
       "outDir": "./dist/",
+      // Подсвечивает все места где не указан тип
       "noImplicitAny": true,
+      // Определяет формат модулей для экспорта/импорта
       "module": "ESNext",
+      // Указывает, до какой версии JavaScript компилировать TypeScript
       "target": "es5",
-      "jsx": "react-jsx",
+      // Указывает способ обработки JSX
+      "jsx": "react-jsx", // не требует импорта React в файле.
+      // Компилятор будет обрабатывать не только TS файлы, но и JS файлы
       "allowJs": true,
-      "moduleResolution": "node",
-      "baseUrl": ".",
-      "paths": { "*": ["./src/*"] },
+      // Указывает стратегию поиска модулей
+      "moduleResolution": "node", //поиск модулей будет аналогичен работе Node.js.
+      // Базовая директория для абсолютных путей
+      "baseUrl": ".", // корень проекта будет базовой директорией
+      // Настраивает пути для абсолютных импортов
+      "paths": { "*": ["./src/*"] }, // позволяет писать from 'module' вместо from './src/module'
+      // Позволяет использовать синтаксис импорта по умолчанию для модулей,
+      // которые экспортируют значения через CommonJS
       "allowSyntheticDefaultImports": true,
-      "esModuleInterop": true
+      //  Позволяет использовать CommonJS-модули так, как если бы они были модулями
+      "esModuleInterop": true // Вместо import * as fs from 'fs'; можно писать import fs from 'fs';
    },
-   "ts-node": { "compilerOptions": { "module": "CommonJS" } },
+   // инструмент, позволяющий выполнять TypeScript напрямую
+   "ts-node": { "compilerOptions": { "module": "CommonJS" } }, //Указывает, что модульный формат для ts-node будет "CommonJS". Это нужно для совместимости с Node.js
+   // Задает плагины, которые расширяют функциональность TypeScript
    "plugins": [{ "name": "typed-scss-modules" }],
+   // Указывает, какие файлы и папки включать в процесс компиляции
    "include": [
-      "./config/test/setupTest.ts",
+      "config/tests/setupTest.ts",
       "**/*.ts",
-      "**/*.tsx"
-, "updateLokiTimeout.js"   ]
+      "**/*.tsx",
+      "./scripts/updateLokiTimeout.ts",
+      "./config/build/loaders/index.ts" // проверка будет ли работать
+   ]
 }

@@ -1,14 +1,15 @@
-import "./styles/index.scss";
-import { useTheme } from "./components/widgets/themeSwicherButton/hook";
-import { NavBar } from "./components/widgets/navBar";
+import { useTheme } from "./providers/themeProvider/useTheme";
+import { NavBar } from "../widgets/navBar";
 import { AppRouter } from "./providers";
-import SideBar from "./components/widgets/sideBar";
+import SideBar from "../widgets/sideBar";
 import { Suspense } from "react";
+import { classNames } from "shared/helpers/classNames";
 
 export const App = (): JSX.Element => {
    const { theme } = useTheme();
+
    return (
-      <div className={`app ${theme}`}>
+      <div className={classNames("app", {}, [theme])}>
          <Suspense fallback="">
             <NavBar />
             <div className="content-page">
