@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { AppLink, AppLinkEnum } from ".";
 import { ThemeDecorator } from "shared/configs/storybook/decorators/themeDecorator";
-import { ThemeStateEnums } from "app/providers/themeProvider";
 import { RouterDecorator } from "../../configs/storybook/decorators/routerDecorator";
+import { ThemeStateEnums } from "app/providers/themeProvider/themeContext";
 const meta = {
    title: "Shared/AppLink",
    component: AppLink,

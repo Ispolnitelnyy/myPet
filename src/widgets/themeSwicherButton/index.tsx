@@ -3,7 +3,7 @@ import { classNames } from "shared/helpers/classNames";
 import LightIcon from "../../../public/assets/icons/theme-light.svg";
 import DarkIcon from "../../../public/assets/icons/theme-dark.svg";
 import Button, { ThemeButtonEnums } from "shared/ui/button";
-import { ThemeStateEnums } from "app/providers/themeProvider";
+import { ThemeStateEnums } from "app/providers/themeProvider/themeContext";
 
 
 interface ThemeSwicherButtonProps {

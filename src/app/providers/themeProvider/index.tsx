@@ -1,29 +1,33 @@
 import {
    LOCAL_STORAGE_THEME_KEY,
    ThemeContext,
+   ThemeStateEnums,
 } from "app/providers/themeProvider/themeContext";
 import { FC, ReactNode, useMemo, useState } from "react";
 
-interface ThemeProviderProps {
-   children: ReactNode;
-}
-
-export enum ThemeStateEnums {
-   DARK = "dark",
-   LIGHT = "light",
-}
 
 const defaultTheme =
    (localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as ThemeStateEnums) ||
    ThemeStateEnums.DARK;
 
-export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
-   const [theme, setTheme] = useState<ThemeStateEnums>(defaultTheme);
+
+
+interface ThemeProviderProps {
+   initialTheme?: ThemeStateEnums;
+   children: ReactNode;
+}
+
+
+
+export const ThemeProvider: FC<ThemeProviderProps> = (props) => {
+   const { initialTheme, children } = props;
+
+   const [theme, setTheme] = useState<ThemeStateEnums>(initialTheme || defaultTheme);
 
    const defaultProps = useMemo(
       () => ({
-         theme: theme,
-         setTheme: setTheme,
+          theme,
+          setTheme,
       }),
       [theme]
    );

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { SideBar } from ".";
-import { ThemeStateEnums } from "app/providers/themeProvider";
 import { ThemeDecorator } from "shared/configs/storybook/decorators/themeDecorator";
 import { RouterDecorator } from "shared/configs/storybook/decorators/routerDecorator";
+import { ThemeStateEnums } from "app/providers/themeProvider/themeContext";
 const meta = {
    title: "Widgets/SideBar",
    component: SideBar,

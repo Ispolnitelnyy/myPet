@@ -1,5 +1,9 @@
 import { createContext } from "react";
-import { ThemeStateEnums } from "..";
+
+export enum ThemeStateEnums {
+   DARK = "dark",
+   LIGHT = "light",
+}
 
 export interface themeContextProps {
    theme?: ThemeStateEnums;

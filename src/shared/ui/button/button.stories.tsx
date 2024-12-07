@@ -4,7 +4,7 @@ import { Button, SizesButtonEnums, ThemeButtonEnums } from ".";
 // import "../../../../styles/index.scss"; // рабочий импорт
 // import "app/styles/index.scss"; // рабочий импорт
 import { ThemeDecorator } from "shared/configs/storybook/decorators/themeDecorator";
-import { ThemeStateEnums } from "app/providers/themeProvider";
+import { ThemeStateEnums } from "app/providers/themeProvider/themeContext";
 const meta = {
    title: "Shared/Button",
    component: Button,
