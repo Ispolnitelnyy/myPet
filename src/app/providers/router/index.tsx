@@ -1,5 +1,5 @@
-import { routeConfig } from "app/components/shared/configs/routes";
-import PageLoader from "app/components/widgets/pageLoader";
+import { routeConfig } from "shared/configs/routes";
+import PageLoader from "widgets/pageLoader";
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 

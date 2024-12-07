@@ -12,14 +12,14 @@
       "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
       "stylelint:scss": "npx stylelint \"**/*.scss\"",
       "stylelint:scss:fix": "npx stylelint \"**/*.scss\" --fix",
-      "test:unit": "jest --config ./config/test/jest.config.ts",
+      "test:unit": "jest --config ./config/tests/jest.config.ts",
       "test:ui": "npx loki init --config ./config/storybook",
       "test:ui:ok": "npx loki approve",
       "test:ui:ci": "npm run update-loki-timeout && npx loki --requireReference --reactUri file:./storybook-static",
       "storybook": "storybook dev -p 6006 -c ./config/storybook",
       "storybook:build": "storybook build -c ./config/storybook",
-      "update-loki-timeout": "node updateLokiTimeout.js",
-      "loki-test": "npm run update-loki-timeout && npx loki test --concurrency 1"
+      "update-loki-timeout": "ts-node scripts/updateLokiTimeout.ts",
+      "loki-test": "npm run update-loki-timeout && npx loki test"
    },
    "keywords": [],
    "author": "",
@@ -40,6 +40,7 @@
       "@storybook/react-webpack5": "^8.4.6",
       "@storybook/test": "^8.4.6",
       "@svgr/webpack": "^8.1.0",
+      "@swc/core": "1.2.122",
       "@testing-library/dom": "^10.4.0",
       "@testing-library/jest-dom": "^6.6.3",
       "@testing-library/react": "^16.0.1",
@@ -63,6 +64,7 @@
       "eslint-plugin-n": "^16.6.2",
       "eslint-plugin-promise": "^6.6.0",
       "eslint-plugin-react": "^7.37.2",
+      "eslint-plugin-react-hooks": "^5.1.0",
       "eslint-plugin-storybook": "^0.11.1",
       "file-loader": "^6.2.0",
       "globals": "^15.13.0",
@@ -81,7 +83,7 @@
       "stylelint": "^16.11.0",
       "stylelint-config-standard-scss": "^14.0.0",
       "stylelint-scss": "^6.10.0",
-      "swc-loader": "^0.2.6",
+      "swc-loader": "0.1.15",
       "ts-jest": "^29.2.5",
       "ts-loader": "^9.5.1",
       "ts-node": "^10.9.2",
@@ -103,6 +105,10 @@
       "react-i18next": "^11.15.5",
       "react-router-dom": "^7.0.1"
    },
+   "overrides": {
+      "@swc/core": "1.2.122",
+      "swc-loader": "0.1.15"
+   },
    "eslintConfig": {
       "extends": [
          "plugin:storybook/recommended"
@@ -111,7 +117,7 @@
    "loki": {
       "configurations": {
          "chrome.laptop": {
-            "target": "chrome.app",
+            "target": "chrome.docker",
             "width": 1366,
             "height": 768,
             "deviceScaleFactor": 1,
@@ -119,7 +125,7 @@
             "timeout": 30000
          },
          "chrome.iphone7": {
-            "target": "chrome.app",
+            "target": "chrome.docker",
             "preset": "iPhone 7"
          }
       }

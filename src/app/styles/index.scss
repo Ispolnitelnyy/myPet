@@ -3,19 +3,16 @@
 @use "./themes/darkTheme/index.scss" as dark;
 @use "./themes/lightTheme/index.scss" as light;
 
-@font-face {
-   font-family: Michroma;
-   font-weight: normal;
-   font-style: normal;
-   src: url("../static/assets/fonts/Michroma-Regular.ttf") format("truetype");
-
-   // src: url("~stattic/assets/fonts/Michroma-Regular.ttf") format("truetype");
+body {
+   font: var(--font-m);
+   color: var(--primary-color);
+   background: var(--bg-color);
 }
 
 .app {
-   font-family: var(--font-family-main);
-   background-color: var(--bg-color);
+   font: var(--font-m);
    color: var(--primary-color);
+   background: var(--bg-color);
    min-height: 100vh;
 }
 
@@ -27,3 +24,25 @@
    flex-grow: 1;
    padding: 20px;
 }
+
+// старые стили
+// .body {
+//    color: var(--primary-color);
+//    font-family: var(--font-family-main);
+//    background-color: var(--bg-color);
+// }
+// .app {
+//    color: var(--primary-color);
+//    background-color: var(--bg-color);
+//    min-height: 100vh;
+//    font-family: var(--font-family-main);
+// }
+
+// .content-page {
+//    display: flex;
+// }
+
+// .page-wrapper {
+//    flex-grow: 1;
+//    padding: 20px;
+// }

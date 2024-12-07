@@ -1,0 +1,78 @@
+.button {
+   cursor: pointer;
+   color: var(--primary-color);
+   padding: 5px 15px;
+}
+
+.clear {
+   padding: 0;
+   border: none;
+   background: none;
+   outline: none;
+}
+
+.clearinverted {
+   padding: 0;
+   border: none;
+   background: none;
+   outline: none;
+   color: var(--invert-primary-color);
+}
+
+.outline {
+   border: 1px solid var(--invert-secondary-color);
+   color: var(--invert-secondary-color);
+   background: none;
+}
+
+.background {
+   background: var(--bg-color);
+   color: var(--primary-color);
+   border: none;
+}
+
+.backgroundinverted {
+   background: var(--invert-bg-color);
+   color: var(--invert-primary-color);
+   border: none;
+}
+
+.square {
+   padding: 0;
+}
+
+.square.sizem {
+   width: var(--font-line-m);
+   height: var(--font-line-m);
+}
+
+.square.sizel {
+   width: var(--font-line-l);
+   height: var(--font-line-l);
+}
+
+.square.sizexl {
+   width: var(--font-line-xl);
+   height: var(--font-line-xl);
+}
+
+.square.sizexxl {
+   width: var(--font-line-xxl);
+   height: var(--font-line-xxl);
+}
+
+.sizem {
+   font-size: var(--font-size-m);
+}
+
+.sizel {
+   font-size: var(--font-size-l);
+}
+
+.sizexl {
+   font-size: var(--font-size-xl);
+}
+
+.sizexxl {
+   font-size: var(--font-size-xxl);
+}

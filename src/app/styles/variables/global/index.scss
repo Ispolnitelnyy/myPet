@@ -1,21 +1,28 @@
 :root {
-  --font-family-main: "Michroma", "Times New Roman", serif;
-  --font-size-m: 16px;
-  --font-line-m: 24px;
-  --font-m: var(--font-size-m) / var(--font-size-m) var(--font-family-main);
-  --font-size-l: 24px;
-  --font-line-l: 32px;
-  --font-l: var(--font-size-l) / var(--font-size-l) var(--font-family-main);
-  --font-size-xl: 32px;
-  --font-line-xl: 40px;
-  --font-xl: var(--font-size-xl) / var(--font-size-xl) var(--font-family-main);
-  --font-size-xxl: 40px;
-  --font-line-xxl: 48px;
-  --font-xxl: var(--font-size-xxl) / var(--font-size-xxl) var(--font-family-main);
+   --font-family-main: consolas, "Times New Roman", serif;
+   --font-size-m: 16px;
+   --font-line-m: 24px;
+   --font-m: var(--font-size-m) / var(--font-size-m) var(--font-family-main);
+   --font-size-l: 24px;
+   --font-line-l: 32px;
+   --font-l: var(--font-size-l) / var(--font-size-l) var(--font-family-main);
+   --font-size-xl: 32px;
+   --font-line-xl: 40px;
+   --font-xl: var(--font-size-xl) / var(--font-size-xl) var(--font-family-main);
+   --font-size-xxl: 40px;
+   --font-line-xxl: 48px;
+   --font-xxl: var(--font-size-xxl) / var(--font-size-xxl)
+      var(--font-family-main);
 
-  // размеры
+   // размеры
 
-  --navbar-height: 50px;
-  --sidebar-width: 250px;
-  --sidebar-width-collapsed: 41px;
+   --navbar-height: 50px;
+   --sidebar-width: 250px;
+   --sidebar-width-collapsed: 40px;
+
+   // z-индексы
+   --modal-z-index: 10px;
+
+   // цвета
+   --overlay-color: rgba(0 0 0 / 50%);
 }
