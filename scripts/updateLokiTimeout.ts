@@ -46,4 +46,4 @@ const updateTimeout = (timeoutValue: TimeoutValue): void => {
 };
 
 // Вызываем функцию с новым значением таймаута
-updateTimeout(5000);
+updateTimeout(45000);
