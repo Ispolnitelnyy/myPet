@@ -8,10 +8,3 @@ export function createReduxStore(initialState?: StateSchema){
    preloadedState: initialState // принимаем данные (для тестов) в initialState
 });
 }
-
-
-
-// // экспорт типов RootState и AppDispatch из самого store.
-// export type RootState = ReturnType<ReturnType<typeof createReduxStore>['getState']>;
-// // Предполагаемый тип: {posts: PostsState, comments: CommentsState, users: UsersState}
-// export type AppDispatch = ReturnType<typeof createReduxStore>['dispatch'];
