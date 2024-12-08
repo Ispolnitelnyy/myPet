@@ -561,7 +561,7 @@ onKeyDown - стрелочная функция, и на каждый перер
 branch:  
 ReduxToolKit
 
-`npm install @reduxjs/toolkit react-redux`
+`npm install @reduxjs/toolkit react-redux @types/react-redux`
 чтобы редакс работал, нужно все приложение обернуть в провайдер
 провайдер `src\app\providers\redux\storeProvider\index.tsx`
 так же необходима дерриктория со стором где будем конфигурировать сам redux `app\providers\redux\storeProvider\store`
