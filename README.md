@@ -556,7 +556,11 @@ onKeyDown - стрелочная функция, и на каждый перер
 вобщем со скриншотами пока оставлю, не супер важно, как дойду до докера, так вернусь к ним
 
 ---
+30 Redux-toolkit. Entity. Тесты на всех уровнях  
+branch:  
+ReduxToolKit  
 
+`npm install @reduxjs/toolkit react-redux`
 ---
 
 ---
