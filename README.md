@@ -584,7 +584,9 @@ Store принимает 3 джинерика, для стэйта, экшено
 для тестов в createReduxStore не работае абсолютный импорт решение: прописать в конфиге jest `moduleNameMapper: {"^entities/(.*)$": "<rootDir>/src/entities/$1"}`
 
 ---
-
+31 Исправляем глобальные стили для Modal  
+branch:  
+modalStelesFixed  
 ---
 
 ---

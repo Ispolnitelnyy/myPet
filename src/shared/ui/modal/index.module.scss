@@ -19,10 +19,7 @@
 .content {
    padding: 20px;
    border-radius: 12px;
-
-   // background-color: var(--bg-color); // не определяется так как портал вне провайдера темы
-   // тоже самое со шрифтами, в дальнейшем исправим
-   background-color: rgb(216 216 216); // хардкод
+   background-color: var(--bg-color);
    transition: 0.3s transform;
    transform: scale(0.5);
    max-width: 60%;
