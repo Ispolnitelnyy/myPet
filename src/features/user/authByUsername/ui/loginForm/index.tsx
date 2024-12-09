@@ -12,8 +12,13 @@ export const LoginForm = ({ className }: LoginFormProps) => {
    const { t } = useTranslation();
    return (
       <div className={classNames(cls.loginform, {}, [className])}>
-         <Input className={cls.input} type="text"/>
-         <Input className={cls.input} type="password"/>
+         <Input
+            autofocus={true}
+            placeholder="Логин"
+            className={cls.input}
+            type="text"
+         />
+         <Input placeholder="Пароль" className={cls.input} type="password" />
          <Button className={cls.loginbtn}>{t("Войти")}</Button>
       </div>
    );
