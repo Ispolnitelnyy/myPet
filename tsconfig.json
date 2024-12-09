@@ -35,6 +35,7 @@
       "**/*.ts",
       "**/*.tsx",
       "./scripts/updateLokiTimeout.ts",
+      "./json-server/**/*.ts",
       "./config/build/loaders/index.ts" // проверка будет ли работать
    ]
 }
