@@ -3,15 +3,18 @@
 @use "./themes/darkTheme/index.scss" as dark;
 @use "./themes/lightTheme/index.scss" as light;
 
-body {
+.app,
+.appmodal{
    font: var(--font-m);
    color: var(--primary-color);
-   background: var(--bg-color);
 }
 
+// body {
+//    font: var(--font-m);
+//    color: var(--primary-color);
+// }
+
 .app {
-   font: var(--font-m);
-   color: var(--primary-color);
    background: var(--bg-color);
    min-height: 100vh;
 }
