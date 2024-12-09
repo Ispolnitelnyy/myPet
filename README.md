@@ -607,6 +607,10 @@ npm install json-server
 
 ---
 
+32 Кастомный Input. Окно авторизации. Lazy modal  
+branch:  
+customInput/autorizationForm
+
 ---
 
 что еще сделать:  

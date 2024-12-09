@@ -1,10 +1,10 @@
 @use "./cssReset/index.scss" as reset;
 @use "./variables/global/index.scss" as global;
-@use "./themes/darkTheme/index.scss" as dark;
-@use "./themes/lightTheme/index.scss" as light;
+@use "./themes/darkTheme/index.scss" as appdarktheme;
+@use "./themes/lightTheme/index.scss" as applighttheme;
 
 .app,
-.appmodal{
+.appmodal {
    font: var(--font-m);
    color: var(--primary-color);
 }
