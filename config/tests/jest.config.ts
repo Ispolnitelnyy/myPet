@@ -7,6 +7,9 @@ import type { Config } from "jest";
 import path from "path";
 
 const config: Config = {
+   globals: {
+      __IS_DEV__: true,
+   },
    testEnvironment: "jsdom",
    modulePaths: ["<rootDir>src"],
 
@@ -52,8 +55,12 @@ const config: Config = {
       //    "<rootDir>/__mocks__/fileMock.js",
       "\\.s?css$": "identity-obj-proxy",
       "\\.module\\.scss$": "identity-obj-proxy",
-      "\\.svg": path.resolve(__dirname, "./mockComponent/jestEmptyComponent.tsx"),
-      
+      "\\.svg": path.resolve(
+         __dirname,
+         "./mockComponent/jestEmptyComponent.tsx"
+      ),
+      "^entities/(.*)$": "<rootDir>/src/entities/$1",
+      "^shared/(.*)$": "<rootDir>/src/shared/$1",
    },
 
    // The test environment that will be used for testing

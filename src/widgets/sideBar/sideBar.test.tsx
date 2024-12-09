@@ -1,12 +1,12 @@
 import {
    fireEvent,
-   render,
    screen,
    waitFor,
    act,
 } from "@testing-library/react";
 import SideBar from ".";
 import { ComponentRender } from "shared/configs/tests/componentRender";
+// import { ComponentRender } from "../../shared/configs/tests/componentRender";
 
 describe("SideBar tests", () => {
    it("render SideBar component", () => {
