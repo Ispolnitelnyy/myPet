@@ -1,5 +1,6 @@
-import { counterReducer } from "entities/counter/model/slice";
 import { configureStore } from "@reduxjs/toolkit";
+import { counterReducer } from "entities/counter/model/slice"; // не работает абсолюттный путь
+// import { counterReducer } from "../../../../../entities/counter/model/slice";
 import { StateSchema } from "./stateSchema";
 
 export function createReduxStore(initialState?: StateSchema) {

@@ -1,5 +1,4 @@
-import { DeepPartial } from "./../../../../../node_modules/@types/react-redux/node_modules/redux/index.d";
-import { StateSchema } from "app/providers/redux/storeProvider/store/stateSchema";
+
 import { counterActions, counterReducer } from ".";
 import { CounterSchema } from "../types";
 
