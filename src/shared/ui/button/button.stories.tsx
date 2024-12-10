@@ -157,3 +157,20 @@ export const squareButtonSizeXXL: Story = {
       square: true,
    },
 };
+export const disabled: Story = {
+   decorators: [ThemeDecorator(ThemeStateEnums.LIGHT)],
+   args: {
+      children: "disabled effect",
+      theme: ThemeButtonEnums.BACKGROUND_INVERTED,
+      disabled: true,
+   },
+};
+
+export const disabledDark: Story = {
+   decorators: [ThemeDecorator(ThemeStateEnums.DARK)],
+   args: {
+      children: "disabled effect",
+      theme: ThemeButtonEnums.BACKGROUND_INVERTED,
+      disabled: true,
+   },
+};
