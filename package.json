@@ -20,7 +20,8 @@
       "storybook": "storybook dev -p 6006 -c ./config/storybook",
       "storybook:build": "storybook build -c ./config/storybook",
       "update-loki-timeout": "ts-node scripts/updateLokiTimeout.ts",
-      "loki-test": "npm run update-loki-timeout && npx loki test"
+      "loki-test": "npm run update-loki-timeout && npx loki test",
+      "prepare": "husky install"
    },
    "keywords": [],
    "author": "",
@@ -97,7 +98,8 @@
       "webpack": "^5.96.1",
       "webpack-bundle-analyzer": "^4.10.2",
       "webpack-cli": "^5.1.4",
-      "webpack-dev-server": "^5.1.0"
+      "webpack-dev-server": "^5.1.0",
+      "husky": "^8.0.0"
    },
    "dependencies": {
       "@reduxjs/toolkit": "^2.4.0",
