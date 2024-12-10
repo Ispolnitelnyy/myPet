@@ -10,6 +10,7 @@ import { loginActions } from "../../model/slice";
 import { getLoginState } from "../../model/selectors/getLoginState";
 import { loginByUsername } from "../../model/services/loginByUsername";
 import { useAppDispatch, useAppSelector } from "app/providers/redux/hooks";
+import Text, { TextThemeEnums } from "shared/ui/text";
 
 interface LoginFormProps {
    className?: string;
@@ -42,7 +43,8 @@ export const LoginForm = memo(({ className }: LoginFormProps) => {
    const { t } = useTranslation();
    return (
       <div className={classNames(cls.loginform, {}, [className])}>
-         {error && <div>{error} </div>}
+         <Text title={"Авторизация"} />
+         {error && <Text text={error} theme={TextThemeEnums.ERROR} />}
          <Input
             autofocus={true}
             placeholder="Логин"
