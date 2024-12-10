@@ -2,7 +2,7 @@ import {
    BuildOptionsStorybook,
    BuildPathStorybook,
 } from "../build/types/config";
-import webpack, { RuleSetRule } from "webpack";
+import webpack, { DefinePlugin, RuleSetRule } from "webpack";
 import { getLoader } from "../build/loaders/index";
 import path from "path";
 
@@ -27,6 +27,7 @@ export default ({ config }: { config: webpack.Configuration }) => {
       return rule;
    });
    config.module.rules.push(getLoader().svgLoader); // впмсываем лоудер svg для отображения svg в sidebar
+   config.plugins.push(new DefinePlugin({ __IS_DEV__: true })); //  __IS_DEV__ не определен. Не удалось правильно отобразить компонент, вероятно, из-за проблемы с конфигурацией в Storybook.
 
    return config;
 };

@@ -4,8 +4,8 @@ import {
    combineReducers,
 } from "@reduxjs/toolkit";
 import { StateSchema } from "./stateSchema";
-import { counterReducer } from "entities/counter/model/slice";
-import { userReducer } from "entities/user/model/slice";
+import { counterReducer } from "../../../../../entities/counter/model/slice";
+import { userReducer } from "../../../../../entities/user/model/slice";
 import { loginReducer } from "features/user/authByUsername/model/slice";
 
 export function createReduxStore(initialState?: StateSchema) {
