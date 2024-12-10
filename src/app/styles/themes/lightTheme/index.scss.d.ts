@@ -1,2 +1,1 @@
-export declare const app: string;
-export declare const light: string;
+export declare const applighttheme: string;

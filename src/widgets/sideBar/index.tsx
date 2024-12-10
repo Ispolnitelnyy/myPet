@@ -35,7 +35,7 @@ export const SideBar = ({ className }: SideBarProps) => {
          onMouseEnter={open}
          onMouseLeave={closed}
       >
-         <div className={cls.items}>
+         <div>
             <SideBarHeader collapsed={collapsed} />
          </div>
          <Button
