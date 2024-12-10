@@ -633,6 +633,14 @@ husky
 
 ---
 
+34 Авторизация. Reducers, slices, async thunk. Custom text  
+branch:  
+auth/asyncThunk  
+
+
+$ npm i axios
+---
+
 что еще сделать:  
 деклорация через 1 глобальную деклорацию scss модулей  
 https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint  
