@@ -1,0 +1,31 @@
+.component {
+   .title {
+      font-size: var(--font-size-l);
+      color: var(--primary-color);
+   }
+
+   .text {
+      font-size: var(--font-size-m);
+      color: var(--secondary-color);
+   }
+}
+
+.primary {
+   .title {
+      color: var(--primary-color);
+   }
+
+   .text {
+      color: var(--secondary-color);
+   }
+}
+
+.error {
+   .title {
+      color: var(--red-light);
+   }
+
+   .text {
+      color: var(--red-dark);
+   }
+}

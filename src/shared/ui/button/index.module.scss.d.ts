@@ -3,6 +3,7 @@ export declare const backgroundinverted: string;
 export declare const button: string;
 export declare const clear: string;
 export declare const clearinverted: string;
+export declare const disabled: string;
 export declare const outline: string;
 export declare const sizel: string;
 export declare const sizem: string;

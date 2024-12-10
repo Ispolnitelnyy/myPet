@@ -253,23 +253,25 @@ npm install --save-dev stylelint stylelint-config-standard-scss
 для создания конфига: npm init @eslint/config  
 удалить еслинт глобально npm uninstall -g eslint  
 не получилось - последняя доступная версия 8.57.1  
-yстанавливаю посдеднюю:  
-`$ npm list eslint  
-mypet@1.0.0 D:\code\myPet  
-├─┬ @typescript-eslint/eslint-plugin@8.16.0  
-│ ├─┬ @typescript-eslint/type-utils@8.16.0  
-│ │ └── eslint@9.16.0 deduped  
-│ ├─┬ @typescript-eslint/utils@8.16.0  
-│ │ └── eslint@9.16.0 deduped  
-│ └── eslint@9.16.0 deduped  
-├─┬ @typescript-eslint/parser@8.16.0  
-│ └── eslint@9.16.0 deduped  
-├─┬ eslint-plugin-react@7.37.2  
-│ └── eslint@9.16.0 deduped  
-└─┬ eslint@9.16.0  
-  └─┬ @eslint-community/eslint-utils@4.4.1  
-    └── eslint@9.16.0 deduped`  
-\_\_\_  
+yстанавливаю посдеднюю:
+
+```$ npm list eslint
+mypet@1.0.0 D:\code\myPet
+├─┬ @typescript-eslint/eslint-plugin@8.16.0
+│ ├─┬ @typescript-eslint/type-utils@8.16.0
+│ │ └── eslint@9.16.0 deduped
+│ ├─┬ @typescript-eslint/utils@8.16.0
+│ │ └── eslint@9.16.0 deduped
+│ └── eslint@9.16.0 deduped
+├─┬ @typescript-eslint/parser@8.16.0
+│ └── eslint@9.16.0 deduped
+├─┬ eslint-plugin-react@7.37.2
+│ └── eslint@9.16.0 deduped
+└─┬ eslint@9.16.0
+  └─┬ @eslint-community/eslint-utils@4.4.1
+    └── eslint@9.16.0 deduped`
+```
+
 пошел в доку https://eslint.org/docs/latest/use/getting-started  
  там предлагается команда npm init @eslint/config@latest
 
@@ -633,25 +635,71 @@ husky
 
 ---
 
-что еще сделать:  
-деклорация через 1 глобальную деклорацию scss модулей  
-https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint  
-метод toBeInTheDocument - посмотреть что делает в ролике про тесты  
+34 Авторизация. Reducers, slices, async thunk. Custom text  
+branch:  
+auth/asyncThunk
+
+создаем loginSchema которая будет отвечать за состояние авторизации
+создаем loginSlise гле в redusers сможем хранить actions которыми сможем воспользоваться через dispatch чтобы установить необходимое значение state  
+чтобы избежать лишних перерисовок loginForm оборачиваем его в мемо. для инпутов (пропса onChange) можем использовать обычный диспач с экшенами которые не асинхронные, при передачи функции пропсом в дочерний компонент необходимо ее обернуть в useCallback.  
+для того чтобы получать значения из инпутов нам необходимо создать селектор getloginState, откуда мы сможем получить данные о user (username и password) это нужно для пропса value в инпутах  
+инициализируем нашу loginForm в глобальной SateSchema, заодно передаем ее в редьюсеры глобального store  
+все селекторы необходимо разбтвать для мельчайших полей, отдельный для name, отдельный для password, отдельный для isLoading, отдельный для error  
+Реализация логина по нажатию кнопки:  
+вешаем onClick на кнопку, создаем хендлер, который будет вызывать диспач для передачи в асинхронный thunk значений для авторизации (username, password)
+теперь создаем сам thunk, loginByUsername, для подтверждения корректности данных нам нужно сделать запрос на сервер, делать буде с помощью `npm i axios`
+тип createAsyncThunk имеет несколько аргументов
+
+`````loginByUsername:createAsyncThunk<
+   User,  // Тип данных, которые возвращает thunk
+   LoginByUsernameProps,  // Тип аргументов для thunk
+   ThunkConfig<string>  // Типизация thunkAPI (состояние, dispatch, rejectValue)````
+
+с помощью rejectWithValue мы сможем обработать ошибки в сучае их получения
+
+для работы с полученными async данными нам в slice потребуется extraRedusers:
+где у нас по дефолту асинхронность даст нам 3 состояния pending fullfield rejected с которыми мы должны взаимодействовать через actions.payload и устанавливать (обработать) значения для всех 3х состояний
+вызываем в хендлере компонента dispatch для thunk `dispatch(loginByUsername({ username, password }))`
+столкнулся с ошибкой линтера: oбычный useDispatch не умет работать с асинхронными экшенами, для него необходимо указывать тип во время объявления хука. Документация предложила сделать кастомный универсальный хук useAppDispatch, который будет являться оберткой useDispatch<AppDispatch>() (диспача с типом),
+тут же не отхлдя от кассы проделал тоже самое с useAppSelector
+теперь можем совершать запросы
+во времф запросов хоро было бы обраьотать состояние pending на этот случай у нас есть селектор isLoading, задаем ему необходимые значения в slice loginByUsername.pending,
+так же в компоненте вешаем проверку на наличие true значения isLoading и в случае когда значение трушное, дизэйблим кнопку отправки  с помощью пропса disabled
+так же при получении ошибки будем выводить значение которое установили в catch санка loginByUsername и обработали в slice loginByUsername.rejected
+для вывода сообщения об ошибке хорошо было бы стилизовать его, для этого будем создавать еще 1 компонент ui kit такой как text, который будет принимать тип title or text и стилистику primary и error
+Данные которые мы получаем с сервера необходимо созранять в state и по наличию этих данных будем опрелять авторизован пользователь или нет
+в Thunk loginByUsername полученные данные будем записывать(за отсутствием бэкенда) в localstorage - `localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(response.data))`
+и тут же сразу будем пердвать значение в редьюсер слайса юзера `thunkAPI.dispatch(userActions.setAuthData(response.data));`
+в slice entity/user в редьюсер добавляем экшены setAuthData, initAuthData и logout
+где в setAuthData устанавливаем значение user как авторизованного (имея данные о нем)
+на случай если пользователь закрыл вкладку мы на уровне компонента App будем тянуть значение с lockalStorage и инициализировать юзера с двнными с помощью initAuthData экшена,
+ну и остается разлогиниться, в навбаре сделаем условие для отображения компонента кнопки на вход и на выход, флагом для этого будут значения селектора authData которое мы получим из `const authData = useAppSelector(getUserAuthData);`(если данные есть, показываем кнопку выхода, если данных нет - вход)
+по нажатию на кнопку выхода, запускаем хендлер который содержит диспач с экшеном logout, который в свою очередь удалит данные из lockalstorage и установит state.authData = undefined;
+
+осталось добавить компоненты в сторибук, для этого нужно сделать декоратор еоторый будет оборачивать <StoryComponent/> в storeProvider, чтобы подружить систему хранения стора редакса с сторибуком
+так же у нас используется глобальная переменная __IS_DEV__ сторибук про нее ничего не знает, но это исправляется добавлением definePlugin в конфиг вэбпака сторибука
+---
+
+что еще сделать:
+деклорация через 1 глобальную деклорацию scss модулей
+https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint
+метод toBeInTheDocument - посмотреть что делает в ролике про тесты
 скриншотные тесты в пайплайне
 бэкграугд для контента в оверлее захардкодил (не отрабатывает тема в сторибуке на модалке)
 
 ---
 
-для заметки:  
-чтобы убрать коммиты из удаленного репозитория  
-Сначала синхронизируйте локальный репозиторий с удалённым  
-1 git fetch origin  
-2 git pull origin <имя ветки>  
-смотрим истории комитов и выбираем SHAкомита к которому нужно откатиться  
-3 git log  
-4 git reset --soft SHAкомита  
-создаем новый коммит  
-5 git add -A  
-6 git commit -m 'тест'  
-перезаписывем историю на удалённом репозитории  
+для заметки:
+чтобы убрать коммиты из удаленного репозитория
+Сначала синхронизируйте локальный репозиторий с удалённым
+1 git fetch origin
+2 git pull origin <имя ветки>
+смотрим истории комитов и выбираем SHAкомита к которому нужно откатиться
+3 git log
+4 git reset --soft SHAкомита
+создаем новый коммит
+5 git add -A
+6 git commit -m 'тест'
+перезаписывем историю на удалённом репозитории
 7 git push origin <имя ветки> --force
+`````
