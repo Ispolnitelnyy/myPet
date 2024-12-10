@@ -6,9 +6,9 @@ import Input from "shared/ui/input";
 import { useDispatch } from "react-redux";
 import { memo, useCallback } from "react";
 import { loginActions } from "../../model/slice";
-import { useSelector } from "react-redux";
 import { getLoginState } from "../../model/selectors/getLoginState";
 import { loginByUsername } from "../../model/services/loginByUsername";
+import { useAppDispatch, useAppSelector } from "app/providers/redux/hooks";
 import { AppDispatch } from "app/providers/redux/storeProvider/store";
 
 interface LoginFormProps {
@@ -16,7 +16,8 @@ interface LoginFormProps {
 }
 
 export const LoginForm = memo(({ className }: LoginFormProps) => {
-   const dispatch = useDispatch<AppDispatch>();
+   // const dispatch = useDispatch<AppDispatch>();
+   const dispatch = useAppDispatch();
 
    const onChangeUsername = useCallback(
       (value: string) => {
@@ -31,7 +32,7 @@ export const LoginForm = memo(({ className }: LoginFormProps) => {
       [dispatch]
    );
 
-   const { username, password } = useSelector(getLoginState);
+   const { username, password } = useAppSelector(getLoginState);
 
    const onLoginClick = useCallback(() => {
       dispatch(loginByUsername({ username, password }));

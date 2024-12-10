@@ -1,4 +1,8 @@
-import { configureStore, ReducersMapObject, combineReducers } from "@reduxjs/toolkit";
+import {
+   configureStore,
+   ReducersMapObject,
+   combineReducers,
+} from "@reduxjs/toolkit";
 import { StateSchema } from "./stateSchema";
 import { counterReducer } from "entities/counter/model/slice";
 import { userReducer } from "entities/user/model/slice";
@@ -13,7 +17,7 @@ export function createReduxStore(initialState?: StateSchema) {
 
    const combinedReducer = combineReducers(rootReducer);
 
-   const store = configureStore({
+   const store = configureStore<StateSchema>({
       reducer: combinedReducer,
       devTools: __IS_DEV__, // отключаем дев тулзы из продакшена
       preloadedState: initialState, // принимаем данные (для тестов) в initialState
@@ -22,7 +26,13 @@ export function createReduxStore(initialState?: StateSchema) {
    return store;
 }
 
-// Тип для dispatch
+// Типизированный dispatch для работы с асинзронными санками
 export type AppDispatch = ReturnType<typeof createReduxStore>["dispatch"];
-// Тип для state
+// Тип, который описывает структуру всего Redux-хранилища
 export type RootState = ReturnType<typeof createReduxStore>["getState"];
+
+export interface ThunkConfig<T = void> {
+   state: StateSchema;
+   dispatch: AppDispatch;
+   rejectValue: T; // Для типа ошибок
+}
