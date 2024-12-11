@@ -6,15 +6,19 @@ import { userReducer } from "../../../../../../entities/user/model/slice";
 // import { loginReducer } from "features/user/authByUsername/model/slice";
 import { createReducerManager } from "../reduserManager";
 
-export function createReduxStore(initialState?: StateSchema) {
+export function createReduxStore(
+   initialState?: StateSchema,
+   asyncReducers?: ReducersMapObject<StateSchema>
+) {
    const rootReducer: ReducersMapObject<StateSchema> = {
+      ...asyncReducers,
       counter: counterReducer,
       user: userReducer,
    };
 
    //createReducerManager для асинхронной подгрузки reducers в store
    // const reduсerManager = createReducerManager(rootReducer); // Обратите внимание: "c" в "reduсerManager" — это не латинская "c", а кириллическая "с".
-   const reducerManager  = createReducerManager(rootReducer);
+   const reducerManager = createReducerManager(rootReducer);
 
    const store = configureStore<StateSchema>({
       reducer: reducerManager.reduce,
@@ -23,7 +27,7 @@ export function createReduxStore(initialState?: StateSchema) {
    });
 
    // @ts-ignore
-   store.reducerManager  = reducerManager ;
+   store.reducerManager = reducerManager;
 
    return store;
 }

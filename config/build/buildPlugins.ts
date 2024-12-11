@@ -21,8 +21,8 @@ export function buildPlugins(
          __IS_DEV__: JSON.stringify(options.isDev),
       }),
 
-      // TODO: для теста на размер бандла в прод сборке
-      new BundleAnalyzerPlugin(),
+      // для теста на размер бандла в прод сборке
+      // new BundleAnalyzerPlugin(),
    ];
 
    if (options.isDev) {
@@ -30,7 +30,7 @@ export function buildPlugins(
          new webpack.HotModuleReplacementPlugin(),
          new ReactRefreshWebpackPlugin(),
          // чтобы он не открывалчя передаем { openAnalyzer: false }
-         // new BundleAnalyzerPlugin({ openAnalyzer: false })
+         new BundleAnalyzerPlugin({ openAnalyzer: false })
       );
    }
 
