@@ -650,10 +650,11 @@ auth/asyncThunk
 теперь создаем сам thunk, loginByUsername, для подтверждения корректности данных нам нужно сделать запрос на сервер, делать буде с помощью `npm i axios`
 тип createAsyncThunk имеет несколько аргументов
 
-`````loginByUsername:createAsyncThunk<
+````loginByUsername:createAsyncThunk<
    User,  // Тип данных, которые возвращает thunk
    LoginByUsernameProps,  // Тип аргументов для thunk
-   ThunkConfig<string>  // Типизация thunkAPI (состояние, dispatch, rejectValue)````
+   ThunkConfig<string>  // Типизация thunkAPI (состояние, dispatch, rejectValue)
+   ```
 
 с помощью rejectWithValue мы сможем обработать ошибки в сучае их получения
 
@@ -678,14 +679,48 @@ auth/asyncThunk
 
 осталось добавить компоненты в сторибук, для этого нужно сделать декоратор еоторый будет оборачивать <StoryComponent/> в storeProvider, чтобы подружить систему хранения стора редакса с сторибуком
 так же у нас используется глобальная переменная __IS_DEV__ сторибук про нее ничего не знает, но это исправляется добавлением definePlugin в конфиг вэбпака сторибука
+
 ---
+
+35 Оптимизация. Асинхронные редюсеры. Размер бандла
+branch:
+optimization/asyncRedusers/bundleSize
+
+для перфоманса в отдельные чанки можно выносить как страницы так и модалки
+(но было бы неплохо еще выносить логику асинхронных redusers (extraReducers) в отдельный чанк для оптимизации)
+
+для оптимизации бандла сперва вытащим bundlAnalazerPlugin из условия __IS_DEV__ и запустим сборку в прод режиме (`http://127.0.0.1:8888`)
+запоминаем значения. bundle.d7e587f7e393ab45ef5a.js (105.88 KB) Gzipped , bundle.d7e587f7e393ab45ef5a.js (329.81 KB) Parsed
+пробуем сделать форму авторизации асинхронной
+разница не значительная - теперь bundle.4e3d9769e68cda860ff8.js (105.37 KB) Gzipped, bundle.4e3d9769e68cda860ff8.js (328.78 KB) Parsed
+
+мы сделали сам компонент асинхронным, но редьюсер все равно выходят наружу, тем самым slice со всеми экшенами, самим редьюсером тоже уходит в главный бандл по тому что иы подключаем этот reducer к корневому reduser ( тоесть сам компонент изолирован, но основная часть логики кода которая находится в reduser и async thuk остается в основном бандле)
+из `src\features\user\authByUsername\model\slice\index.ts` мы экспортруем `export const { reducer: loginReducer } = loginSlice;`  и подключаем его в `src\app\providers\redux\storeProvider\config\store\index.ts` (все что лежит в storeProvider подтягивается в основной бандл)
+для выноса логики в чанк нужно обращаться к документации redux code splitting `https://redux.js.org/usage/code-splitting`, там есть 2 подхода
+1. использовать на глобальном store.replaceReduser() которая позволяет полностью целиком заменит reduser:
+```
+// Create an inject reducer function
+  // Эта функция добавляет асинхронный reduser и создает новый комбинированный reduser.
+  store.injectReducer = (key, asyncReducer) => {
+   store.asyncReducers[key] = asyncReducer
+   store.replaceReducer(createReducer(store.asyncReducers))
+   // c помощью функции replaceReducer обновляем полностью reduser и добавляем новый асинхронный reduser по ключу.
+ }
+```
+2. использование Reducer Manager - c помощью него redusers можно добавлять, удалять, получать - это более гибкий подход, более продвинутый функциональный инструмент
+Будем использовать его:
+создаем диру `src\app\providers\redux\storeProvider\config\reduserManager` и тянем туда пример с доки 
+
+
+---
+
 
 что еще сделать:
 деклорация через 1 глобальную деклорацию scss модулей
 https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint
+перетянуть линт с строгой версией без галки, и вписать в overrides по аналогии с swc-loader
 метод toBeInTheDocument - посмотреть что делает в ролике про тесты
 скриншотные тесты в пайплайне
-бэкграугд для контента в оверлее захардкодил (не отрабатывает тема в сторибуке на модалке)
 
 ---
 
@@ -702,4 +737,6 @@ https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про нов
 6 git commit -m 'тест'
 перезаписывем историю на удалённом репозитории
 7 git push origin <имя ветки> --force
-`````
+
+
+````

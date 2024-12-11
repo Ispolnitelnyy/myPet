@@ -4,7 +4,7 @@ import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
 import i18n from "../../i18n/i18nForTests";
 import StoreProvider from "app/providers/redux/storeProvider";
-import { StateSchema } from "app/providers/redux/storeProvider/store/stateSchema";
+import { StateSchema } from "app/providers/redux/storeProvider/config/stateSchema";
 import { DeepPartial } from "./../../../../../node_modules/@types/react-redux/node_modules/redux/index.d";
 
 export interface ComponentRenderOptions {

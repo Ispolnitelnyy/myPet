@@ -1,7 +1,10 @@
 import { classNames } from "shared/helpers/classNames";
 import cls from "./index.module.scss";
 import Modal from "shared/ui/modal";
-import LoginForm from "../loginForm";
+// import LoginForm from "../loginForm"; // заменяем на LoginFormLazy, по хорошему удалить, чтобы он не подтягивался в бандл
+import { LoginFormLazy } from "../loginForm/loginFormLazy";
+import { Suspense } from "react";
+import Loader from "shared/ui/loader";
 
 interface LoginModalProps {
    className?: string;
@@ -19,7 +22,9 @@ export const LoginModal = (props: LoginModalProps) => {
          onClose={onClose}
          lazy={true}
       >
-         <LoginForm />
+         <Suspense fallback={<Loader />}>
+            <LoginFormLazy />
+         </Suspense>
       </Modal>
    );
 };
