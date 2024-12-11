@@ -20,12 +20,16 @@ export function buildPlugins(
       new webpack.DefinePlugin({
          __IS_DEV__: JSON.stringify(options.isDev),
       }),
+
+      // для теста на размер бандла в прод сборке
+      // new BundleAnalyzerPlugin(),
    ];
 
    if (options.isDev) {
       plugins.push(
          new webpack.HotModuleReplacementPlugin(),
          new ReactRefreshWebpackPlugin(),
+         // чтобы он не открывалчя передаем { openAnalyzer: false }
          new BundleAnalyzerPlugin({ openAnalyzer: false })
       );
    }

@@ -650,10 +650,11 @@ auth/asyncThunk
 теперь создаем сам thunk, loginByUsername, для подтверждения корректности данных нам нужно сделать запрос на сервер, делать буде с помощью `npm i axios`
 тип createAsyncThunk имеет несколько аргументов
 
-`````loginByUsername:createAsyncThunk<
+````loginByUsername:createAsyncThunk<
    User,  // Тип данных, которые возвращает thunk
    LoginByUsernameProps,  // Тип аргументов для thunk
-   ThunkConfig<string>  // Типизация thunkAPI (состояние, dispatch, rejectValue)````
+   ThunkConfig<string>  // Типизация thunkAPI (состояние, dispatch, rejectValue)
+   ```
 
 с помощью rejectWithValue мы сможем обработать ошибки в сучае их получения
 
@@ -678,19 +679,68 @@ auth/asyncThunk
 
 осталось добавить компоненты в сторибук, для этого нужно сделать декоратор еоторый будет оборачивать <StoryComponent/> в storeProvider, чтобы подружить систему хранения стора редакса с сторибуком
 так же у нас используется глобальная переменная __IS_DEV__ сторибук про нее ничего не знает, но это исправляется добавлением definePlugin в конфиг вэбпака сторибука
+
 ---
+
+35 Оптимизация. Асинхронные редюсеры. Размер бандла
+branch:
+optimization/asyncRedusers/bundleSize
+
+для перфоманса в отдельные чанки можно выносить как страницы так и модалки
+(но было бы неплохо еще выносить логику асинхронных redusers (extraReducers) в отдельный чанк для оптимизации)
+
+для оптимизации бандла сперва вытащим bundlAnalazerPlugin из условия __IS_DEV__ и запустим сборку в прод режиме (`http://127.0.0.1:8888`)
+запоминаем значения. bundle.d7e587f7e393ab45ef5a.js (105.88 KB) Gzipped , bundle.d7e587f7e393ab45ef5a.js (329.81 KB) Parsed
+пробуем сделать форму авторизации асинхронной
+разница не значительная - теперь bundle.4e3d9769e68cda860ff8.js (105.37 KB) Gzipped, bundle.4e3d9769e68cda860ff8.js (328.78 KB) Parsed
+
+мы сделали сам компонент асинхронным, но редьюсер все равно выходят наружу, тем самым slice со всеми экшенами, самим редьюсером тоже уходит в главный бандл по тому что иы подключаем этот reducer к корневому reduser ( тоесть сам компонент изолирован, но основная часть логики кода которая находится в reduser и async thuk остается в основном бандле)
+из `src\features\user\authByUsername\model\slice\index.ts` мы экспортруем `export const { reducer: loginReducer } = loginSlice;`  и подключаем его в `src\app\providers\redux\storeProvider\config\store\index.ts` (все что лежит в storeProvider подтягивается в основной бандл)
+для выноса логики в чанк нужно обращаться к документации redux code splitting `https://redux.js.org/usage/code-splitting`, там есть 2 подхода
+1. использовать на глобальном store.replaceReduser() которая позволяет полностью целиком заменит reduser:
+```
+// Create an inject reducer function
+  // Эта функция добавляет асинхронный reduser и создает новый комбинированный reduser.
+  store.injectReducer = (key, asyncReducer) => {
+   store.asyncReducers[key] = asyncReducer
+   store.replaceReducer(createReducer(store.asyncReducers))
+   // c помощью функции replaceReducer обновляем полностью reduser и добавляем новый асинхронный reduser по ключу.
+ }
+```
+2. использование Reducer Manager - c помощью него reduсers можно добавлять, удалять, получать - это более гибкий подход, более продвинутый функциональный инструмент
+Будем использовать его:
+создаем диру `src\app\providers\redux\storeProvider\config\reduserManager` и тянем туда пример с доки
+добавляем тип StateSchemaKey  и прописываем типы для аргументов reduce, add, remove
+создаем reducerManager в главном сторе, в типе StateSchema делаем асинхронные редьюсеры опциональными, в корневом редьюссере в сторe удаляем все асинхронные редьюсеры  и вписываем их как `asyncReducers?: ReducersMapObject<StateSchema>`  `...asyncReducers`
+в самом сторе переопределяем редьюсеры под  `reducer: reducerManager.reduce,`
+теперь самому стору необходимо добавить reducerManager `store.reducerManager = reducerManager;` тип для стора потом расширим и под тип с новым свойством
+   создадим компонент обертку(`DynamicModuleLoaderWrapper`) который будет получать redux store из `const store = useStore() as ReduxStoreReducerManager` где ReduxStoreReducerManager тип стора в которм есть свойство reducerManager (store.reducerManager), так что предварительно его нужно создать, путем наследования от EnhancedStore (который является стандартный тип store redux) в котором будет лежать только свойство reducerManager которое будет иметь тип ReducerManager который мы объявили при создании function createReducerManager
+далее в компоненте обертке прописывем useEffect где в момент монтирования компонента добавляем редьюсер с помощью reducerManager `store.reducerManager.add(keyname, reducer);` и в моменте размонтирования компонента в колбэке ретерна будем удалять reducer `store.reducerManager.remove(keyname);` при условии которое мы указали в пропсе removeAfterUnmount, так  как иногда требуется оставить reduser, чтобы при повторном открытии использовался уже ранее созданный редьюсер
+теперь редьюсер мы можем подключить только через ленивый компонент(будет подгружаться только с самим компонентом), а не как по стандартной процедуре из слайса в стор и из стора в компонент
+далее в ленивом компоненте(LoginForm) наш стэйт будет пустым при монтировании и все поля в нем будут undefined, регишим это путем создания селекторов для какждого поля индивидуально, где укажем значения которые они будут иметь в момент когда state еще не проинициализировался, чтобы они были не undefined ( на примере `const getLoginUsername=(state:StateSchema)=>state?.loginForm?.username || ""`)
+достаем значения, где под каждое поле стэйта будем вызывать соответствующий ему селектор (на примере `const username = useAppSelector(getLoginUsername)`)
+оборачиваем разметку в нашем ленивом компоненте(LoginForm) в компонент обертку(DynamicModuleLoaderWrapper)
+чтобы отслежживать когда reduсers у нас инициализируются можно диспачить рандомный экшен  и указать ему в типе строку с ``${keyname}`` (на примере `dispatch({ type: `@INIT ${keyname} reducer` });`) 
+так же поскольку ленивый компонент(LoginForm) у нас в модалке а модалка в портале, она остается в дом дереве, необходтмо по местить флаг на LoginModa при котором она будет отображаться в DOM а в ином случае удаляться и DOM  
+после добавления асинхронного редьюсера - теперь bundle.6e6f0ed299d411463e34.js (92.08 KB) Gzipped, bundle.6e6f0ed299d411463e34.js (293.05 KB) Parsed
+для подключения нескольких редьюсеров реализуем тип ReducersList где будем принимать массив этих редьюсеров, далее в самом useEffect пропишем `Object.entries(reducers).forEach(([keyname, reducer]: ReducersListEntry) => {})`
+так же после внедрения asyncReducers необходимо изменить (createReduxStore в StoreProvider/ui) для сторибука: добавим asyncReducers в StoreProviderProps, диструктурируем asyncReducers пропс, в createReduxStore добавим вторым аргументом asyncReducers, ранее в глобальном сторе мы уже удалили все асинхронные редьюсеры из корневого редьюсера и теперь вписываем их как (аргумент `asyncReducers?: ReducersMapObject<StateSchema>`)  `...asyncReducers`
+далее в StoreDecorator создадим объект который будет принимать наши defaultAsyncRedusers = {loginForm:loginReduser} ну и этот объект передаем в стор провайдер, так же вторым аргументом можем принимать остальные asyncReducers опйионально, и разворачивать их вместе после `{{...defaultAsyncRedusers, ...asyncReducers}}`
+---
+
 
 что еще сделать:
 деклорация через 1 глобальную деклорацию scss модулей
 https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint
+перетянуть линт с строгой версией без галки, и вписать в overrides по аналогии с swc-loader
 метод toBeInTheDocument - посмотреть что делает в ролике про тесты
 скриншотные тесты в пайплайне
-бэкграугд для контента в оверлее захардкодил (не отрабатывает тема в сторибуке на модалке)
+интернационализация, пройтись по приложению и навесить везде переводы i18n
 
 ---
-
 для заметки:
-чтобы убрать коммиты из удаленного репозитория
+
+```чтобы убрать коммиты из удаленного репозитория
 Сначала синхронизируйте локальный репозиторий с удалённым
 1 git fetch origin
 2 git pull origin <имя ветки>
@@ -701,5 +751,25 @@ https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про нов
 5 git add -A
 6 git commit -m 'тест'
 перезаписывем историю на удалённом репозитории
-7 git push origin <имя ветки> --force
-`````
+7 git push origin <имя ветки> --force```
+
+при объявленом типе можем нажать alt + space для того чтобы были подсказки какие значения доступны для использования при ээтом типе
+
+1. Добавить курсоры на нескольких строках
+Windows/Linux: Alt + Click на нужных строках.
+2. Вертикальный выбор (добавить курсоры на нескольких строках подряд)
+Windows/Linux: Ctrl + Alt + ↑/↓ стрелка.
+3. Выделить текст в нескольких строках для редактирования
+Shift + Alt + стрелка вверх/вниз: Расширяет выделение вертикально.
+После этого вы можете редактировать все выделенные строки одновременно.
+4. Выбрать одно слово и все его вхождения
+Поставьте курсор на слово и нажмите:
+Windows/Linux: Ctrl + D.
+Нажимайте Ctrl + D/Command + D снова для выбора следующего вхождения.
+5. Выбрать все вхождения слова
+Выделите слово или просто поставьте на него курсор.
+Нажмите:
+Windows/Linux: Ctrl + Shift + L.
+6. Перейти в режим выделения блоков
+Windows/Linux: Ctrl + Shift + Alt + стрелка (вверх/вниз/вправо/влево).
+````

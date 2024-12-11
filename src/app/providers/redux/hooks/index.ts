@@ -1,14 +1,14 @@
 import { TypedUseSelectorHook, useDispatch } from "react-redux";
-import { AppDispatch } from "../storeProvider/store";
+import { AppDispatch } from "../storeProvider/config/store";
 import { useSelector } from "react-redux";
-import { StateSchema } from "../storeProvider/store/stateSchema";
+import { StateSchema } from "../storeProvider/config/stateSchema";
 
 // По умолчанию useDispatch не знает о кастомных типах,
 // поэтому нужно передавать свой тип AppDispatch,
 // чтобы он работал корректно с асинхронными действиями и Redux Toolkit
 // export const useAppDispatch: () => AppDispatch = useDispatch; // кастомный хук для работы с асинхронными thunks
 // дока предлагает
-export const useAppDispatch = useDispatch.withTypes<AppDispatch>() // Export a hook that can be reused to resolve types
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>(); // Export a hook that can be reused to resolve types
 
 // тоже самон с useSelector
 // Чтобы каждый раз не указывать дженерик явно, можно создать свою обертку
