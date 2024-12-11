@@ -24,7 +24,7 @@ import DynamicModuleLoaderWrapper, {
 export interface LoginFormProps {
    className?: string;
 }
-
+// initialReducers будет использовать 1 ссылку по этому выносим его сюда а не передаем сразу пропсом loginForm: loginReducer
 const initialReducers: ReducersList = {
    loginForm: loginReducer,
 };

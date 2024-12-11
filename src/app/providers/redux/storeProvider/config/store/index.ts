@@ -17,7 +17,6 @@ export function createReduxStore(
    };
 
    //createReducerManager для асинхронной подгрузки reducers в store
-   // const reduсerManager = createReducerManager(rootReducer); // Обратите внимание: "c" в "reduсerManager" — это не латинская "c", а кириллическая "с".
    const reducerManager = createReducerManager(rootReducer);
 
    const store = configureStore<StateSchema>({

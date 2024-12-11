@@ -12,7 +12,7 @@ export interface StateSchema {
    loginForm?: LoginSchema;
 }
 
-export type StateSchemaKey = keyof StateSchema;
+export type StateSchemaKey = keyof StateSchema; // ключи редьюсеров
 
 
 
