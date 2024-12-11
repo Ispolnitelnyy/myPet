@@ -712,6 +712,9 @@ optimization/asyncRedusers/bundleSize
 создаем диру `src\app\providers\redux\storeProvider\config\reduserManager` и тянем туда пример с доки 
 
 
+
+
+после добавления асинхронного редьюсера - теперь bundle.6e6f0ed299d411463e34.js (92.08 KB) Gzipped, bundle.6e6f0ed299d411463e34.js (293.05 KB) Parsed
 ---
 
 
