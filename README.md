@@ -857,8 +857,7 @@ optimization/asyncRedusers/bundleSize
    после добавления асинхронного редьюсера - теперь `bundle.6e6f0ed299d411463e34.js (92.08 KB) - Gzipped`, `bundle.6e6f0ed299d411463e34.js (293.05 KB) - Parsed`  
    для подключения нескольких редьюсеров реализуем тип `ReducersList` где будем принимать массив этих редьюсеров, далее в самом useEffect пропишем `Object.entries(reducers).forEach(([keyname, reducer]: ReducersListEntry) => {})`  
    так же после внедрения `asyncReducers` необходимо изменить (`createReduxStore` в `StoreProvider/ui`) для сторибука: добавим `asyncReducers` в `StoreProviderProps`, диструктурируем `asyncReducers` пропс, в `createReduxStore` добавим вторым аргументом `asyncReducers`, ранее в глобальном сторе мы уже удалили все асинхронные редьюсеры из корневого редьюсера и теперь вписываем их как (аргумент `asyncReducers?: ReducersMapObject<StateSchema>`) `...asyncReducers`  
-   далее в `StoreDecorator` создадим объект который будет принимать наши `defaultAsyncReducers = {loginForm:loginReducer}` ну и этот объект передаем в стор провайдер, так же вторым аргументом можем принимать остальные `asyncReducers` опционально, и разворачивать их вместе после `{{...defaultAsyncReducers, ...asyncReducers}}`  
-
+   далее в `StoreDecorator` создадим объект который будет принимать наши `defaultAsyncReducers = {loginForm:loginReducer}` ну и этот объект передаем в стор провайдер, так же вторым аргументом можем принимать остальные `asyncReducers` опционально, и разворачивать их вместе после `{{...defaultAsyncReducers, ...asyncReducers}}`
 
 не забываем вернуть `bundlAnalazerPlugin` в условие `__IS_DEV__` чтобы не заводился в сборке в прод режиме
 
@@ -871,12 +870,12 @@ test-authByUserName/test-asyncThunk
 ---
 
 что еще сделать:
-деклорация через 1 глобальную деклорацию scss модулей
-https://www.youtube.com/watch?v=MvnTwjAjhic - посмотреть про новый Eslint
-перетянуть линт с строгой версией без галки, и вписать в overrides по аналогии с swc-loader
-плагин `npm i eslint-plugin-react-hooks --save-dev` для мемоизации подсказывает когда функцию надо мемоизировать.
-метод toBeInTheDocument - посмотреть что делает в ролике про тесты
-скриншотные тесты в пайплайне
+деклорация через 1 глобальную деклорацию scss модулей  
+`https://www.youtube.com/watch?v=MvnTwjAjhic` - посмотреть про новый Eslint  
+перетянуть eslint с старой версией без галки, и вписать в overrides по аналогии с swc-loader  
+плагин `npm i eslint-plugin-react-hooks --save-dev` для мемоизации подсказывает когда функцию надо мемоизировать.  
+метод toBeInTheDocument - посмотреть что делает в ролике про тесты  
+скриншотные тесты в пайплайне (Docker)  
 интернационализация, пройтись по приложению и навесить везде переводы i18n
 
 ---
