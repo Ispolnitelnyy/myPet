@@ -817,11 +817,15 @@ optimization/asyncRedusers/bundleSize
 (но было бы неплохо еще выносить логику асинхронных `reducers` (`extraReducers`) в отдельный чанк для оптимизации)
 
 для оптимизации бандла сперва вытащим `bundlAnalazerPlugin` из условия `__IS_DEV__` и запустим сборку в прод режиме (`http://127.0.0.1:8888`)  
-запоминаем значения. `bundle.d7e587f7e393ab45ef5a.js (105.88 KB) - Gzipped` , `bundle.d7e587f7e393ab45ef5a.js (329.81 KB) - Parsed`  
+запоминаем значения.  
+`bundle.d7e587f7e393ab45ef5a.js (105.88 KB) - Gzipped`,  
+`bundle.d7e587f7e393ab45ef5a.js (329.81 KB) - Parsed`  
 пробуем сделать форму авторизации асинхронной  
-разница не значительная - теперь `bundle.4e3d9769e68cda860ff8.js (105.37 KB) - Gzipped`, `bundle.4e3d9769e68cda860ff8.js (328.78 KB) - Parsed`
+разница не значительная - теперь  
+`bundle.4e3d9769e68cda860ff8.js (105.37 KB) - Gzipped`,  
+`bundle.4e3d9769e68cda860ff8.js (328.78 KB) - Parsed`
 
-мы сделали сам компонент асинхронным, но 'reducers' все равно выходят наружу, тем самым `slice` со всеми `actons`, самим 'reducer' тоже уходит в главный бандл по тому что иы подключаем этот `reducer` к `rootReduсer` в глобальный `store` редакса ( тоесть сам компонент изолирован, но основная часть логики кода которая находится в `reducer` и `async thuk` остается в основном бандле)  
+мы сделали сам компонент асинхронным, но `reducers` все равно выходят наружу, тем самым `slice` со всеми `actons`, самим `reducer` тоже уходит в главный бандл по тому что иы подключаем этот `reducer` к `rootReduсer` в глобальный `store` редакса ( тоесть сам компонент изолирован, но основная часть логики кода которая находится в `reducer` и `async thuk` остается в основном бандле)  
 из `src\features\user\authByUsername\model\slice\index.ts` мы экспортруем `export const { reducer: loginReducer } = loginSlice;` и подключаем его в `src\app\providers\redux\storeProvider\config\store\index.ts` (все что лежит в `storeProvider` подтягивается в основной бандл)  
 для выноса логики в чанк нужно обращаться к документации `redux code splitting`: `https://redux.js.org/usage/code-splitting`, там есть 2 подхода
 
@@ -829,35 +833,38 @@ optimization/asyncRedusers/bundleSize
 
 ```
 // Create an inject reducer function
-  // Эта функция добавляет асинхронный reducer и создает новый комбинированный reducer.
+  // Эта функция добавляет асинхронный reducer
+  // и создает новый комбинированный reducer.
   store.injectReducer = (key, asyncReducer) => {
-   store.asyncReducers[key] = asyncReducer
-   store.replaceReducer(createReducer(store.asyncReducers))
-   // c помощью функции replaceReducer обновляем полностью reducer и добавляем новый асинхронный reducer по ключу.
+  store.asyncReducers[key] = asyncReducer
+  store.replaceReducer(createReducer(store.asyncReducers))
+  // c помощью функции replaceReducer обновляем полностью reducer
+  // и добавляем новый асинхронный reducer по ключу.
  }
 ```
 
 2. использование `Reducer Manager` - c помощью него `reduсers` можно добавлять, удалять, получать - это более гибкий подход, более продвинутый функциональный инструмент
 
-   Будем использовать его:  
-   создаем диру `src\app\providers\redux\storeProvider\config\reducerManager` и тянем туда пример с доки  
-   добавляем тип `StateSchemaKey` и прописываем типы для аргументов `reduce`, `add`, `remove`  
-   создаем `reducerManager` в главном `store`, в типе `StateSchema` делаем асинхронные редьюсеры опциональными, в `rootReducer` в `store` удаляем все асинхронные редьюсеры и вписываем их как `asyncReducers?: ReducersMapObject<StateSchema>` `...asyncReducers`  
-   в самом `store` переопределяем редьюсеры под `reducer: reducerManager.reduce,`  
-   теперь самому `store` необходимо добавить `reducerManager:` `store.reducerManager = reducerManager;` тип для `store` потом расширим и под тип с новым свойством  
-   создадим компонент обертку `<DynamicModuleLoaderWrapper/>` который будет получать `redux store` из `const store = useStore() as ReduxStoreReducerManager` где `ReduxStoreReducerManager` тип `store` в которм есть свойство `reducerManager`: `store.reducerManager`, так что предварительно его нужно создать, путем наследования от `EnhancedStore` (который является стандартный тип `store` redux) в котором будет лежать только свойство `reducerManager` которое будет иметь тип `ReducerManager` который мы объявили при создании `function createReducerManager`  
-   далее в компоненте обертке `<DynamicModuleLoaderWrapper/>` прописывем useEffect где в момент монтирования компонента добавляем редьюсер с помощью `reducerManager`: `store.reducerManager.add(keyname, reducer)` и в моменте размонтирования компонента в колбэке ретерна будем удалять `reducer`: `store.reducerManager.remove(keyname)` при условии которое мы указали в пропсе `removeAfterUnmount`, так как иногда требуется оставить `reducer`, чтобы при повторном открытии использовался уже ранее созданный редьюсер  
-   теперь редьюсер мы можем подключить только через ленивый компонент(будет подгружаться только с самим компонентом), а не как по стандартной процедуре из `slice` в `store` и из `store` в компонент  
-   далее в ленивом компоненте `<LoginForm/>` наш стэйт будет пустым при монтировании и все поля в нем будут undefined, решим это путем создания 'selectors' для какждого поля индивидуально, где укажем значения которые они будут иметь в момент когда state еще не проинициализировался, чтобы они были не undefined ( на примере `const getLoginUsername=(state:StateSchema)=>state?.loginForm?.username || ""`)  
-   достаем значения, где под каждое поле стэйта будем вызывать соответствующий ему селектор (на примере `const username = useAppSelector(getLoginUsername)`)  
-   оборачиваем разметку в нашем ленивом компоненте `<LoginForm/>` в компонент обертку: `<DynamicModuleLoaderWrapper/>`  
-   чтобы отслежживать когда `reduсers` у нас инициализируются можно диспачить рандомный экшен и указать ему в типе строку с `${keyname}` (на примере `dispatch({ type: `@INIT ${keyname} reducer` });`)  
-   так же поскольку ленивый компонент `<LoginForm/>` у нас в модалке а модалка в портале, она остается в дом дереве, необходимо поместить флаг на `<LoginModal/>` при котором она будет отображаться в DOM а в ином случае удаляться и DOM
-
-   после добавления асинхронного редьюсера - теперь `bundle.6e6f0ed299d411463e34.js (92.08 KB) - Gzipped`, `bundle.6e6f0ed299d411463e34.js (293.05 KB) - Parsed`  
-   для подключения нескольких редьюсеров реализуем тип `ReducersList` где будем принимать массив этих редьюсеров, далее в самом useEffect пропишем `Object.entries(reducers).forEach(([keyname, reducer]: ReducersListEntry) => {})`  
-   так же после внедрения `asyncReducers` необходимо изменить (`createReduxStore` в `StoreProvider/ui`) для сторибука: добавим `asyncReducers` в `StoreProviderProps`, диструктурируем `asyncReducers` пропс, в `createReduxStore` добавим вторым аргументом `asyncReducers`, ранее в глобальном сторе мы уже удалили все асинхронные редьюсеры из корневого редьюсера и теперь вписываем их как (аргумент `asyncReducers?: ReducersMapObject<StateSchema>`) `...asyncReducers`  
-   далее в `StoreDecorator` создадим объект который будет принимать наши `defaultAsyncReducers = {loginForm:loginReducer}` ну и этот объект передаем в стор провайдер, так же вторым аргументом можем принимать остальные `asyncReducers` опционально, и разворачивать их вместе после `{{...defaultAsyncReducers, ...asyncReducers}}`
+Будем использовать его:  
+создаем диру `src\app\providers\redux\storeProvider\config\reducerManager` и тянем туда пример с доки  
+добавляем тип `StateSchemaKey` и прописываем типы для аргументов `reduce`, `add`, `remove`  
+создаем `reducerManager` в главном `store`, в типе `StateSchema` делаем асинхронные редьюсеры опциональными, в `rootReducer` в `store` удаляем все асинхронные редьюсеры и вписываем ихкак `asyncReducers?: ReducersMapObject<StateSchema>` `...asyncReducers`  
+в самом `store` переопределяем редьюсеры под `reducer: reducerManager.reduce,`  
+теперь самому `store` необходимо добавить `reducerManager:` `store.reducerManager = reducerManager;` тип для `store` потом расширим и под тип с новым свойством  
+создадим компонент обертку `<DynamicModuleLoaderWrapper/>` который будет получать `redux store` из `const store = useStore() as ReduxStoreReducerManager` где`ReduxStoreReducerManager` тип `store` в которм есть свойство `reducerManager`: `store.reducerManager`, так что предварительно его нужно создать, путем наследования от `EnhancedStore`(который является стандартный тип `store` redux) в котором будет лежать только свойство `reducerManager` которое будет иметь тип `ReducerManager` который мы объявили при создании`function createReducerManager`  
+далее в компоненте обертке `<DynamicModuleLoaderWrapper/>` прописывем useEffect где в момент монтирования компонента добавляем редьюсер с помощью `reducerManager`: `storereducerManager.add(keyname, reducer)` и в моменте размонтирования компонента в колбэке ретерна будем удалять `reducer`: `store.reducerManager.remove(keyname)` при условии которое мыуказали в пропсе `removeAfterUnmount`, так как иногда требуется оставить `reducer`, чтобы при повторном открытии использовался уже ранее созданный редьюсер  
+теперь редьюсер мы можем подключить только через ленивый компонент(будет подгружаться только с самим компонентом), а не как по стандартной процедуре из `slice` в `store` и из `store`в компонент  
+далее в ленивом компоненте `<LoginForm/>` наш стэйт будет пустым при монтировании и все поля в нем будут undefined, решим это путем создания 'selectors' для какждого поляиндивидуально, где укажем значения которые они будут иметь в момент когда state еще не проинициализировался, чтобы они были не undefined ( на примере `const getLoginUsername(state:StateSchema)=>state?.loginForm?.username || ""`)  
+достаем значения, где под каждое поле стэйта будем вызывать соответствующий ему селектор (на примере `const username = useAppSelector(getLoginUsername)`)  
+оборачиваем разметку в нашем ленивом компоненте `<LoginForm/>` в компонент обертку: `<DynamicModuleLoaderWrapper/>`  
+чтобы отслежживать когда `reduсers` у нас инициализируются можно диспачить рандомный экшен и указать ему в типе строку с `${keyname}` (на примере `dispatch({ type: `@INIT ${keyname}reducer` });`)  
+так же поскольку ленивый компонент `<LoginForm/>` у нас в модалке а модалка в портале, она остается в дом дереве, необходимо поместить флаг на `<LoginModal/>` при котором она будетотображаться в DOM а в ином случае удаляться и DOM  
+после добавления асинхронного редьюсера - теперь  
+`bundle.6e6f0ed299d411463e34.js (92.08 KB) - Gzipped`,  
+`bundle.6e6f0ed299d411463e34.js (293.05 KB) - Parsed`  
+для подключения нескольких редьюсеров реализуем тип `ReducersList` где будем принимать массив этих редьюсеров, далее в самом useEffect пропишем `Object.entries(reducers).forEac(([keyname, reducer]: ReducersListEntry) => {})`  
+так же после внедрения `asyncReducers` необходимо изменить (`createReduxStore` в `StoreProvider/ui`) для сторибука: добавим `asyncReducers` в `StoreProviderProps`, диструктурируем`asyncReducers` пропс, в `createReduxStore` добавим вторым аргументом `asyncReducers`, ранее в глобальном сторе мы уже удалили все асинхронные редьюсеры из корневого редьюсера итеперь вписываем их как (аргумент `asyncReducers?: ReducersMapObject<StateSchema>`) `...asyncReducers`  
+далее в `StoreDecorator` создадим объект который будет принимать наши `defaultAsyncReducers = {loginForm:loginReducer}` ну и этот объект передаем в стор провайдер, так же вторымаргументом можем принимать остальные `asyncReducers` опционально, и разворачивать их вместе после `{{...defaultAsyncReducers, ...asyncReducers}}`
 
 не забываем вернуть `bundlAnalazerPlugin` в условие `__IS_DEV__` чтобы не заводился в сборке в прод режиме
 
