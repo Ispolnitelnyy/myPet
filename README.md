@@ -874,6 +874,43 @@ optimization/asyncRedusers/bundleSize
 branch:  
 test-authByUserName/test-asyncThunk
 
+наапишем тесты для функционала который составили ранее  
+начнем с селекторов `getLoginError`, `getLoginIsLodading`, `getLoginUsername`, `getLoginPassword`  
+так же для самого стэйта `getLoginState` - они легкие, делаются однотипно друг другу
+
+тесты на `Thunk` особенно важны:  
+`loginByUsername.test` - разберем подробнее
+в `thunk`: `loginByUsername` у нас используется `axios` и любые запросы на сервер в тестах необходимо мокать
+для мока воспользуемся функцией которую предоставляет `jest`: `jest.mock("axios");` в аргумент передаем модуль который хотим замокать  
+`jest` для замоканных модулей добавляет функции по типу `mockReturnValue`: `mockedAxios.post.mockReturnValue()` которые позволяют замокать возвращаемое значение, но у нас TypeScript - он не подхватывает эти функции  
+решение: `const mockedAxios: jest.MockedFunctionDeep<AxiosStatic> = jest.mocked(axios, {shallow: false,});` здесь 1 аргумент - модуль который хотим замокать, 2 аргумент - флаг с поверхностным моком, таким образом мокаем не только сам модуль, но и внутренние поля такие как `mockedAxios.post`  
+в `axios` по дефолту приходит поле `data` в котором уже хранится ответ от сервера.  
+таким образом мы замокали ответ от сервера.  
+`CreateAsyncThunk` - это `actionCreator` который по итогу после вызова возвращает `action`, этот `action` попадает в `dispatch` и мы возвращаем какието данные.  
+`loginByUsername`- это функция `CreateAsyncThunk` она создает асинхронный `thunk` еоторая будет `action`. Далее мы это `action` вызываем и помещаем в `result` результат
+
+```
+// пример результата action
+{
+   type: 'login/loginByUsername/fulfilled',
+   payload: {username:'123', id:'1'},
+   meta:{
+      arg: { username:'123', password:'123'},
+      requestId: 'uzu8PIqn1lwaKhakHTo0B9',
+      requestStatus: 'fulfilled'
+   }
+}
+```
+
+как отрабатывают `dispatch`:  
+один раз `dispatch` отрабатывает когда мы вызвали `loginByUsername`- это функция `CreateAsyncThunk,   
+второй раз `dispatch`вызывается когда мы применяем определенный`action` которым владет`reduser`,  
+и 3 вызов `dispatch`происходит когда наступает состояние`fulfilled` - то есть при успешном выполнении`action`все дефолтные тесты для AsyncThunk будут повторяться, по этому хорошим патерном будет переиспользовать этот код  
+создадим`src\shared\configs\tests\testAsyncThunk\index.ts` и вынесем его туда - это будет `testAsyncThunk` класс внитри которого мы всю логику изолируем
+
+остается написать тест на `slice` 
+тесты на изменения состояний полей `isLoding` и `error` - избыточны, но для опыта и образца можно прописать
+
 ---
 
 что еще сделать:
