@@ -1,10 +1,10 @@
 import Button, { ThemeButtonEnums } from "shared/ui/button";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // компонент для тестирования errorBoundary
 
-export const GetErrorButton = () => {
+export const GetErrorButton = memo(() => {
    const [error, setError] = useState(false);
    const { t } = useTranslation();
    useEffect(() => {
@@ -22,6 +22,6 @@ export const GetErrorButton = () => {
          {t("вызвать ошибку")}
       </Button>
    );
-};
+});
 
 export default GetErrorButton;

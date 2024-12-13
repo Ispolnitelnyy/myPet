@@ -21,6 +21,11 @@ export const LoginFormComponent: Story = {
       ThemeDecorator(ThemeStateEnums.LIGHT),
       StoreDecorator({ loginForm: { username: "name", password: "123" } }),
    ],
+   args: {
+      onSuccess: () => {
+         return;
+      },
+   },
 };
 export const LoginFormComponentDark: Story = {
    decorators: [
@@ -29,6 +34,11 @@ export const LoginFormComponentDark: Story = {
          loginForm: { username: "name", password: "123", error: "OШИБКА" },
       }),
    ],
+   args: {
+      onSuccess: () => {
+         return;
+      },
+   },
 };
 export const LoginFormLoadingDark: Story = {
    decorators: [
@@ -37,4 +47,9 @@ export const LoginFormLoadingDark: Story = {
          loginForm: { username: "name", password: "123", isLoading: true },
       }),
    ],
+   args: {
+      onSuccess: () => {
+         return;
+      },
+   },
 };
