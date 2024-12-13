@@ -23,13 +23,14 @@ import DynamicModuleLoaderWrapper, {
 
 export interface LoginFormProps {
    className?: string;
+   onSuccess: () => void;
 }
 // initialReducers будет использовать 1 ссылку по этому выносим его сюда а не передаем сразу пропсом loginForm: loginReducer
 const initialReducers: ReducersList = {
    loginForm: loginReducer,
 };
 
-export const LoginForm = memo(({ className }: LoginFormProps) => {
+export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
    // const dispatch = useDispatch<AppDispatch>();
    const dispatch = useAppDispatch();
    // const { username, password, error, isLoading } =
@@ -52,9 +53,12 @@ export const LoginForm = memo(({ className }: LoginFormProps) => {
       [dispatch]
    );
 
-   const onLoginClick = useCallback(() => {
-      dispatch(loginByUsername({ username, password }));
-   }, [dispatch, username, password]);
+   const onLoginClick = useCallback(async () => {
+      const result = await dispatch(loginByUsername({ username, password }));
+      if (result.meta.requestStatus === "fulfilled") {
+         onSuccess();
+      }
+   }, [onSuccess, dispatch, username, password]);
 
    const { t } = useTranslation();
    return (
