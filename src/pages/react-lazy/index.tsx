@@ -2,6 +2,8 @@ import { lazy } from "react";
 
 export const MainPageLazy = lazy(() => import("../mainPage"));
 
+export const ProfilePageLazy = lazy(() => import("../profilePage"));
+
 export const AboutPageLazy = lazy(
    () =>
       new Promise((resolve) => {

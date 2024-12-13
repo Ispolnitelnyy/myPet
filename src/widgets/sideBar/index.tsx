@@ -13,6 +13,7 @@ interface SideBarProps {
 
 export const SideBar = ({ className }: SideBarProps) => {
    const [collapsed, setCollapsed] = useState(true);
+   const [test, setTest] = useState(0);
    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
    const open = () => {
       setCollapsed(false);
@@ -38,6 +39,7 @@ export const SideBar = ({ className }: SideBarProps) => {
          <div>
             <SideBarHeader collapsed={collapsed} />
          </div>
+         <button onClick={() => setTest(test + 1)}>"+1"</button>
          <Button
             data-testid="sidebar-toggle"
             onClick={onToggle}

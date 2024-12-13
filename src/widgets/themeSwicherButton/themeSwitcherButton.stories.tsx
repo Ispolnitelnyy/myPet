@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ThemeSwicherButton } from ".";
+import { ThemeSwicherButton } from "../themeSwicherButton";
 import { ThemeDecorator } from "shared/configs/storybook/decorators/themeDecorator";
 import { ThemeStateEnums } from "app/providers/themeProvider/themeContext";
 const meta = {
