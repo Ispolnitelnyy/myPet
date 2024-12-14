@@ -3,7 +3,7 @@ import cls from "./index.module.scss";
 import { memo, useCallback, useState } from "react";
 import Button, { ThemeButtonEnums } from "shared/ui/button";
 import { useTranslation } from "react-i18next";
-import LoginModal from "features/user/authByUsername/ui/loginModal";
+import LoginModal from "features/authByUsername/ui/loginModal";
 import { useAppDispatch, useAppSelector } from "app/providers/redux/hooks";
 import { getUserAuthData } from "../../entities/user/model/selectors/getUserAuthData";
 import { userActions } from "../../entities/user/model/slice";
