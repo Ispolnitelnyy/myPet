@@ -1,6 +1,6 @@
 import { classNames } from "shared/helpers/classNames";
 import cls from "./index.module.scss";
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import ThemeSwicherButton from "../themeSwicherButton";
 import { LangSwitcherButton } from "../langSwitherButton";
 import GetErrorButton from "../bugButton";
@@ -11,9 +11,8 @@ interface SideBarProps {
    className?: string;
 }
 
-export const SideBar = ({ className }: SideBarProps) => {
+export const SideBar = memo(({ className }: SideBarProps) => {
    const [collapsed, setCollapsed] = useState(true);
-   const [test, setTest] = useState(0);
    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
    const open = () => {
       setCollapsed(false);
@@ -39,7 +38,6 @@ export const SideBar = ({ className }: SideBarProps) => {
          <div>
             <SideBarHeader collapsed={collapsed} />
          </div>
-         <button onClick={() => setTest(test + 1)}>"+1"</button>
          <Button
             data-testid="sidebar-toggle"
             onClick={onToggle}
@@ -58,6 +56,6 @@ export const SideBar = ({ className }: SideBarProps) => {
          )}
       </div>
    );
-};
+});
 
 export default SideBar;

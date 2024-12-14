@@ -14,21 +14,19 @@ const appLinksRouters = routeConfig.filter(
    ([route]) => route !== AppRoutesEnum.NOTFOUND
 ) as [AppLinksRouters, RouteProps][];
 
- const SideBarHeader = ({ className, collapsed }: SideBarHeaderProps) => {
+const SideBarHeader = memo(({ className, collapsed }: SideBarHeaderProps) => {
    return (
       <div className={classNames(cls.sidebarheader, {}, [className])}>
-         {appLinksRouters.map(([route, { path, element }]) => {
-            return (
-               <SideBarItem
-                  key={route}
-                  path={path}
-                  route={route}
-                  collapsed={collapsed}
-               />
-            );
-         })}
+         {appLinksRouters.map(([route, { path, element }]) => (
+            <SideBarItem
+               key={route}
+               path={path}
+               route={route}
+               collapsed={collapsed}
+            />
+         ))}
       </div>
    );
-};
+});
 
-export default memo(SideBarHeader);
+export default SideBarHeader;

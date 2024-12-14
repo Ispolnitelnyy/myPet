@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ThunkConfig } from "app/providers/redux/storeProvider/config/store";
 import axios from "axios";
 import { User } from "entities/user/model/types";
-import { userActions } from "../../../../../../entities/user/model/slice";
+import { userActions } from "../../../../../entities/user/model/slice";
 import { USER_LOCALSTORAGE_KEY } from "shared/constants/localstorage";
 
 interface LoginByUsernameProps {

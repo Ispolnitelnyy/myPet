@@ -1,5 +1,5 @@
 import { loginActions, loginReducer } from ".";
-import { DeepPartial } from "../../../../../../node_modules/@types/react-redux/node_modules/redux/index.d";
+import { DeepPartial } from "react-redux/node_modules/redux";
 import { loginByUsername } from "../services/loginByUsername";
 import { LoginSchema } from "../types";
 

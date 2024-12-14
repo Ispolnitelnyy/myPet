@@ -3,7 +3,7 @@ import cls from "./index.module.scss";
 import Modal from "shared/ui/modal";
 // import LoginForm from "../loginForm"; // заменяем на LoginFormLazy, по хорошему удалить, чтобы он не подтягивался в бандл
 import { LoginFormLazy } from "../loginForm/loginFormLazy";
-import { Suspense } from "react";
+import { memo, Suspense } from "react";
 import Loader from "shared/ui/loader";
 
 interface LoginModalProps {
@@ -12,7 +12,7 @@ interface LoginModalProps {
    onClose: () => void;
 }
 
-export const LoginModal = (props: LoginModalProps) => {
+export const LoginModal = memo((props: LoginModalProps) => {
    const { className, isOpen, onClose } = props;
 
    return (
@@ -27,6 +27,6 @@ export const LoginModal = (props: LoginModalProps) => {
          </Suspense>
       </Modal>
    );
-};
+});
 
 export default LoginModal;

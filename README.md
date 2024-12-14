@@ -851,7 +851,7 @@ optimization/asyncRedusers/bundleSize
 создаем `reducerManager` в главном `store`, в типе `StateSchema` делаем асинхронные редьюсеры опциональными, в `rootReducer` в `store` удаляем все асинхронные редьюсеры и вписываем ихкак `asyncReducers?: ReducersMapObject<StateSchema>` `...asyncReducers`  
 в самом `store` переопределяем редьюсеры под `reducer: reducerManager.reduce,`  
 теперь самому `store` необходимо добавить `reducerManager:` `store.reducerManager = reducerManager;` тип для `store` потом расширим и под тип с новым свойством  
-создадим компонент обертку `<DynamicModuleLoaderWrapper/>` который будет получать `redux store` из `const store = useStore() as ReduxStoreReducerManager` где`ReduxStoreReducerManager` тип `store` в которм есть свойство `reducerManager`: `store.reducerManager`, так что предварительно его нужно создать, путем наследования от `EnhancedStore`(который является стандартный тип `store` redux) в котором будет лежать только свойство `reducerManager` которое будет иметь тип `ReducerManager` который мы объявили при создании`function createReducerManager`  
+создадим компонент обертку для асинхронной подгрузки `reducer` - `<DynamicModuleLoaderWrapper/>` который будет получать `redux store` из `const store = useStore() as ReduxStoreReducerManager` где`ReduxStoreReducerManager` тип `store` в которм есть свойство `reducerManager`: `store.reducerManager`, так что предварительно его нужно создать, путем наследования от `EnhancedStore`(который является стандартный тип `store` redux) в котором будет лежать только свойство `reducerManager` которое будет иметь тип `ReducerManager` который мы объявили при создании`function createReducerManager`  
 далее в компоненте обертке `<DynamicModuleLoaderWrapper/>` прописывем useEffect где в момент монтирования компонента добавляем редьюсер с помощью `reducerManager`: `storereducerManager.add(keyname, reducer)` и в моменте размонтирования компонента в колбэке ретерна будем удалять `reducer`: `store.reducerManager.remove(keyname)` при условии которое мыуказали в пропсе `removeAfterUnmount`, так как иногда требуется оставить `reducer`, чтобы при повторном открытии использовался уже ранее созданный редьюсер  
 теперь редьюсер мы можем подключить только через ленивый компонент(будет подгружаться только с самим компонентом), а не как по стандартной процедуре из `slice` в `store` и из `store`в компонент  
 далее в ленивом компоненте `<LoginForm/>` наш стэйт будет пустым при монтировании и все поля в нем будут undefined, решим это путем создания 'selectors' для какждого поляиндивидуально, где укажем значения которые они будут иметь в момент когда state еще не проинициализировался, чтобы они были не undefined ( на примере `const getLoginUsername(state:StateSchema)=>state?.loginForm?.username || ""`)  
@@ -862,7 +862,8 @@ optimization/asyncRedusers/bundleSize
 после добавления асинхронного редьюсера - теперь  
 `bundle.6e6f0ed299d411463e34.js (92.08 KB) - Gzipped`,  
 `bundle.6e6f0ed299d411463e34.js (293.05 KB) - Parsed`  
-для подключения нескольких редьюсеров реализуем тип `ReducersList` где будем принимать массив этих редьюсеров, далее в самом useEffect пропишем `Object.entries(reducers).forEac(([keyname, reducer]: ReducersListEntry) => {})`  
+для подключения нескольких редьюсеров реализуем тип `ReducersList` где будем принимать массив этих редьюсеров, далее в самом useEffect пропишем `Object.entries(reducers).forEac(([keyname, reducer]: ReducersListEntry) => {})`
+
 так же после внедрения `asyncReducers` необходимо изменить (`createReduxStore` в `StoreProvider/ui`) для сторибука: добавим `asyncReducers` в `StoreProviderProps`, диструктурируем`asyncReducers` пропс, в `createReduxStore` добавим вторым аргументом `asyncReducers`, ранее в глобальном сторе мы уже удалили все асинхронные редьюсеры из корневого редьюсера итеперь вписываем их как (аргумент `asyncReducers?: ReducersMapObject<StateSchema>`) `...asyncReducers`  
 далее в `StoreDecorator` создадим объект который будет принимать наши `defaultAsyncReducers = {loginForm:loginReducer}` ну и этот объект передаем в стор провайдер, так же вторымаргументом можем принимать остальные `asyncReducers` опционально, и разворачивать их вместе после `{{...defaultAsyncReducers, ...asyncReducers}}`
 
@@ -946,29 +947,36 @@ useAppDispatch(loginByUsername({ username, password })):
 в `src/pages` создаем структуру для новой страницы `profilePage`  
 добавляем ее в `src\pages\react-lazy\index.tsx` для асинхронной подгрузки по аналогии с остальными страницами  
 добавляем новый `route` в `src\shared\configs\routes\index.tsx` и проверяем стартуя проект с новым роутом `http://localhost:3000/profile`  
-теперь добавим ссылку:`<AppLink/>` в `<Sidebar/>`
+теперь добавим ссылку:`<AppLink/>` в `<Sidebar/>`  
 ранее я уже создал `<SidebarHeader/>` где прописывал `<AppLink/>` компоненты  
 теперь вынесем `<AppLink/>` компоненты в `<Sidebaritems/>` чтобы потом их мапить в `<Sidebaritems/>` и выносить в общий компонент `<Sidebar/>`
 
-reactMemo - для того чтобы дочерние компоненты не перерисовывались при изменении родительского
-в каких случаях ререндерится компонент:
-1 изменилось состояние - state
-2 изменился хотябы 1 пропс
-3 перерисовался родитель (этот пункт можно предотвратить мемоизацией)
-практически 90 % компонентов по хорошему бы оборачивать с мемо
-компоненты которые не стоит оборачивать в мемо это те компоненты у которых есть children
+reactMemo - для того чтобы дочерние компоненты не перерисовывались при изменении родительского  
+в каких случаях ререндерится компонент:  
+1 изменилось состояние - `state`  
+2 изменился хотябы 1 пропс  
+3 перерисовался родитель (этот пункт можно предотвратить мемоизацией)  
+практически 90 % компонентов по хорошему бы оборачивать с мемо  
+компоненты которые не стоит оборачивать в мемо это те компоненты у которых есть `{children}`  
 когда мы перерисовываем наш интерфейс мы задействуем процессор и видеокарту, а мемо всего лишь тратит какое-то количество памяти  
 сейчас памяти у всех дофига и забить какой то % из браузера достаточно сложно, а вот вычислительные процессорные, видеокарту по хорошему надо беречь, чтобы все работало быстро
 
-кнопки - в кнопках чаще всего используется какая-то строка  или текст в качестве children в таких случаях сравнивать легко и хранить дешево - в данном случае доапустимо использовать мемо  
+кнопки - в кнопках чаще всего используется какая-то строка или текст в качестве `children` в таких случаях сравнивать легко и хранить дешево - в данном случае доапустимо использовать мемо
 
-в случае же если в children передается древовидная структура на примере routers где в качестве чилдрена используются другие компоненты, то здесь уже работа непосредственно с объектами  
-объекты могут менять ссылки и соответсвенно 2 по виду одинаковых объекта могут быть разными по тому что они находятся в разной области памяти 
+в случае же если в `children` передается древовидная структура на примере `routers` где в качестве чилдрена используются другие компоненты, то здесь уже работа непосредственно с объектами  
+объекты могут менять ссылки и соответсвенно 2 по виду одинаковых объекта могут быть разными по тому что они находятся в разной области памяти
 а строка это примитив который мы сравниваем не по ссылке, а по значению
 
-dopisat pro rashirenie v chrome react dev tools
-obernut' v memo vse komponenty bez children
+для отслеживания ререндеров компонентов в `chrome` есть расширение `react dev tools`
 
+далаее настроим логику инициализации страницы профиля  
+создаем `src\entities\profile` по стандарту указываем `types`, `slice`, `selectors`  
+добавляем `profileReducer` (он же `ProfileSchema`) в `StateSchema`  
+в `src\pages\profilePage\index.tsx` оборачиваем компонент в `<DynamicModuleLoaderWrapper reducers={redusers}/>`
+где `redusers: ReducersList ={profile: profileReducer,};` чтобы подгружать наш `profileReducer` асинхронно
+
+так же в сторибуке на компонент `<ProfilePage/>` добавим `StoreDecorator` по тому как используем в компоненте `asyncReducers`
+дополнительно провалимся в декоратор `StoreDecorator` и расширим `defaulAsyncReducers` вписав туда `profile: profileReducer`
 
 -
 -
