@@ -30,5 +30,5 @@ interface ThunkExtraArg {
 
 export interface ThunkConfig<T> {
    extra: ThunkExtraArg;
-   rejectValue: T; // Для типа ошибок
+   rejectValue: T; // Для типа ошибок который мы будем определять из вне и прокидывать джинериком: ThunkConfig<string>
 }

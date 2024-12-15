@@ -33,8 +33,7 @@ export const loginByUsername = createAsyncThunk<
          JSON.stringify(response.data)
       );
       thunkApi.dispatch(userActions.setAuthData(response.data));
-      // @ts-ignore
-      // extra.navigate('/about') // теперь при отработке thunk нас будет редеректить на /about
+      // extra.navigate('/about') // теперь при отработке thunk можем выполнить редерект на /about
 
       return response.data;
    } catch (e) {

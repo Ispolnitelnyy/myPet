@@ -985,8 +985,27 @@ branch:
 instanceAPI/ApiUrl
 
 Улутшение асинхронных запросов на примере `src\features\authByUsername\model\services\loginByUsername\index.ts`  
-Создадим `instance axiox` в `src\shared\api\index.ts`   
+Создадим `instance axios` в `src\shared\api\index.ts`  
+зададим `baseURL` и `headers` чтобы при каждом запросе у нас уже была строка например `"http://localhost:8000"` в которую останется лишь добавить `/login` в самом thunk при запросе, Ну и токен который будем отсылать при каждом запросе
 
+у `thunkApi` eсть аргумент `extra` `app\providers\redux\storeProvider\config\store\index.ts` (30 строка - указываем мидлвару так как в tool-kit есть набор мидлвар которые содержат в серебе работу с thunk) в который мы можем расположить любые вспомогательные функции, данные, и как раз в этот агумент будем помещать инстанс api: `$apiCreateBase` чтобы не импортировать его в каждый файл с `asynkThunk ом`
+
+так же из `asynkThunk` мы можем делать редиректы (например после успещной авторизации перебрасывать пользователя на определенную страниу)  
+для этого используется хук `useNavigate`, его мы тоже можем упаковать в `thunkApi.extra` по аналогии с инстанс api  
+в `<StoreProvider/>` вызывем хук `useNavigate` и определим его в `navigate`, далее передаем аргументом в `store`  
+в `createReduxStore` укажем ему тип `navigate?: (to: To, options?: NavigateOptions) => void` и передадим его в `thunk.extraArgument` аналогично инстанс api  
+теперь при вызове `thunk` в блоке `try` можем указать редирект путем `extra.navigate('/about')`
+
+для `thunkApi` создадим тип: `ThunkExtraArg` чтобы ts знал, что у него есть `ExtraArgs`  
+в `createAsynkThunk` где аргумент принимает конфиг укажем у `extra: ThunkExtraArg`  
+для простоты использования, создадим сам конфиг: `ThunkConfig<T>` куда пропишем `rejectValue` и `extra`
+
+для определения `baseUrl` в версии prod и dev создадим еще одну глобальную переменную `__API__`  
+ее мы будем задавать на этапе сборки приложения
+добавим в типы `BuildOptions`, `BuildEnv`  
+добавим в `DefinePluguin` новую переменную, тоже самое делаем для `storybook-webpack.config`, так же добавляем ее в `Jest.config`, прописываем ее в глобальную декларацию типов и в конфиг `eslint`
+не забываем проинициализировать само значение в `webpack.config`
+теперь в качестве `baseUrl` в instance api: `$apiCreateBase` передаем глобальную переменную `__API__`
 
 ---
 

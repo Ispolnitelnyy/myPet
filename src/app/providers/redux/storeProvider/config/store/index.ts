@@ -30,7 +30,7 @@ export function createReduxStore(
       middleware: (getDefaultMiddleware) =>
          getDefaultMiddleware({
             thunk: {
-               extraArgument: {
+               extraArgument: {  // аргумент extra асинзронного thunkApi
                   api: $apiCreateBase,
                   navigate: navigate,
                },
