@@ -4,7 +4,7 @@ import { memo } from "react";
 import DynamicModuleLoaderWrapper, {
    ReducersList,
 } from "shared/helpers/components/dynamicModuleLoaderWrapper";
-import { profileReducer } from "entities/profile/model/slice";
+import { profileReducer } from "../../entities/profile/model/slice";
 
 interface ProfilePageProps {
    className?: string;

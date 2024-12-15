@@ -19,6 +19,7 @@ export function buildPlugins(
       }),
       new webpack.DefinePlugin({
          __IS_DEV__: JSON.stringify(options.isDev),
+         __API__: JSON.stringify(options.apiUrl),
       }),
 
       // для теста на размер бандла в прод сборке

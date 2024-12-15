@@ -11,6 +11,7 @@ export default [
          globals: {
             ...globals.browser,
             __IS_DEV__: true, // Добавляем глобальную переменную
+            __API__: true,
          },
       },
    },
