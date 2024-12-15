@@ -27,7 +27,7 @@ export default ({ config }: { config: webpack.Configuration }) => {
       return rule;
    });
    config.module.rules.push(getLoader().svgLoader); // впмсываем лоудер svg для отображения svg в sidebar
-   config.plugins.push(new DefinePlugin({ __IS_DEV__: true })); //  __IS_DEV__ не определен. Не удалось правильно отобразить компонент, вероятно, из-за проблемы с конфигурацией в Storybook.
+   config.plugins.push(new DefinePlugin({ __IS_DEV__: true, __API__: "" })); //  __IS_DEV__ не определен. Не удалось правильно отобразить компонент, вероятно, из-за проблемы с конфигурацией в Storybook.
 
    return config;
 };

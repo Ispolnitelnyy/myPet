@@ -979,11 +979,17 @@ reactMemo - для того чтобы дочерние компоненты н�
 дополнительно провалимся в декоратор `StoreDecorator` и расширим `defaulAsyncReducers` вписав туда `profile: profileReducer`
 
 ---
+
 38 Инстанс API. ApiUrl
 branch:  
-instanceAPI/ApiUrl  
+instanceAPI/ApiUrl
+
+Улутшение асинхронных запросов на примере `src\features\authByUsername\model\services\loginByUsername\index.ts`  
+Создадим `instance axiox` в `src\shared\api\index.ts`   
+
 
 ---
+
 -
 -
 -
