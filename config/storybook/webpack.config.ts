@@ -15,19 +15,20 @@ export default ({ config }: { config: webpack.Configuration }) => {
       isDev: true,
    };
 
-   config.resolve.modules.push(options.paths.src); // добавляем путь  в массив modules конфига вэбпака сторибука
-   config.resolve.extensions.push(".ts", ".tsx"); // добавляем расширения в массив extensions
-   config.module.rules.push(getLoader(options.isDev).cssLoader); // добавляем cssLoader в массив rules
-   config.module.rules.push(getLoader().babelLoader); // отрубаем дефолтеый импорт реакта через правило в babelLoader
+   config?.resolve?.modules?.push(options.paths.src); // добавляем путь  в массив modules конфига вэбпака сторибука
+   config?.resolve?.extensions?.push(".ts", ".tsx"); // добавляем расширения в массив extensions
+   config?.module?.rules?.push(getLoader(options.isDev).cssLoader); // добавляем cssLoader в массив rules
+   config?.module?.rules?.push(getLoader().babelLoader); // отрубаем дефолтеый импорт реакта через правило в babelLoader
    // отключение дефолтного правила для svg если такое есть
+   //@ts-ignore
    config.module.rules = config.module.rules.map((rule: RuleSetRule) => {
       if (/svg/.test(rule.test as string)) {
          return { ...rule, exclude: /\.svg$/i };
       }
       return rule;
    });
-   config.module.rules.push(getLoader().svgLoader); // впмсываем лоудер svg для отображения svg в sidebar
-   config.plugins.push(new DefinePlugin({ __IS_DEV__: true, __API__: "" })); //  __IS_DEV__ не определен. Не удалось правильно отобразить компонент, вероятно, из-за проблемы с конфигурацией в Storybook.
+   config?.module?.rules?.push(getLoader().svgLoader); // впмсываем лоудер svg для отображения svg в sidebar
+   config?.plugins?.push(new DefinePlugin({ __IS_DEV__: true, __API__: "" })); //  __IS_DEV__ не определен. Не удалось правильно отобразить компонент, вероятно, из-за проблемы с конфигурацией в Storybook.
 
    return config;
 };

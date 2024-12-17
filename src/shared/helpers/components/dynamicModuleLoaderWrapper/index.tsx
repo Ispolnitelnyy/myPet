@@ -9,8 +9,6 @@ import { useStore } from "react-redux";
 
 export type ReducersList = Partial<Record<StateSchemaKey, Reducer>>;
 
-type ReducersListEntry = [StateSchemaKey, Reducer];
-
 interface DynamicModuleLoaderWrapperProps {
    //    keyname: StateSchemaKey;
    reducers: ReducersList;
@@ -26,10 +24,10 @@ export const DynamicModuleLoaderWrapper: FC<DynamicModuleLoaderWrapperProps> = (
 
    useEffect(() => {
       Object.entries(reducers).forEach(
-         ([keyname, reducer]: ReducersListEntry) => {
+         ([keyname, reducer]) => {
             // в момент монтирования компонента добавляем редьюсер с помощью reducerManager
             // в качестве ключа (keyname) передаем строку, вторым аргументом сам reducer
-            store.reducerManager.add(keyname, reducer);
+            store.reducerManager.add(keyname as StateSchemaKey, reducer);
             dispatch({ type: `@INIT ${keyname} reducer` });
          }
       );
@@ -37,9 +35,9 @@ export const DynamicModuleLoaderWrapper: FC<DynamicModuleLoaderWrapperProps> = (
       // в момент размонтирования будем удалять reducer
       return () => {
          Object.entries(reducers).forEach(
-            ([keyname, reducer]: ReducersListEntry) => {
+            ([keyname, reducer]) => {
                if (removeAfterUnmount) {
-                  store.reducerManager.remove(keyname);
+                  store.reducerManager.remove(keyname as StateSchemaKey);
                   dispatch({ type: `@DESTROY ${keyname} reducer` });
                }
             }

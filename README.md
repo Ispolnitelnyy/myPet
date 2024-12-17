@@ -1027,6 +1027,101 @@ profilesModule/dataFetching/TS-strictMode
 
 ---
 
+40 Чиним типы и проект после TS strict mode. ThunkConfig  
+branch:  
+TS-strict-mode/ThunkConfig
+
+1. ERROR in `D:\code\myPet\config\tests\setupTest.ts`  
+   // TS2322: Type 'typeof TextDecoder' is not assignable to type ...  
+   решение:  
+   `https://stackoverflow.com/questions/70808405/how-to-set-global-textdecoder-in-jest-for-jsdom-if-nodes-util-textdecoder-is-ty#:~:text=I%20managed%20to%20get%20rid%20of%20the%20error%20by%20first%20coercing%20the%20global%20object%20to%20any%20then%20assigning%20the%20TextDecoder%3A`
+
+2. ERROR in `D:\code\myPet\config\storybook\webpack.config.ts`  
+   // TS18048: 'config.resolve' is possibly 'undefined'.  
+   // TS18048: 'config.resolve.modules' is possibly 'undefined'.  
+   // TS18048: 'config.resolve.extensions' is possibly 'undefined'.  
+   // TS18048: 'config.module' is possibly 'undefined'.  
+   // TS18048: 'config.module.rules' is possibly 'undefined'.  
+   решение:  
+   использование `Optional Chaining operator` `?`
+
+3. ERROR in `D:\code\myPet\config\storybook\webpack.config.ts`  
+   // TS2345: Argument of type '(rule: RuleSetRule) => webpack.RuleSetRule' is not assignable to parameter of type ...  
+   решение: 1. массив может содержать не только RuleSetRule, но и другие значения (false, "", 0, "...", null, undefined). Следовательно, нужно обработать все эти случаи в функции map 2. yсловное присваивание массива: Если config?.module?.rules равно null или undefined, мы присваиваем пустой массив []
+
+4. ERROR in `D:\code\myPet\src\app\providers\redux\storeProvider\config\reduserManager\index.ts`  
+   // TS2322: Type '(state: StateSchema, action: UnknownAction) => { counter: CounterSchema; user: UserSchema; loginForm?: undefined; profile?: undefined; }' is not assignable to type '(state: StateSchema | undefined, action: UnknownAction) => StateSchema'.  
+   решение: // @ts-ignore
+
+5. ERROR in D:\code\myPet\src\shared\ui\modal\index.tsx
+   // TS2722: Cannot invoke an object which is possibly 'undefined'.
+   решение:
+   `https://dev.to/wojciechmatuszewski/mutable-and-immutable-useref-semantics-with-react-typescript-30c9#:~:text=Suppose%20we%20are%20writing%20a%20component%20that%20deals%20with%20timers.`
+
+6. ERROR in D:\code\myPet\src\shared\ui\modal\index.tsx
+   TS2722: Cannot invoke an object which is possibly 'undefined'.
+   решение: связано с тем, что в интерфейсе ModalProps свойство onClose не является обязательным надо в `onClose?.()` использовать опциональный оператор перед вызовом
+
+7. ERROR in D:\code\myPet\src\shared\ui\modal\index.tsx
+   TS2769: No overload matches this call.
+   решение: clearTimeout в браузерном окружении ожидает number | undefined, так как идентификатор таймера — это число. В Node.js, он возвращает объект типа Timeout, что вызывает расхождение в типах. Тип null также несовместим с clearTimeout нужно добавить проверку на наличие timerRef.current === true значения
+
+8. ERROR in D:\code\myPet\src\shared\ui\modal\index.tsx
+   TS2345: Argument of type `Record<string, boolean | undefined>` is not assignable to parameter of type 'Mods'.
+   решение: в `D:\code\myPet\src\shared\helpers\classNames\index.ts` в тип Mods добавить значение undefined
+
+9. ERROR in D:\code\myPet\src\shared\ui\button\index.tsx
+   TS2322: Type '{ [x: string]: boolean | undefined; [x: number]: true; }' is not assignable to type `Record<string, boolean>`.
+   решение: используем Mods тип из `D:\code\myPet\src\shared\helpers\classNames\index.ts`
+
+10.   ERROR in D:\code\myPet\src\app\providers\themeProvider\useTheme\index.ts
+      TS2322: Type 'ThemeStateEnums | undefined' is not assignable to type 'ThemeStateEnums'.
+      решение: присвоим ThemeStateEnums.Light в случае когда theme === undefined
+
+11.   ERROR in D:\code\myPet\src\shared\configs\storybook\decorators\storeDecorator\index.tsx
+      TS2322: Type `Reducer<LoginSchema>` is not assignable to type `Reducer<LoginSchema | undefined, UnknownAction, LoginSchema | undefined>`.
+      решение: использовать `type ReducersList = Partial<Record<StateSchemaKey, Reducer>>` вместо `DeepPartial<ReducersMapObject<StateSchema>>`
+
+12.   ERROR in D:\code\myPet\src\widgets\sideBar\sideBarHeader\index.tsx
+      TS2322: Type 'string | undefined' is not assignable to type 'string'.
+      Используем "!" для указания, что path не будет undefined
+
+```
+// в createReducerManager столкнулся с разными версиями типов combineReducers
+
+// этот тип старой версии  редакса
+export function combineReducers<S>(
+  reducers: ReducersMapObject<S, any>
+): Reducer<CombinedState<S>>
+export function combineReducers<S, A extends Action =
+AnyAction>( reducers: ReducersMapObject<S, A>
+): Reducer<CombinedState<S>, A>
+export function combineReducers<M extends ReducersMapObject
+<any, any>>( reducers: M): Reducer<
+  CombinedState<StateFromReducersMapObject<M>>,
+  ActionFromReducersMapObject<M>
+>
+
+// а этот актуальной версии  редакса
+declare function combineReducers<M>(
+   reducers: M
+): M[keyof M] extends Reducer<any,any,any> | undefined
+   ? Reducer<
+        StateFromReducersMapObject<M>,
+        ActionFromReducersMapObject<M>,
+        Partial<PreloadedStateShapeFromReducersMapObject<M>>
+     >
+   : never;
+
+```
+
+между этими двумя версиями combineReducers есть важные различия. Они касаются того, как обрабатываются типы для состояния и редьюсеров, а также какой тип возвращается в результате работы функции  
+Первая версия возвращает типы `CombinedState<S>` и `ActionFromReducersMapObject<M>`, что является более простым и прямолинейным способом работы с редьюсерами  
+Вторая версия использует более сложную типизацию с условным типом для более точного определения возвращаемого типа. Эта версия динамически извлекает типы состояния и экшенов, а также типизирует предварительное состояние в `PreloadedStateShapeFromReducersMapObject<M>`  
+Вторая версия: более сложная и гибкая, подходит для более сложных случаев, где требуется учитывать дополнительные особенности, такие как предварительно загруженное состояние и возможность undefined для некоторых редьюсеров
+
+---
+
 -
 -
 -

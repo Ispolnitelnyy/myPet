@@ -25,9 +25,9 @@ export const profileSlice = createSlice({
                //Profile - по тому как бэк возвращает данные о пользователе
                state.isLoading = false;
                state.data = action.payload; // сохраняем в state данные полученные с бэка
-               state.data.avatar = action.payload.avatar
-                  ? action.payload.avatar
-                  : `https://raw.githubusercontent.com/Ispolnitelnyy/myPet/ca20b5778efb063099a8ca18a112cf89d79fea7e/public/assets/icons/user-32-32.png`;
+               // state.data.avatar = action.payload.avatar
+               //    ? action.payload.avatar
+               //    : `https://raw.githubusercontent.com/Ispolnitelnyy/myPet/ca20b5778efb063099a8ca18a112cf89d79fea7e/public/assets/icons/user-32-32.png`;
             }
          )
          .addCase(fetchProfileData.rejected, (state, action) => {

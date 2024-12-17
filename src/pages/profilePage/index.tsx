@@ -1,21 +1,17 @@
 import { classNames } from "shared/helpers/classNames";
-import cls from "./index.module.scss";
-import { memo, useEffect } from "react";
-import DynamicModuleLoaderWrapper, {
-   ReducersList,
-} from "shared/helpers/components/dynamicModuleLoaderWrapper";
+import DynamicModuleLoaderWrapper, { ReducersList } from "../../shared/helpers/components/dynamicModuleLoaderWrapper";
 import { profileReducer } from "../../entities/profile/model/slice";
-import { useAppDispatch } from "app/providers/redux/hooks";
-import { fetchProfileData } from "entities/profile/model/services";
-import ProfileCard from "entities/profile/ui/profileCard";
-
-interface ProfilePageProps {
-   className?: string;
-}
+import { memo, useEffect } from "react";
+import { useAppDispatch } from "../../app/providers/redux/hooks";
+import { fetchProfileData } from "../../entities/profile/model/services";
+import ProfileCard from "../../entities/profile/ui/profileCard";
 
 const redusers: ReducersList = {
    profile: profileReducer,
 };
+interface ProfilePageProps {
+   className?: string;
+}
 
 export const ProfilePage = memo(({ className }: ProfilePageProps) => {
    const dispatch = useAppDispatch();
@@ -24,7 +20,7 @@ export const ProfilePage = memo(({ className }: ProfilePageProps) => {
    }, [dispatch]);
    return (
       <DynamicModuleLoaderWrapper reducers={redusers} removeAfterUnmount>
-         <div className={classNames(cls.profilepage, {}, [className])}>
+         <div className={classNames('', {}, [className])}>
             <ProfileCard />
          </div>
       </DynamicModuleLoaderWrapper>

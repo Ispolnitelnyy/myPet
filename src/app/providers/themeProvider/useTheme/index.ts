@@ -1,5 +1,9 @@
 import { useContext } from "react";
-import { LOCAL_STORAGE_THEME_KEY, ThemeContext, ThemeStateEnums } from "../themeContext";
+import {
+   LOCAL_STORAGE_THEME_KEY,
+   ThemeContext,
+   ThemeStateEnums,
+} from "../themeContext";
 
 interface UseThemeResult {
    toggleTheme: () => void;
@@ -14,9 +18,9 @@ export function useTheme(): UseThemeResult {
          theme === ThemeStateEnums.LIGHT
             ? ThemeStateEnums.DARK
             : ThemeStateEnums.LIGHT;
-      setTheme(newTheme);
+      setTheme?.(newTheme);
       // document.body.className = newTheme
       localStorage.setItem(LOCAL_STORAGE_THEME_KEY, newTheme);
    };
-   return { theme, toggleTheme };
+   return { theme: theme || ThemeStateEnums.LIGHT, toggleTheme };
 }
