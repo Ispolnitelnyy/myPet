@@ -12,7 +12,9 @@ const meta = {
    argTypes: {},
    decorators: [
       RouterDecorator,
-      StoreDecorator({ loginForm: { username: "", password: "" } }),
+      StoreDecorator({
+         loginForm: { username: "", password: "", isLoading: true },
+      }),
    ],
 } satisfies Meta<typeof NavBar>;
 

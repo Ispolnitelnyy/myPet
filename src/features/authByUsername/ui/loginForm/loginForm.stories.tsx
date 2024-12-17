@@ -19,7 +19,9 @@ type Story = StoryObj<typeof meta>;
 export const LoginFormComponent: Story = {
    decorators: [
       ThemeDecorator(ThemeStateEnums.LIGHT),
-      StoreDecorator({ loginForm: { username: "name", password: "123" } }),
+      StoreDecorator({
+         loginForm: { username: "name", password: "123", isLoading: false },
+      }),
    ],
    args: {
       onSuccess: () => {
@@ -31,7 +33,12 @@ export const LoginFormComponentDark: Story = {
    decorators: [
       ThemeDecorator(ThemeStateEnums.DARK),
       StoreDecorator({
-         loginForm: { username: "name", password: "123", error: "OШИБКА" },
+         loginForm: {
+            username: "name",
+            password: "123",
+            error: "OШИБКА",
+            isLoading: false,
+         },
       }),
    ],
    args: {

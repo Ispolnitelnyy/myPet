@@ -6,7 +6,10 @@ describe("getLoginIsLoadingSelector.test", () => {
    test("should return true", () => {
       const state: DeepPartial<StateSchema> = {
          loginForm: {
+            username: "",
+            password: "",
             isLoading: true,
+            error: undefined,
          },
       };
       expect(getLoginIsLoading(state as StateSchema)).toEqual(true);

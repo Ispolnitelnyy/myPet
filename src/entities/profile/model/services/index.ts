@@ -12,7 +12,7 @@ export const fetchProfileData = createAsyncThunk<
    // ThunkConfig<string> // Типизация thunkAPI (состояние, dispatch, rejectValue)
 
    // _: void - тела запроса никакого не будет, так как это get запрос
->("profile/fetchProfileData", async (_: void, thunkApi) => {
+>("profile/fetchProfileData", async (_, thunkApi) => {
    try {
       const response = await thunkApi.extra.api.get<Profile>("/profile");
 

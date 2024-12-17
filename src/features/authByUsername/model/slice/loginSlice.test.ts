@@ -33,10 +33,11 @@ describe("loginSlice.test", () => {
 
    test("test fulfilled", () => {
       const state: DeepPartial<LoginSchema> = { isLoading: true };
+      const payload = { id: "1", username: "test" };
       expect(
          loginReducer(
             state as LoginSchema,
-            loginByUsername.fulfilled(undefined, "", {
+            loginByUsername.fulfilled(payload, "", {
                username: "test",
                password: "test",
             })

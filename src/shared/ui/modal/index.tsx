@@ -1,4 +1,4 @@
-import { classNames } from "shared/helpers/classNames";
+import { classNames, Mods } from "shared/helpers/classNames";
 import cls from "./index.module.scss";
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import ReactPortal from "../portal";
@@ -17,7 +17,9 @@ export const Modal = (props: ModalProps) => {
 
    const [isClosing, setIsClosing] = useState(false);
    const [isMounted, setIsMounted] = useState(false);
-   const timerRef = useRef<ReturnType<typeof setTimeout>>();
+   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+   // const timerRef = useRef<number | null>(null);
+
    const { theme } = useTheme();
 
    useEffect(() => {
@@ -29,7 +31,7 @@ export const Modal = (props: ModalProps) => {
    const closeHandler = useCallback(() => {
       if (onClose) setIsClosing(true);
       timerRef.current = setTimeout(() => {
-         onClose();
+         onClose?.();
          setIsClosing(false);
       }, 300);
    }, [onClose]);
@@ -52,18 +54,20 @@ export const Modal = (props: ModalProps) => {
          window.addEventListener("keydown", onKeyDown);
       }
       return () => {
-         clearTimeout(timerRef.current);
+         if (timerRef.current) {
+            clearTimeout(timerRef.current); // Убедимся, что timerRef.current определён
+         }
          window.removeEventListener("keydown", onKeyDown);
       };
    }, [isOpen, onKeyDown]);
 
-   const mods: Record<string, boolean> = {
+   const mods: Mods = {
       [cls.opened]: isOpen,
       [cls.isclosing]: isClosing,
    };
 
-   if(lazy && !isMounted ){
-      return null
+   if (lazy && !isMounted) {
+      return null;
    }
 
    return (

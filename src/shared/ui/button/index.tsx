@@ -1,4 +1,4 @@
-import { classNames } from "shared/helpers/classNames";
+import { classNames, Mods } from "shared/helpers/classNames";
 import cls from "./index.module.scss";
 import { ButtonHTMLAttributes, memo } from "react";
 
@@ -26,10 +26,17 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 // оборачиваем в memo так как в качестве children будет примитив - string
 export const Button = memo((props: ButtonProps) => {
-   const { className, theme, children, square, size, disabled, ...otherProps } =
-      props;
+   const {
+      className,
+      theme = ThemeButtonEnums.OUTLINE,
+      children,
+      square,
+      size = SizesButtonEnums.M,
+      disabled,
+      ...otherProps
+   } = props;
 
-   const mods: Record<string, boolean> = {
+   const mods: Mods = {
       [cls[theme]]: true,
       [cls.square]: square,
       [cls[size]]: true,

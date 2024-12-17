@@ -20,7 +20,7 @@ const SideBarHeader = memo(({ className, collapsed }: SideBarHeaderProps) => {
          {appLinksRouters.map(([route, { path, element }]) => (
             <SideBarItem
                key={route}
-               path={path}
+               path={path!}  // Используем "!" для указания, что path не будет undefined 
                route={route}
                collapsed={collapsed}
             />

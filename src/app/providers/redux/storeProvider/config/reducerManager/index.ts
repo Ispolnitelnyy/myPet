@@ -5,12 +5,16 @@ import {
    ReducersMapObject,
 } from "@reduxjs/toolkit";
 import { StateSchema, StateSchemaKey } from "../stateSchema";
+import { CombinedState } from "../../../../../../../node_modules/@types/react-redux/node_modules/redux/index.d";
 
 export interface ReducerManager {
    getReducerMap: () => ReducersMapObject<StateSchema>;
    // state: StateSchema | undefined для совместимости с Redux, где state может быть undefined при инициализации
    // reduce: возвращаемое значение — StateSchema, так как combinedReducer всегда возвращает объект состояния.
-   reduce: (state: StateSchema | undefined, action: UnknownAction) => StateSchema;
+   reduce: (
+      state: StateSchema,
+      action: UnknownAction
+   ) => CombinedState<StateSchema>;
    add: (key: StateSchemaKey, reducer: Reducer) => void;
    remove: (key: StateSchemaKey) => void;
 }
@@ -28,20 +32,20 @@ export function createReducerManager(
    return {
       // getReducerMap пролсто возвращает reducers
       getReducerMap: () => reducers,
-      // reduce по сути это и есть reducer
       // в аргументах state, action как и у классического reducer
       // но если в keysToRemove есть ключи, то эти ключи из state полностью удаляем
       reduce: (state: StateSchema, action: UnknownAction) => {
+         // Если состояние undefined, возвращаем начальное состояние
          if (keysToRemove.length > 0) {
             state = { ...state };
 
             keysToRemove.forEach((key) => {
-               //    delete state[key];
-               delete state[key as keyof StateSchema];
+               delete state![key as keyof StateSchema];
             });
             keysToRemove = [];
          }
          // возвращаем reducer cо state без лишних ключей
+         // @ts-ignore
          return combinedReducer(state, action);
       },
       // add - по ключу добавляет новый reducer в reducer
@@ -64,3 +68,4 @@ export function createReducerManager(
       },
    };
 }
+

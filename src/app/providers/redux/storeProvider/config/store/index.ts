@@ -1,10 +1,12 @@
-import { configureStore, ReducersMapObject } from "@reduxjs/toolkit";
+import { CombinedState } from "../../../../../../../node_modules/@types/react-redux/node_modules/redux/index.d";
+
+import { configureStore, Reducer, ReducersMapObject } from "@reduxjs/toolkit";
 import { StateSchema } from "../stateSchema";
 import { counterReducer } from "../../../../../../entities/counter/model/slice";
 import { userReducer } from "../../../../../../entities/user/model/slice";
 // loginReducer подгружаем асинхронно через store.reducerManager.add непосредственно в самом компоненте LoginForm
 // import { loginReducer } from "features/user/authByUsername/model/slice";
-import { createReducerManager } from "../reduserManager";
+import { createReducerManager } from "../reducerManager";
 import { $apiCreateBase } from "shared/api";
 import { NavigateOptions, To } from "react-router-dom";
 
@@ -23,14 +25,15 @@ export function createReduxStore(
    const reducerManager = createReducerManager(rootReducer);
 
    const store = configureStore({
-      reducer: reducerManager.reduce,
+      reducer: reducerManager.reduce as Reducer<CombinedState<StateSchema>>,
       devTools: __IS_DEV__, // отключаем дев тулзы из продакшена
       preloadedState: initialState, // принимаем данные (для тестов) в initialState
 
       middleware: (getDefaultMiddleware) =>
          getDefaultMiddleware({
             thunk: {
-               extraArgument: {  // аргумент extra асинзронного thunkApi
+               // аргумент extra асинзронного thunkApi
+               extraArgument: {
                   api: $apiCreateBase,
                   navigate: navigate,
                },
@@ -48,4 +51,3 @@ export function createReduxStore(
 export type AppDispatch = ReturnType<typeof createReduxStore>["dispatch"];
 // Тип, который описывает структуру всего Redux-хранилища
 export type RootState = ReturnType<typeof createReduxStore>["getState"];
-
