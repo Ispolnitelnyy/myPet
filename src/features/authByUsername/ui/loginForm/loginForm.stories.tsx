@@ -3,7 +3,7 @@ import { LoginForm } from ".";
 import { ThemeDecorator } from "shared/configs/storybook/decorators/themeDecorator";
 import { ThemeStateEnums } from "app/providers/themeProvider/themeContext";
 import { RouterDecorator } from "shared/configs/storybook/decorators/routerDecorator";
-import { StoreDecorator } from "shared/configs/storybook/decorators/storeDecorator";
+import { StoreDecorator } from "../../../../shared/configs/storybook/decorators/storeDecorator";
 const meta = {
    title: "Features/LoginForm",
    component: LoginForm,
@@ -20,7 +20,10 @@ export const LoginFormComponent: Story = {
    decorators: [
       ThemeDecorator(ThemeStateEnums.LIGHT),
       StoreDecorator({
-         loginForm: { username: "name", password: "123", isLoading: false },
+         loginForm: {
+            username: "username",
+            password: "123",
+         },
       }),
    ],
    args: {
@@ -34,10 +37,9 @@ export const LoginFormComponentDark: Story = {
       ThemeDecorator(ThemeStateEnums.DARK),
       StoreDecorator({
          loginForm: {
-            username: "name",
+            username: "username",
             password: "123",
-            error: "OШИБКА",
-            isLoading: false,
+            error: "error",
          },
       }),
    ],
@@ -51,7 +53,9 @@ export const LoginFormLoadingDark: Story = {
    decorators: [
       ThemeDecorator(ThemeStateEnums.DARK),
       StoreDecorator({
-         loginForm: { username: "name", password: "123", isLoading: true },
+         loginForm: {
+            isLoading: true,
+         },
       }),
    ],
    args: {

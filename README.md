@@ -1007,6 +1007,17 @@ instanceAPI/ApiUrl
 не забываем проинициализировать само значение в `webpack.config`
 теперь в качестве `baseUrl` в instance api: `$apiCreateBase` передаем глобальную переменную `__API__`
 
+для тестов использующих asynkThunk с fetch api необходимо внести изменения
+так как раньше мы использовали сам axios а теперь используем экстрааргумент `src\shared\api\index.ts` `$apiCreateBase`
+так что теперь вместо мока axios должны использовать мок экстрааргумента
+
+импортируем в `src/shared/configs/tests/testAsyncThunk/index.ts` `jest.mock("axios");`
+создем `const mockedAxios: jest.MockedFunctionDeep<AxiosStatic> = jest.mocked(axios, {shallow: false,});`
+в классе укажим типы для `api: jest.MockedFunctionDeep<AxiosStatic>` и `navigate: jest.MockedFn<any>;`
+передаем в конструктор `this.api = mockedAxios`и`this.navigate = jest.fn()` c нужными значениями
+теперь вместо 3 аргумента(Extra) в action, мы передаеи `{api: this.api, navigate: this.navigate}`
+если раньше мы мокади axios, то теперь мокаеи api внутри thunk `thunk.api`
+
 ---
 
 39 Модуль профиля. Фетчинг данных. TS strict mode  
@@ -1042,49 +1053,52 @@ TS-strict-mode/ThunkConfig
    // TS18048: 'config.resolve.extensions' is possibly 'undefined'.  
    // TS18048: 'config.module' is possibly 'undefined'.  
    // TS18048: 'config.module.rules' is possibly 'undefined'.  
-   решение:  
+   решение:
    использование `Optional Chaining operator` `?`
 
 3. ERROR in `D:\code\myPet\config\storybook\webpack.config.ts`  
    // TS2345: Argument of type '(rule: RuleSetRule) => webpack.RuleSetRule' is not assignable to parameter of type ...  
-   решение: 1. массив может содержать не только RuleSetRule, но и другие значения (false, "", 0, "...", null, undefined). Следовательно, нужно обработать все эти случаи в функции map 2. yсловное присваивание массива: Если config?.module?.rules равно null или undefined, мы присваиваем пустой массив []
+   решение:
+
+   1. массив может содержать не только RuleSetRule, но и другие значения (false, "", 0, "...", null, undefined). Следовательно, нужно обработать все эти случаи в функции map
+   2. yсловное присваивание массива: Если config?.module?.rules равно null или undefined, мы присваиваем пустой массив []
 
 4. ERROR in `D:\code\myPet\src\app\providers\redux\storeProvider\config\reduserManager\index.ts`  
    // TS2322: Type '(state: StateSchema, action: UnknownAction) => { counter: CounterSchema; user: UserSchema; loginForm?: undefined; profile?: undefined; }' is not assignable to type '(state: StateSchema | undefined, action: UnknownAction) => StateSchema'.  
    решение: // @ts-ignore
 
-5. ERROR in D:\code\myPet\src\shared\ui\modal\index.tsx
-   // TS2722: Cannot invoke an object which is possibly 'undefined'.
-   решение:
+5. ERROR in `D:\code\myPet\src\shared\ui\modal\index.tsx`  
+   // TS2722: Cannot invoke an object which is possibly 'undefined'.  
+   решение:  
    `https://dev.to/wojciechmatuszewski/mutable-and-immutable-useref-semantics-with-react-typescript-30c9#:~:text=Suppose%20we%20are%20writing%20a%20component%20that%20deals%20with%20timers.`
 
-6. ERROR in D:\code\myPet\src\shared\ui\modal\index.tsx
-   TS2722: Cannot invoke an object which is possibly 'undefined'.
+6. ERROR in `D:\code\myPet\src\shared\ui\modal\index.tsx`  
+   TS2722: Cannot invoke an object which is possibly 'undefined'.  
    решение: связано с тем, что в интерфейсе ModalProps свойство onClose не является обязательным надо в `onClose?.()` использовать опциональный оператор перед вызовом
 
-7. ERROR in D:\code\myPet\src\shared\ui\modal\index.tsx
-   TS2769: No overload matches this call.
-   решение: clearTimeout в браузерном окружении ожидает number | undefined, так как идентификатор таймера — это число. В Node.js, он возвращает объект типа Timeout, что вызывает расхождение в типах. Тип null также несовместим с clearTimeout нужно добавить проверку на наличие timerRef.current === true значения
+7. ERROR in `D:\code\myPet\src\shared\ui\modal\index.tsx`  
+   TS2769: No overload matches this call.  
+   решение: `clearTimeout` в браузерном окружении ожидает `number | undefined`, так как идентификатор таймера — это число. В `Node.js`, он возвращает объект типа `Timeout`, что вызывает расхождение в типах. Тип `null` также несовместим с `clearTimeout` нужно добавить проверку на наличие `timerRef.current === true` значения
 
-8. ERROR in D:\code\myPet\src\shared\ui\modal\index.tsx
-   TS2345: Argument of type `Record<string, boolean | undefined>` is not assignable to parameter of type 'Mods'.
-   решение: в `D:\code\myPet\src\shared\helpers\classNames\index.ts` в тип Mods добавить значение undefined
+8. ERROR in `D:\code\myPet\src\shared\ui\modal\index.tsx`  
+   TS2345: Argument of type `Record<string, boolean | undefined>` is not assignable to parameter of type 'Mods'.  
+   решение: в `D:\code\myPet\src\shared\helpers\classNames\index.ts` в тип `Mods` добавить значение `undefined`
 
-9. ERROR in D:\code\myPet\src\shared\ui\button\index.tsx
-   TS2322: Type '{ [x: string]: boolean | undefined; [x: number]: true; }' is not assignable to type `Record<string, boolean>`.
-   решение: используем Mods тип из `D:\code\myPet\src\shared\helpers\classNames\index.ts`
+9. ERROR in `D:\code\myPet\src\shared\ui\button\index.tsx`  
+   TS2322: Type '{ [x: string]: boolean | undefined; [x: number]: true; }' is not assignable to type `Record<string, boolean>`.  
+   решение: используем `Mods` тип из `D:\code\myPet\src\shared\helpers\classNames\index.ts`
 
-10.   ERROR in D:\code\myPet\src\app\providers\themeProvider\useTheme\index.ts
-      TS2322: Type 'ThemeStateEnums | undefined' is not assignable to type 'ThemeStateEnums'.
-      решение: присвоим ThemeStateEnums.Light в случае когда theme === undefined
+10.   ERROR in `D:\code\myPet\src\app\providers\themeProvider\useTheme\index.ts`  
+      TS2322: Type `ThemeStateEnums | undefined` is not assignable to type `ThemeStateEnums`.  
+      решение: присвоим `ThemeStateEnums.Light` в случае когда `theme === undefined`
 
-11.   ERROR in D:\code\myPet\src\shared\configs\storybook\decorators\storeDecorator\index.tsx
-      TS2322: Type `Reducer<LoginSchema>` is not assignable to type `Reducer<LoginSchema | undefined, UnknownAction, LoginSchema | undefined>`.
+11.   ERROR in `D:\code\myPet\src\shared\configs\storybook\decorators\storeDecorator\index.tsx`  
+      TS2322: Type `Reducer<LoginSchema>` is not assignable to type `Reducer<LoginSchema | undefined, UnknownAction, LoginSchema | undefined>`.  
       решение: использовать `type ReducersList = Partial<Record<StateSchemaKey, Reducer>>` вместо `DeepPartial<ReducersMapObject<StateSchema>>`
 
-12.   ERROR in D:\code\myPet\src\widgets\sideBar\sideBarHeader\index.tsx
-      TS2322: Type 'string | undefined' is not assignable to type 'string'.
-      Используем "!" для указания, что path не будет undefined
+12.   ERROR in `D:\code\myPet\src\widgets\sideBar\sideBarHeader\index.tsx`  
+      TS2322: Type 'string | undefined' is not assignable to type 'string'.  
+      Используем "!" для указания, что `path` не будет `undefined`
 
 ```
 // в createReducerManager столкнулся с разными версиями типов combineReducers
@@ -1115,30 +1129,32 @@ declare function combineReducers<M>(
 
 ```
 
-между этими двумя версиями combineReducers есть важные различия. Они касаются того, как обрабатываются типы для состояния и редьюсеров, а также какой тип возвращается в результате работы функции  
+между этими двумя версиями `combineReducers` есть важные различия. Они касаются того, как обрабатываются типы для состояния и редьюсеров, а также какой тип возвращается в результате работы функции  
 Первая версия возвращает типы `CombinedState<S>` и `ActionFromReducersMapObject<M>`, что является более простым и прямолинейным способом работы с редьюсерами  
 Вторая версия использует более сложную типизацию с условным типом для более точного определения возвращаемого типа. Эта версия динамически извлекает типы состояния и экшенов, а также типизирует предварительное состояние в `PreloadedStateShapeFromReducersMapObject<M>`  
-Вторая версия: более сложная и гибкая, подходит для более сложных случаев, где требуется учитывать дополнительные особенности, такие как предварительно загруженное состояние и возможность undefined для некоторых редьюсеров
+Вторая версия: более сложная и гибкая, подходит для более сложных случаев, где требуется учитывать дополнительные особенности, такие как предварительно загруженное состояние и возможность `undefined` для некоторых редьюсеров
+
+переопределил DeepPartial через глобальную деклорацию, теперь его не надо импортировать
+
+`npm run storybook -- --debug-webpack`  
+всплыли проблемы по сторибуку, декоратор `StoreDecorator` не может загрузиться та как асинхронный,   
+не знаю как пофиксить предпологаю проблема в вэбпаке сторибука.    
+исправил только сам билд сторибука, он запускается, но не показывает компоненты с этим декоратром  
+
+пофиксил сторибук, проблема оказалась как я и думал в конфиге сборщика    
+в define plaguin неправильно былли указаны isDev и Api  
+
+```
+config?.plugins?.push(
+      new DefinePlugin({
+         __IS_DEV__: JSON.stringify(true),
+         __API__: JSON.stringify(""),
+      })
+   );
+```
 
 ---
 
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
 -
 -
 -
@@ -1152,10 +1168,8 @@ declare function combineReducers<M>(
 `https://www.youtube.com/watch?v=MvnTwjAjhic` - посмотреть про новый Eslint  
 перетянуть eslint с старой версией без галки, и вписать в overrides по аналогии с swc-loader  
 плагин `npm i eslint-plugin-react-hooks --save-dev` для мемоизации подсказывает когда функцию надо мемоизировать.  
-метод toBeInTheDocument - посмотреть что делает в ролике про тесты  
 скриншотные тесты в пайплайне (Docker)  
 интернационализация, пройтись по приложению и навесить везде переводы i18n
-поиграться с относительными путями аватара в `D:\code\myPet\src\entities\profile\model\slice\index.ts`
 
 ---
 

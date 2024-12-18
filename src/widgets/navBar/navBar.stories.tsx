@@ -10,22 +10,27 @@ const meta = {
    parameters: {},
    tags: ["NavBar component"],
    argTypes: {},
-   decorators: [
-      RouterDecorator,
-      StoreDecorator({
-         loginForm: { username: "", password: "", isLoading: true },
-      }),
-   ],
+   decorators: [RouterDecorator],
 } satisfies Meta<typeof NavBar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const LightThemeNavBar: Story = {
-   decorators: [ThemeDecorator(ThemeStateEnums.LIGHT)],
+   decorators: [
+      ThemeDecorator(ThemeStateEnums.LIGHT),
+      StoreDecorator({
+         loginForm: { username: "", password: "", isLoading: true },
+      }),
+   ],
    args: {},
 };
 export const DarkThemeNavBar: Story = {
-   decorators: [ThemeDecorator(ThemeStateEnums.DARK)],
+   decorators: [
+      ThemeDecorator(ThemeStateEnums.DARK),
+      StoreDecorator({
+         loginForm: { username: "", password: "", isLoading: true },
+      }),
+   ],
    args: {},
 };
