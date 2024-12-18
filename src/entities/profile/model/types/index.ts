@@ -8,7 +8,7 @@ export interface Profile {
    country: Country;
    city: string;
    username: string;
-   avatar: string | null;
+   avatar: string;
 }
 
 export interface ProfileSchema {

@@ -1,9 +1,9 @@
 import { classNames } from "shared/helpers/classNames";
 import cls from "./index.module.scss";
 import { useAppSelector } from "app/providers/redux/hooks";
-import { getProfileData } from "entities/profile/model/state/getProfileData";
-import { getProfileIsLoading } from "entities/profile/model/state/getProfileIsLoading";
-import { getProfileError } from "entities/profile/model/state/getProfileError";
+import { getProfileData } from "../../../../entities/profile/model/state/getProfileData";
+import { getProfileIsLoading } from "../../../../entities/profile/model/state/getProfileIsLoading";
+import { getProfileError } from "../../../../entities/profile/model/state/getProfileError";
 import { useTranslation } from "react-i18next";
 import Text from "shared/ui/text";
 import Button, { ThemeButtonEnums } from "shared/ui/button";
@@ -29,12 +29,12 @@ export const ProfileCard = ({ className }: ProfileCardProps) => {
          </div>
          <div className={cls.data}>
             <Input
-               value={data?.name}
+               value={data.name}
                placeholder={t("Ваше имя")}
                className={cls.input}
             />
             <Input
-               value={data?.lastname}
+               value={data.lastname}
                placeholder={t("Ваша фамилия")}
                className={cls.input}
             />
