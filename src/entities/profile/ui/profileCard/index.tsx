@@ -1,7 +1,7 @@
 import { classNames } from "shared/helpers/classNames";
 import cls from "./index.module.scss";
 import { useTranslation } from "react-i18next";
-import Text from "shared/ui/text";
+import Text, { TextAlignEnums, TextThemeEnums } from "shared/ui/text";
 import Button, { ThemeButtonEnums } from "shared/ui/button";
 import Input from "shared/ui/input";
 import { Profile } from "entities/profile/model/types";
@@ -20,14 +20,30 @@ export const ProfileCard = (props: ProfileCardProps) => {
    if (isLoading) {
       return (
          <div
-            className={classNames(cls.profilecard, { [cls.loading]: true }, [
+            className={classNames(cls.profilecard, {}, [
                className,
+               cls.loading,
             ])}
          >
             <Loader />
          </div>
       );
    }
+   if (error) {
+      return (
+         <div
+            className={classNames(cls.profilecard, {}, [className, cls.error])}
+         >
+            <Text
+               theme={TextThemeEnums.ERROR}
+               title={"Не удалось получить данные"}
+               text={"Попробуйте обновить страницу"}
+               align={TextAlignEnums.CENET}
+            />
+         </div>
+      );
+   }
+
    return (
       <div className={classNames(cls.profilecard, {}, [className])}>
          <div className={cls.header}>
