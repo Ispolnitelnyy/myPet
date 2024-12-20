@@ -7,6 +7,7 @@
    .text {
       font-size: var(--font-size-m);
       color: var(--secondary-color);
+      margin-top: 20px;
    }
 }
 
@@ -26,6 +27,18 @@
    }
 
    .text {
-      color: var(--red-dark);
+      color: var(--red-light);
    }
+}
+
+.left {
+   text-align: left;
+}
+
+.right {
+   text-align: right;
+}
+
+.center {
+   text-align: center;
 }

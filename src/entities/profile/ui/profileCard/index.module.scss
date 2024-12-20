@@ -18,7 +18,9 @@
 .editbtn {
    margin-left: auto;
 }
-.loading {
+
+.loading,
+.error {
    display: flex;
    justify-content: center;
    align-items: center;
